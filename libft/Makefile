@@ -6,7 +6,7 @@
 #    By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 20:06:11 by cheelim           #+#    #+#              #
-#    Updated: 2024/06/08 18:34:24 by cheelim          ###   ########.fr        #
+#    Updated: 2024/06/09 21:22:03 by cheelim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,13 @@ ft_putnbr_fd.c ft_memcmp.c
 
 OBJS = $(SRCS:.c=.o)
 
+BONUS = \
+ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
+ft_lstmap.c
+
+BONUSOBJS = $(BONUS:.c=.o)
+
 NAME = libft.a
 
 CC = gcc
@@ -34,13 +41,18 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
+bonus: $(BONUS) $(BONUSOBJS) 
+	ar rcs $(NAME) $(BONUSOBJS) $(OBJS)
+
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	rm -f $(OBJS)
+	rm -rf $(OBJS) $(BONUSOBJS)
 
 fclean : clean
-	rm -f $(NAME)
+	rm -rf $(NAME)
 
 re : fclean $(NAME)
+
+.PHONY : all clean flcean re bonus

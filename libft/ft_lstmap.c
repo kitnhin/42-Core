@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 17:07:03 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/09 16:56:48 by cheelim          ###   ########.fr       */
+/*   Created: 2024/06/09 20:59:05 by cheelim           #+#    #+#             */
+/*   Updated: 2024/06/09 21:37:15 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	void	*str;
+	t_list	*newlist;
+	t_list	*newnode;
 
-	if (num == 0 || size == 0)
+	if (!lst || !f || !del)
+		return (NULL);
+	newlist = NULL;
+	while (lst)
 	{
-		str = ft_strdup("");
-		if (!str)
+		newnode = ft_lstnew((*f)(lst->content));
+		if (!newnode)
+		{
+			ft_lstclear(&newlist, del);
 			return (NULL);
-		return (str);
+		}
+		ft_lstadd_back(&newlist, newnode);
+		lst = lst->next;
 	}
-	if (num > 4294967295 / size)
-		return (NULL);
-	str = (void *)malloc(num * size);
-	if (!str)
-		return (NULL);
-	ft_bzero(str, num * size);
-	return (str);
+	return (newlist);
 }

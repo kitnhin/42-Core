@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 17:07:03 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/09 16:56:48 by cheelim          ###   ########.fr       */
+/*   Created: 2024/06/09 17:50:50 by cheelim           #+#    #+#             */
+/*   Updated: 2024/06/09 21:30:57 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+int	ft_lstsize(t_list *lst)
 {
-	void	*str;
+	int	count;
 
-	if (num == 0 || size == 0)
+	count = 0;
+	while (lst)
 	{
-		str = ft_strdup("");
-		if (!str)
-			return (NULL);
-		return (str);
+		lst = lst->next;
+		count++;
 	}
-	if (num > 4294967295 / size)
-		return (NULL);
-	str = (void *)malloc(num * size);
-	if (!str)
-		return (NULL);
-	ft_bzero(str, num * size);
-	return (str);
+	return (count);
 }
