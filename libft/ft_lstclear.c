@@ -6,7 +6,7 @@
 /*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:27:29 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/09 21:34:34 by cheelim          ###   ########.fr       */
+/*   Updated: 2024/06/10 16:45:50 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
+	t_list	*lst_ptr;
+
 	if (!lst || !del)
 		return ;
 	else
 	{
 		while (*lst)
 		{
+			lst_ptr = (*lst)->next;
 			ft_lstdelone(*lst, del);
-			*lst = (*lst)->next;
+			*lst = lst_ptr;
 		}
 		lst = NULL;
 	}
