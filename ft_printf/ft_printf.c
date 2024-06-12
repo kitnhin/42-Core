@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:54:01 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/11 18:47:10 by cheelim          ###   ########.fr       */
+/*   Updated: 2024/06/12 16:37:08 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int printformat(va_list args, char c)
 
 	len = 0;
     if (c == 'c')
-        len = printchar(va_arg(args, int));
+        len = printchar(va_arg(args, int)); 
     else if (c == 's')
         len = printstr(va_arg(args, char *));
     else if (c == 'd' || c == 'i')
@@ -44,12 +44,10 @@ int ft_printf(const char *str, ...)
             len += printformat(args, str[i + 1]);
             i += 2;
         }
-        else
-        {
-            write(1,&str[i],1);
-            i++;
-			len++;
-        }
+        if (str[i] != '%')
+            len += printchar(str[i]);
+		i++;
     }
+	va_end(args);
 	return (len);
 }

@@ -1,19 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchar.c                                     :+:      :+:    :+:   */
+/*   ft_printhex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 17:53:58 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/12 16:08:58 by ethanlim         ###   ########.fr       */
+/*   Created: 2024/06/12 21:33:36 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/06/12 21:40:36 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int printchar(int c)
+int printhex(int n, char *base)
 {
-    write(1,&c,1);
-    return (1);
+    int len;
+    char *str;
+    int i;
+    int nb;
+
+    len = 1;
+    nb = n;
+    while(nb > 16)
+    {
+        nb /= 16;
+        len++;
+    }
+    i = len - 1;
+    str = (char *)malloc(len + 1);
+    while (i >= 0)
+    {
+        str[i] = base[n % 16];
+        n /= 16;
+        i--;
+    }
+    str[len] = '\0';
+    write(1,str,len);
+    free(str);
+    return (len);
 }

@@ -3,20 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+         #
+#    By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/11 17:53:46 by cheelim           #+#    #+#              #
-#    Updated: 2024/06/11 18:00:28 by cheelim          ###   ########.fr        #
+#    Updated: 2024/06/12 15:41:52 by ethanlim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = \
-ft_printchar.c ft_printf.c ft_printint.c ft_printstr.c
+ft_printchar.c ft_printf.c ft_printint.c ft_printstr.c \
+ft_printui.c
 
 OBJS = $(SRCS:.c=.o)
 
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 
 CC = gcc
 

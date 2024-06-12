@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:54:03 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/11 18:50:16 by cheelim          ###   ########.fr       */
+/*   Updated: 2024/06/12 23:08:30 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 int	printint(int n);
 int printchar(int c);
