@@ -6,19 +6,26 @@
 /*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:54:08 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/11 17:54:10 by cheelim          ###   ########.fr       */
+/*   Updated: 2024/06/14 16:58:15 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int printstr(char *str)
+int	printstr(char *str)
 {
-    int i = 0;
-    while (str[i] != '\0')
-    {
-        write(1,&str[i],1);
-        i++;
-    }
-    return (i);
+	int	i;
+
+	i = 0;
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return (i);
 }

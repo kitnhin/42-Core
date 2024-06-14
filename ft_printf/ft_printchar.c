@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:53:58 by cheelim           #+#    #+#             */
-/*   Updated: 2024/06/12 16:08:58 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:42:28 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int printchar(int c)
+int	printchar(int c)
 {
-    write(1,&c,1);
-    return (1);
+	write(1, &c, 1);
+	return (1);
 }
