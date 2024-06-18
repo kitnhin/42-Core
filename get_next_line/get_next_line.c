@@ -11,25 +11,31 @@
 
 char *get_next_line(int fd)
 {
-	static char	*stash;
-	char	*readline;
-	char	*line;
-	
+    static char *stash;
+    char *readline;
+    char *line;
+	char *tempstash;
+
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+		return (NULL);
 	if (!stash)
-		stash = ft_strdup("");
-	readline = ft_readline(fd);
-	if (readline)
-		stash = ft_strjoin(stash, readline);
-	line = ft_getline(stash);
-	if (line)
-		return (line);
-	else
-		return (ft_strdup(""));
+        stash = ft_strdup("");
+    readline = ft_readline(fd);
+    if (readline)
+        stash = ft_strjoin(stash, readline);
+    line = ft_getline(&stash);
+    if (line)
+        return (line);
+	tempstash = stash;
+	free (stash);
+	stash = tempstash;
+	free (readline);
+	return (get_next_line(fd));
 }
 
 int main()
 {
-	int fd = open("/Users/cheelim/Desktop/test.txt", O_RDONLY);
+	int fd = open("/Users/cheelim/Desktop/test.txt", O_RDWR);
 	printf("value = %d\n", fd);
 	// char buffer[BUFFER_SIZE];
 	// char buffer2[BUFFER_SIZE];
@@ -38,7 +44,7 @@ int main()
 	printf("string = %s\n", buffer);
 
 	buffer = get_next_line(fd);
-	printf("string = %s\n", buffer);
+	printf("string = %p\n", buffer);
 
 	// buffer = get_next_line(fd);
 	// printf("string = %s\n", buffer);
