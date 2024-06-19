@@ -3,10 +3,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 100
-#endif
-
 #include "get_next_line.h"
 
 size_t	ft_strlen(char const *str)
@@ -72,22 +68,6 @@ char	*ft_substr(char const *s, size_t start, size_t len)
 	return (str);
 }
 
-char	*ft_readline(int fd)
-{
-	char	*buffer;
-	int		bytesread;
-
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	bytesread = read(fd, buffer, BUFFER_SIZE);
-	if (bytesread <= 0)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	buffer[bytesread] = '\0';
-	return (buffer);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		total_len;
@@ -113,6 +93,23 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dest[i] = '\0';
 	return (dest);
 }
+
+char	*ft_readline(int fd)
+{
+	char	*buffer;
+	int		bytesread;
+
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	bytesread = read(fd, buffer, BUFFER_SIZE);
+	if (bytesread <= 0)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	buffer[bytesread] = '\0';
+	return (buffer);
+}
+
 char *ft_getline(char **stash)
 {
     char *line;
@@ -122,18 +119,15 @@ char *ft_getline(char **stash)
     len = 0;
     while((*stash)[len]!= '\n' && (*stash)[len]!= '\0')
         len++;
-	if (!len)
-		return (NULL);
     if((*stash)[len] == '\n')
     {
-        line = ft_substr(*stash, 0, len);
+        line = ft_substr(*stash, 0, len + 1);
         leftover = ft_substr(*stash, len + 1, (ft_strlen(*stash) - (len + 1)));
         free(*stash);
         *stash = leftover;
+		return (line);
     }
-    else
-        return (*stash);
-    return (line);
+    return (NULL);
 }
 // char *get_next_line(int fd)
 // {
