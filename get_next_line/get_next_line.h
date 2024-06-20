@@ -11,12 +11,13 @@
 #endif
 
 
-char *get_next_line(int fd);
+char 	*get_next_line(int fd);
 size_t	ft_strlen(char const *str);
-char *ft_strdup(char *s);
-int	total_size(char const *s, unsigned int start, size_t len);
+char 	*ft_strdup(char *s);
+int		total_size(char const *s, unsigned int start, size_t len);
 char	*ft_substr(char const *s, size_t start, size_t len);
-char	*ft_getline(char **stash);
-char	*ft_readline(int fd);
+char	*ft_getline(char *stash);
+char	*ft_readfile(int fd, char *stash);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*process_stash(char *stash);
 #endif

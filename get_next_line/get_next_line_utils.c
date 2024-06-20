@@ -1,8 +1,3 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-
 #include "get_next_line.h"
 
 size_t	ft_strlen(char const *str)
@@ -94,41 +89,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (dest);
 }
 
-char	*ft_readline(int fd)
-{
-	char	*buffer;
-	int		bytesread;
+// char	*ft_readline(int fd)
+// {
+// 	char	*buffer;
+// 	int		bytesread;
 
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	bytesread = read(fd, buffer, BUFFER_SIZE);
-	if (bytesread <= 0)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	buffer[bytesread] = '\0';
-	return (buffer);
-}
+// 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+// 	bytesread = read(fd, buffer, BUFFER_SIZE);
+// 	if (bytesread <= 0)
+// 	{
+// 		free(buffer);
+// 		return (NULL);
+// 	}
+// 	buffer[bytesread] = '\0';
+// 	return (buffer);
+// }
 
-char *ft_getline(char **stash)
-{
-    char *line;
-    char *leftover;
-    int len;
-
-    len = 0;
-    while((*stash)[len]!= '\n' && (*stash)[len]!= '\0')
-        len++;
-    if((*stash)[len] == '\n')
-    {
-        line = ft_substr(*stash, 0, len + 1);
-        leftover = ft_substr(*stash, len + 1, (ft_strlen(*stash) - (len + 1)));
-        free(*stash);
-        *stash = leftover;
-		return (line);
-    }
-    return (NULL);
-}
 // char *get_next_line(int fd)
 // {
 //     static char *stash;
