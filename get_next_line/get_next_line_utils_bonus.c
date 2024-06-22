@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 02:14:19 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/06/22 02:37:23 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:36:30 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_substr(char const *s, size_t start, size_t len)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	int		total_len;
 	char	*dest;
@@ -90,6 +90,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[j] != '\0')
 		dest[i++] = s2[j++];
 	dest[i] = '\0';
+	free(s1);
 	return (dest);
 }
 

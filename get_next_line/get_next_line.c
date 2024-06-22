@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 01:39:41 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/06/22 02:33:14 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/06/23 00:56:48 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ char	*ft_readfile(int fd, char *stash)
 {
 	char	*buffer;
 	int		bytesread;
-	char	*tempstash;
 
 	bytesread = 1;
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (bytesread > 0)
+	while (bytesread > 0 && ft_strchr(buffer, '\n') == 0)
 	{
 		bytesread = read(fd, buffer, BUFFER_SIZE);
+		if (bytesread == -1)
+		{
+			free(stash);
+			free(buffer);
+			return (NULL);
+		}
 		buffer[bytesread] = '\0';
-		tempstash = ft_strjoin(stash, buffer);
-		free(stash);
-		stash = tempstash;
-		if (ft_strchr(buffer, '\n') == 1)
-			break ;
+		stash = ft_strjoin_free(stash, buffer);
 	}
 	free (buffer);
-	buffer = NULL;
 	return (stash);
 }
 
@@ -59,19 +59,22 @@ char	*process_stash(char *stash)
 	int		i;
 
 	i = 0;
-	while (stash[i] != '\0' && stash[i] != '\n')
-		i++;
 	if (!stash || stash[i] == '\0')
 	{
 		free(stash);
-		stash = NULL;
+		return (NULL);
+	}
+	while (stash[i] != '\0' && stash[i] != '\n')
+		i++;
+	if (stash[i] == '\0')
+	{
+		free(stash);
 		return (NULL);
 	}
 	if (stash[i] == '\n')
 		i++;
 	tempstash = ft_substr(stash, i, ft_strlen(stash));
 	free(stash);
-	stash = NULL;
 	return (tempstash);
 }
 
