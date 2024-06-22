@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 01:39:41 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/06/22 02:33:14 by ethanlim         ###   ########.fr       */
+/*   Created: 2024/06/22 02:31:16 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/06/22 02:32:52 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_readfile(int fd, char *stash)
 {
@@ -77,23 +77,23 @@ char	*process_stash(char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-	if (!stash)
-		stash = ft_strdup("");
-	stash = ft_readfile(fd, stash);
-	line = ft_getline(stash);
-	stash = process_stash(stash);
+	if (!stash[fd])
+		stash[fd] = ft_strdup("");
+	stash[fd] = ft_readfile(fd, stash[fd]);
+	line = ft_getline(stash[fd]);
+	stash[fd] = process_stash(stash[fd]);
 	return (line);
 }
 
 // int main()
 // {
-// 	// int fd = open("/Users/ethanlim/Documents/42-Core/
-//	get_next_line/gnlTester/files/42_with_nl", O_RDWR);
+// 	// int fd = open("/Users/ethanlim/Documents/42-Core/get_next_line/
+//	gnlTester/files/42_with_nl", O_RDWR);
 // 	int fd = open("/Users/ethanlim/Desktop/test.txt", O_RDWR);
 // 	printf("value = %d\n", fd);
 // 	// char buffer[BUFFER_SIZE];
