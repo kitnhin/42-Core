@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cheelim <cheelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 01:39:41 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/06/23 00:56:48 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:19:33 by cheelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_readfile(int fd, char *stash)
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (bytesread > 0 && ft_strchr(buffer, '\n') == 0)
+	while (bytesread > 0)
 	{
 		bytesread = read(fd, buffer, BUFFER_SIZE);
 		if (bytesread == -1)
@@ -32,6 +32,8 @@ char	*ft_readfile(int fd, char *stash)
 		}
 		buffer[bytesread] = '\0';
 		stash = ft_strjoin_free(stash, buffer);
+		if (ft_strchr(buffer, '\n') == 1)
+			break ;
 	}
 	free (buffer);
 	return (stash);
