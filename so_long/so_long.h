@@ -55,8 +55,8 @@ void	make_map(void);
 void	handle_image(t_wall *walls, t_game *game, int map_width, int map_height, t_key *keys);
 void	print_player(t_game *game);
 int		check_move_player(int keycode, t_game *game);
-int		check_lines(char **map, int map_width, int map_height);
-int		check_map(t_game *game);
+int		check_lines(char **map, int map_width, int map_height); 
 int		height_map(char **map);
-int		width_map(char **map);
+int check_map(char **map, int map_width, int map_height);
+int width_map(char **map);
 

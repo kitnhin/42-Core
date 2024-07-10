@@ -1,28 +1,28 @@
 #include "so_long.h"
 
-void init_structs(t_wall *walls, t_key *keys, t_game *game)
-{
-    walls->top_left_wall = "./textures/walls/top_left_wall.xpm";
-    walls->up_wall = "./textures/walls/up_wall.xpm";
-    walls->down_wall = "./textures/walls/down_wall.xpm";
-    walls->right_wall = "./textures/walls/right_wall.xpm";
-    walls->up_left_wall = "./textures/walls/up_left_wall.xpm";
-    walls->up_right_wall = "./textures/walls/up_right_wall.xpm";
-    walls->left_wall = "./textures/walls/left_wall.xpm";
-    walls->floor = "./textures/floors/floor.xpm";
-    walls->cross_wall = "./textures/walls/cross_wall.xpm";
-    walls->down_left_wall = "./textures/walls/down_left_wall.xpm";
-    walls->down_right_wall = "./textures/walls/down_right_wall.xpm";
-	walls->exit = "./textures/walls/exit.xpm";
-	keys->addr ="./textures/others/Key.xpm";
-	game->player_addr = "./textures/others/Player_v2.xpm";
-	game->player_pos_x = 0;
-	game->player_pos_y = 0;
-	game->map = NULL;
-	game->steps = 0;
-	game->map_width = 0;
-	game->map_height = 0;
-}
+// void init_structs(t_wall *walls, t_key *keys, t_game *game)
+// {
+//     walls->top_left_wall = "./textures/walls/top_left_wall.xpm";
+//     walls->up_wall = "./textures/walls/up_wall.xpm";
+//     walls->down_wall = "./textures/walls/down_wall.xpm";
+//     walls->right_wall = "./textures/walls/right_wall.xpm";
+//     walls->up_left_wall = "./textures/walls/up_left_wall.xpm";
+//     walls->up_right_wall = "./textures/walls/up_right_wall.xpm";
+//     walls->left_wall = "./textures/walls/left_wall.xpm";
+//     walls->floor = "./textures/floors/floor.xpm";
+//     walls->cross_wall = "./textures/walls/cross_wall.xpm";
+//     walls->down_left_wall = "./textures/walls/down_left_wall.xpm";
+//     walls->down_right_wall = "./textures/walls/down_right_wall.xpm";
+// 	walls->exit = "./textures/walls/exit.xpm";
+// 	keys->addr ="./textures/others/Key.xpm";
+// 	game->player_addr = "./textures/others/Player_v2.xpm";
+// 	game->player_pos_x = 0;
+// 	game->player_pos_y = 0;
+// 	game->map = NULL;
+// 	game->steps = 0;
+// 	game->map_width = 0;
+// 	game->map_height = 0;
+// }
 void find_player_start(t_game *game)
 {
 	int x = 0;
@@ -113,20 +113,25 @@ int main()
 	t_key	keys;
 	t_game	game;
 	char *steps;
-	int fd = open("./maps/no_exit", O_RDWR);
+	int fd = open("./maps/map2.ber", O_RDWR);
 
+	if  (read(fd, NULL, 0) < 0)
+	{
+		ft_printf("cant read file lol\n");
+		return 0;
+	}
 	init_structs(&walls, &keys, &game);
 	game.map = readmap(fd);
 	game.map_width = width_map(game.map);
 	game.map_height = height_map(game.map);
-	int map_error = check_map(&game);
+	int map_error = check_map(game.map, game.map_width, game.map_height);
 	if (map_error == 0)
 	{
 		ft_printf("map error bruh\n");
 		return (1);
 	}
 	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, 1300, 500, "Hello world!");
+	game.window = mlx_new_window(game.mlx, game.map_width * 100, game.map_height * 100, "Hello world!");
 	handle_image(&walls, &game, game.map_width, game.map_height, &keys);
 	find_player_start(&game);
 	print_player(&game);

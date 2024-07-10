@@ -26,4 +26,7 @@ fclean : clean
 
 re : fclean all
 
+mapp : 
+	gcc make_map.c -lft -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
+
 .PHONY: all clean fclean re

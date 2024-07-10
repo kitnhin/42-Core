@@ -7,6 +7,22 @@ void	init_check(t_checks *checks)
 	checks->p_count = 0;
 }
 
+// char **readmap(int fd)
+// {
+// 	char **res;
+// 	int j = 0;
+// 	res = (char **)malloc(sizeof(char *) * 100); 
+// 	// if (get_next_line(fd) == NULL)
+// 	// {
+// 	// 	ft_printf("cant read map or map has nothing lol\n");
+// 	// 	exit(0);
+// 	// }
+// 	while ((res[j] = get_next_line(fd)) != NULL)
+// 		j++;
+// 	res[j] = NULL; 
+// 	return res;
+// }
+
 int width_map(char **map)
 {
 	int i;
@@ -107,20 +123,20 @@ int check_map_ply_col_exit(char **map, int map_width, int map_height)
 		return 1;
 	return 0;
 }
-int check_map(t_game *game)
+int check_map(char **map, int map_width, int map_height)
 {
 	int a;
 	int b;
 	int c;
 
-	if(game->map[0] == NULL)
+	if(map[0] == NULL)
 	{
 		ft_printf("cant read map or map got nothing lol");
 		exit(0);
 	}
-	a = check_map_ply_col_exit(game->map, game->map_width, game->map_height);
-	b = check_bounds(game->map, game->map_width, game->map_height);
-	c = check_lines(game->map, game->map_width, game->map_height);
+	a = check_map_ply_col_exit(map, map_width, map_height);
+	b = check_bounds(map, map_width, map_height);
+	c = check_lines(map, map_width, map_height);
 
 	if (a == 1 && b == 1 && c == 1)
 		return 1;
