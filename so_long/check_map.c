@@ -123,22 +123,80 @@ int check_map_ply_col_exit(char **map, int map_width, int map_height)
 		return 1;
 	return 0;
 }
+
+void locate_e(char **map, int *x, int *y)
+{
+	int row;
+	int col;
+
+	row = 0;
+	col = 0;
+	while(map[row])
+	{
+		if(map[row][col] == 'E')
+		{
+			// printf("row = %d, col = %d\n",row, col);
+			*x = col;
+			*y = row;
+		}
+		if(map[row][col] == '\0')
+		{
+			row++;
+			col = 0;
+		}
+		col++;
+	}
+}
+
+void check_sol(int *error, char **map, int map_width, int map_height, int row, int col)
+{
+	if (row < 0 || col < 0 || row >= map_height || col >= map_width)
+        return;
+    else if (map[row][col] != '0' && map[row][col] != 'C' && map[row][col] != 'E' && map[row][col] != 'P') 
+        return;
+	else if (map[row][col] == 'P')
+	{
+		*error = 1;
+		return ;
+	}
+    map[row][col] = 'V';
+
+    check_sol(error, map, map_width, map_height, row -1, col); 
+    check_sol(error, map, map_width, map_height, row +1, col);
+    check_sol(error, map, map_width, map_height, row, col - 1);
+    check_sol(error, map, map_width, map_height, row, col + 1);
+}
+
+char **copy_map(char **map, int map_width, int map_height) 
+{
+    char **map_copy = malloc(sizeof(char *) * map_height);
+    int i = 0;
+    while (i < map_height) 
+	{
+        map_copy[i] =ft_substr(map[i], 0, map_width);
+        i++;
+    }
+    return map_copy;
+}
+#include <stdio.h>
+#include <string.h>
 int check_map(char **map, int map_width, int map_height)
 {
 	int a;
 	int b;
 	int c;
-
-	if(map[0] == NULL)
-	{
-		ft_printf("cant read map or map got nothing lol");
-		exit(0);
-	}
+	int error;
+	int col = 0;
+	int row = 0;
+	error = 0;
+	char **map_copy = copy_map(map, map_width, map_height);
+	locate_e(map, &col, &row);
+	check_sol(&error, map_copy, map_width, map_height, row, col);
 	a = check_map_ply_col_exit(map, map_width, map_height);
 	b = check_bounds(map, map_width, map_height);
 	c = check_lines(map, map_width, map_height);
 
-	if (a == 1 && b == 1 && c == 1)
+	if (a == 1 && b == 1 && c == 1 && error == 1)
 		return 1;
 	else
 		return 0;

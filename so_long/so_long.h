@@ -47,6 +47,8 @@ typedef struct s_game{
 	int steps;
 	int total_keys;
 	int key_count;
+	int exit_posx;
+	int exit_posy;
 } t_game;
 
 void init_structs(t_wall *walls, t_key *keys, t_game *game);

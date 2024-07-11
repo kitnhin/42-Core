@@ -6,7 +6,7 @@ int main()
 	t_key	keys;
 	t_game	game;
 	char *steps;
-	int fd = open("./maps/map3.ber", O_RDWR);
+	int fd = open("./maps/no_sol.ber", O_RDWR);
 
 	if  (read(fd, NULL, 0) < 0)
 	{
