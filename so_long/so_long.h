@@ -65,6 +65,7 @@ int		height_map(char **map);
 int check_map(char **map, int map_width, int map_height);
 int width_map(char **map);
 void	map_setup(t_game *game, int fd);
+void locate_e(char **map, int *x, int *y);
 
 //player
 int handle_keypress(int keycode, t_game *game);

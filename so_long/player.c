@@ -42,6 +42,15 @@ void find_player_start(t_game *game)
 		game->player_pos_y = y;
 	}
 }
+void	print_steps(t_game *game)
+{
+	char *str;
+
+	str = ft_itoa(game->steps);
+	display_image(game, "./textures/walls/up_wall.xpm", 100, 0);
+	mlx_string_put(game->mlx, game->window, 130, 50, 0xFFFFFF, "steps: ");
+	mlx_string_put(game->mlx, game->window, 170, 50, 0xFFFFFF, str);
+}
 void	move_player(int keycode, t_game *game)
 {
 	char *floor = "./textures/floors/floor.xpm";
@@ -49,6 +58,7 @@ void	move_player(int keycode, t_game *game)
 	if(check_move_player(keycode, game) == 1)
 	{
 		game->steps++;
+		print_steps(game);
 		ft_printf("number of steps : %d\n", game->steps);
 		if (keycode == up)
 		{
@@ -85,6 +95,7 @@ int check_move_player(int keycode, t_game *game)
 {
     int x = game->player_pos_x;
     int y = game->player_pos_y;
+	char *open_exit = "./textures/others/open_exit.xpm";
 
     if (keycode == up)
         y--;
@@ -100,7 +111,11 @@ int check_move_player(int keycode, t_game *game)
 	if (game->map[y][x] == 'E' && game->key_count != game->total_keys)
 		return 0;
 	if (game->map[y][x] == 'C')
+	{
 		game->key_count++;
+		if (game->key_count == game->total_keys)
+			display_image(game, open_exit, game->exit_posx * 100, game->exit_posy * 100);
+	}
 	if (game->map[y][x] == 'E' && game->key_count == game->total_keys)
 	{
 		ft_printf("u won in here but unfortunately life says otherwise lol\n");
@@ -123,6 +138,23 @@ int handle_keypress(int keycode, t_game *game)
 		close_window(game);
 	return 0;
 }
+// void animate(char **frames, t_game *game)
+// {
+// 	 int i = 0;
+// 	 int j = 0;
+// 	 int a = 0;
+// 	 char *path;
+// 	 while(j < 1)
+// 	 {
+// 		path = frames[i];
+// 		display_image(vars, path, 0 , 0);
+// 		i = (i + 1)% 8;
+// 		while (a < 130000000)
+// 			a++;
+// 		a = 0;
+// 	 }
+// }
+
 void	print_player(t_game *game)
 {
 	int x = game->player_pos_x * 100;
