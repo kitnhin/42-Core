@@ -1,4 +1,4 @@
-SRCS = make_map.c player.c check_map.c 
+SRCS = make_map.c player.c check_map.c main.c keys.c
 
 OBJ = $(SRCS:.c=.o)
 

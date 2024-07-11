@@ -64,3 +64,14 @@ int check_map(char **map, int map_width, int map_height);
 int width_map(char **map);
 void	map_setup(t_game *game, int fd);
 
+//player
+int handle_keypress(int keycode, t_game *game);
+int close_window(t_game *game);
+void find_player_start(t_game *game);
+void	move_player(int keycode, t_game *game);
+int check_move_player(int keycode, t_game *game);
+void	print_player(t_game *game);
+
+// keys
+int total_keys(char **map);
+

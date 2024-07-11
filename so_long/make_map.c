@@ -22,6 +22,8 @@ void init_structs(t_wall *walls, t_key *keys, t_game *game)
 	game->steps = 0;
 	game->map_width = 0;
 	game->map_height = 0;
+	game->key_count = 0;
+	game->total_keys = 0;
 }
 
 char **readmap(int fd)
