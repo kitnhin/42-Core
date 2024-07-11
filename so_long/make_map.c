@@ -126,6 +126,19 @@ void	handle_image(t_wall *walls, t_game *game, int map_width, int map_height, t_
 	display_image(game, walls->down_right_wall, x,y);
 }
 
+void	map_setup(t_game *game, int fd)
+{
+	game->map = readmap(fd);
+	game->map_width = width_map(game->map);
+	game->map_height = height_map(game->map);
+	int map_error = check_map(game->map, game->map_width, game->map_height);
+	if (map_error == 0)
+	{
+		ft_printf("map error bruh\n");
+		exit(1);
+	}
+}
+
 // int	main(void)
 // {
 // 	t_wall	walls;

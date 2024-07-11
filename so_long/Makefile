@@ -1,4 +1,4 @@
-SRCS = make_map.c player.c check_map.c
+SRCS = make_map.c player.c check_map.c 
 
 OBJ = $(SRCS:.c=.o)
 
@@ -28,5 +28,11 @@ re : fclean all
 
 mapp : 
 	gcc make_map.c -lft -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
+
+testkey:
+	gcc test_key.c -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext
+
+key:
+	gcc keys.c -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
 
 .PHONY: all clean fclean re

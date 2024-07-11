@@ -6,6 +6,7 @@
 # define down 65364
 # define left 65361
 # define right 65363
+# define esc 65307
 
 
 typedef struct s_checks{
@@ -44,6 +45,8 @@ typedef struct s_game{
 	void *mlx;
 	void *window;
 	int steps;
+	int total_keys;
+	int key_count;
 } t_game;
 
 void init_structs(t_wall *walls, t_key *keys, t_game *game);
@@ -59,4 +62,5 @@ int		check_lines(char **map, int map_width, int map_height);
 int		height_map(char **map);
 int check_map(char **map, int map_width, int map_height);
 int width_map(char **map);
+void	map_setup(t_game *game, int fd);
 

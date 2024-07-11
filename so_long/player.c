@@ -83,21 +83,37 @@ void	move_player(int keycode, t_game *game)
 }
 int check_move_player(int keycode, t_game *game)
 {
-	if(keycode == up && game->map[game->player_pos_y - 1][game->player_pos_x] == '1')
-		return 0;
-	else if(keycode == down && game->map[game->player_pos_y + 1][game->player_pos_x] == '1')
-		return 0;
-	else if(keycode == right && game->map[game->player_pos_y][game->player_pos_x + 1] == '1')
-		return 0;
-	else if(keycode == left && game->map[game->player_pos_y][game->player_pos_x - 1] == '1')
-		return 0;
-	return 1;
-}
+    int x = game->player_pos_x;
+    int y = game->player_pos_y;
 
+    if (keycode == up)
+        y--;
+    else if (keycode == down)
+        y++;
+    else if (keycode == right)
+        x++;
+    else if (keycode == left)
+        x--;
+
+    if (game->map[y][x] == '1')
+        return 0;
+	if (game->map[y][x] == 'E')
+		return 0;
+
+    return 1;
+}
+int close_window(t_game *game)
+{
+	mlx_destroy_display(game->mlx);
+	exit(0);
+	return (0);
+}
 int handle_keypress(int keycode, t_game *game)
 {
 	if(keycode == up || keycode == down || keycode == right || keycode == left)
 		move_player(keycode, game);
+	else if(keycode == esc)
+		close_window(game);
 	return 0;
 }
 void	print_player(t_game *game)
@@ -107,13 +123,14 @@ void	print_player(t_game *game)
 	display_image(game, game->player_addr, x, y);
 }
 
+
 int main()
 {
 	t_wall	walls;
 	t_key	keys;
 	t_game	game;
 	char *steps;
-	int fd = open("./maps/map2.ber", O_RDWR);
+	int fd = open("./maps/map1.ber", O_RDWR);
 
 	if  (read(fd, NULL, 0) < 0)
 	{
@@ -121,21 +138,14 @@ int main()
 		return 0;
 	}
 	init_structs(&walls, &keys, &game);
-	game.map = readmap(fd);
-	game.map_width = width_map(game.map);
-	game.map_height = height_map(game.map);
-	int map_error = check_map(game.map, game.map_width, game.map_height);
-	if (map_error == 0)
-	{
-		ft_printf("map error bruh\n");
-		return (1);
-	}
+	map_setup(&game, fd);
 	game.mlx = mlx_init();
 	game.window = mlx_new_window(game.mlx, game.map_width * 100, game.map_height * 100, "Hello world!");
 	handle_image(&walls, &game, game.map_width, game.map_height, &keys);
 	find_player_start(&game);
 	print_player(&game);
 	mlx_hook(game.window, 2, 1L<<0, handle_keypress, &game);
+	mlx_hook(game.window, 17, 0, &close_window, &game);
 	mlx_loop(game.mlx);
 }
 
