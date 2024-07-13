@@ -26,6 +26,7 @@ void init_structs(t_wall *walls, t_key *keys, t_game *game)
 	game->total_keys = 0;
 	game->exit_posx = 0;
 	game->exit_posy = 0;
+	game->total_bats = 0;
 }
 
 int main()
@@ -34,7 +35,7 @@ int main()
 	t_key	keys;
 	t_game	game;
 	char *steps;
-	int fd = open("./maps/map3.ber", O_RDWR);
+	int fd = open("./maps/map1.ber", O_RDWR);
 
 	if  (read(fd, NULL, 0) < 0)
 	{
@@ -47,6 +48,7 @@ int main()
 	game.window = mlx_new_window(game.mlx, game.map_width * 100, game.map_height * 100, "Hello world!");
 	handle_image(&walls, &game, game.map_width, game.map_height, &keys);
 	game.total_keys = total_keys(game.map);
+	game.total_bats =  total_bats(game.map);
 	find_player_start(&game);
 	locate_e(game.map, &game.exit_posx, &game.exit_posy);
 	mlx_loop_hook(game.mlx, &ft_animate, &game);

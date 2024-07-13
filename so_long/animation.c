@@ -8,6 +8,7 @@ int ft_animate(t_game *game)
 	a = 0;
 	char_anim(game);
 	print_key(game);
+	print_bat(game);
 	while (a < 130000000)
 		a++;
 	a = 0;
@@ -66,32 +67,33 @@ void key_anim(t_game *game, t_key *keys)
 	a = 0;
 }
 
-// void key_anim(t_game *game, t_bat *bat)
-// {
-// 	static int i = 0;
-// 	 int j = 0;
-// 	 int a = 0;
-// 	 char *path;
+void bat_anim(t_game *game, t_bat *bat)
+{
+	static int i = 0;
+	 int j = 0;
+	 int a = 0;
+	 char *path;
 
-// 	char **frames = (char **)malloc(6 * sizeof(char *));
-//     frames[0] = "./textures/keys/key1.xpm";
-//     frames[1] = "./textures/keys/key2.xpm";
-//     frames[2] = "./textures/keys/key3.xpm";
-//     frames[3] = "./textures/keys/key4.xpm";
-//     frames[4] = "./textures/keys/key5.xpm";
-// 	frames[5] = "./textures/keys/key6.xpm";
+	char **frames = (char **)malloc(6 * sizeof(char *));
+    frames[0] = "./textures/bats/bat1.xpm";
+    frames[1] = "./textures/bats/bat2.xpm";
+    frames[2] = "./textures/bats/bat3.xpm";
+    frames[3] = "./textures/bats/bat4.xpm";
+    frames[4] = "./textures/bats/bat3.xpm";
+	frames[5] = "./textures/bats/bat2.xpm";
 
-// 	path = frames[i];
-// 	while(j < game->total_keys)
-// 	{
-// 		display_image(game, path, bat[j].x * 100 , bat[j].y * 100);
-// 		j++;
-// 	}
-// 	i = (i + 1)% 6;
-// 	// while (a < 13000000)
-// 	// 	a++;
-// 	a = 0;
-// }
+	path = frames[i];
+	while(j < game->total_bats)
+	{
+		if(game->map[bat[j].y + 1][bat[j].x + 1] == '0')
+		display_image(game, path, bat[j].x * 100 , bat[j].y * 100);
+		j++;
+	}
+	i = (i + 1)% 6;
+	// while (a < 13000000)
+	// 	a++;
+	a = 0;
+}
 
 
 

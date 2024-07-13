@@ -1,13 +1,36 @@
 #include "so_long.h"
 
-void	handle_bat(t_game *game)
+int total_bats(char **map)
+{
+	int i;
+	int j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (map[j])
+	{
+		while (map[j][i] != '\0')
+		{
+			if (map[j][i] == 'B')
+				count++;
+			i++;
+		}
+		j++;
+		i = 0;
+	}
+	return (count);
+}
+
+void	print_bat(t_game *game)
 {
 	int	x;
 	int	y;
 	int i;
 	t_bat *bat;
 
-	bat = malloc(sizeof(t_key) * game->total_keys);
+	bat = malloc(sizeof(t_key) * game->total_bats);
 	x = 0;
 	y = 0;
 	i = 0;

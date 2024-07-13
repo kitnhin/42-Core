@@ -123,6 +123,12 @@ int check_move_player(int keycode, t_game *game)
 		close_window(game);
 		exit(0);
 	}
+	if(game->map[y][x] == 'B')
+	{
+		ft_printf("how tf did u lose u actually suck\n");
+		close_window(game);
+		exit(0);
+	}
     return 1;
 }
 int close_window(t_game *game)

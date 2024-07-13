@@ -59,6 +59,7 @@ typedef struct s_game{
 	int key_count;
 	int exit_posx;
 	int exit_posy;
+	int total_bats;
 } t_game;
 
 void init_structs(t_wall *walls, t_key *keys, t_game *game);
@@ -89,6 +90,12 @@ void	print_player(t_game *game);
 int total_keys(char **map);
 void	print_key(t_game *game);
 
+//bat
+void	print_bat(t_game *game);
+int total_bats(char **map);
+
+//animation
 int ft_animate(t_game *game);
 void char_anim(t_game *game);
 void key_anim(t_game *game, t_key *keys);
+void bat_anim(t_game *game, t_bat *bat);
