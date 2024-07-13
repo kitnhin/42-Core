@@ -34,7 +34,7 @@ int main()
 	t_key	keys;
 	t_game	game;
 	char *steps;
-	int fd = open("./maps/map1.ber", O_RDWR);
+	int fd = open("./maps/map3.ber", O_RDWR);
 
 	if  (read(fd, NULL, 0) < 0)
 	{
@@ -48,8 +48,8 @@ int main()
 	handle_image(&walls, &game, game.map_width, game.map_height, &keys);
 	game.total_keys = total_keys(game.map);
 	find_player_start(&game);
-	print_player(&game);
 	locate_e(game.map, &game.exit_posx, &game.exit_posy);
+	mlx_loop_hook(game.mlx, &ft_animate, &game);
 	mlx_hook(game.window, 2, 1L<<0, handle_keypress, &game);
 	mlx_hook(game.window, 17, 0, &close_window, &game);
 	mlx_loop(game.mlx);

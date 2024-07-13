@@ -22,6 +22,40 @@ int total_keys(char **map)
 	}
 	return (count);
 }
+
+void	init_key_struct(t_key *key)
+{
+	key->x = 0;
+	key->y = 0;
+}
+void	print_key(t_game *game)
+{
+	int	x;
+	int	y;
+	int i;
+	t_key *keys;
+
+	keys = malloc(sizeof(t_key) * game->total_keys);
+	x = 0;
+	y = 0;
+	i = 0;
+	while(game->map[y])
+	{
+		if(game->map[y][x] == 'C')
+		{
+			keys[i].x = x;
+			keys[i].y = y;
+			i++;
+		}
+		if(game->map[y][x] == 0)
+		{
+			y++;
+			x = 0;
+		}
+		x++;
+	}
+	key_anim(game, keys);
+}
 // char **readmap(int fd)
 // {
 // 	char **res;

@@ -1,4 +1,4 @@
-SRCS = make_map.c player.c check_map.c main.c keys.c
+SRCS = make_map.c player.c check_map.c main.c keys.c animation.c 
 
 OBJ = $(SRCS:.c=.o)
 
@@ -8,7 +8,7 @@ CC = gcc
 
 SAN = -g -fsanitize=address
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 
 all : $(NAME)
 
@@ -16,7 +16,7 @@ $(NAME): $(OBJ)
 		@$(CC) $(OBJ) -lft -L. -lmlx -framework OpenGL -framework AppKit -o $(NAME) -L/usr/X11/lib -lX11 -lXext libft.a
 
 %.o: %.c
-		@gcc $(CFLAG) -c $< -o $(<:.c=.o)
+		@gcc $(CFLAGS) -c $< -o $(<:.c=.o)
 
 clean :
 		@rm -f ${OBJ}

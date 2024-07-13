@@ -7,7 +7,10 @@
 # define left 65361
 # define right 65363
 # define esc 65307
-
+# define wKey 119
+# define aKey 97
+# define sKey 115
+# define dKey 100
 
 typedef struct s_checks{
 	int p_count;
@@ -32,8 +35,15 @@ typedef struct s_wall{
 
 typedef struct s_key{
 	char *addr;
+	int x;
+	int y;
 } t_key;
 
+typedef struct s_bat{
+	char *addr;
+	int	x;
+	int	y;
+}t_bat;
 
 typedef struct s_game{
 	char **map;
@@ -77,4 +87,8 @@ void	print_player(t_game *game);
 
 // keys
 int total_keys(char **map);
+void	print_key(t_game *game);
 
+int ft_animate(t_game *game);
+void char_anim(t_game *game);
+void key_anim(t_game *game, t_key *keys);

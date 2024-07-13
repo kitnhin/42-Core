@@ -60,36 +60,36 @@ void	move_player(int keycode, t_game *game)
 		game->steps++;
 		print_steps(game);
 		ft_printf("number of steps : %d\n", game->steps);
-		if (keycode == up)
+		if (keycode == up || keycode == wKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
 			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_y -= 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
-		else if (keycode == down)
+		else if (keycode == down || keycode == sKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
 			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_y += 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
-		else if (keycode == right)
+		else if (keycode == right || keycode == dKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
 			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_x += 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
-		else if (keycode == left)
+		else if (keycode == left || keycode == aKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
 			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_x -= 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
+		display_image(game,"./textures/player/player.xpm", game->player_pos_x * 100, game->player_pos_y * 100);
 	}
-	print_player(game);
 }
 int check_move_player(int keycode, t_game *game)
 {
@@ -97,26 +97,27 @@ int check_move_player(int keycode, t_game *game)
     int y = game->player_pos_y;
 	char *open_exit = "./textures/others/open_exit.xpm";
 
-    if (keycode == up)
+    if (keycode == up || keycode == wKey)
         y--;
-    else if (keycode == down)
+    else if (keycode == down || keycode == sKey)
         y++;
-    else if (keycode == right)
+    else if (keycode == right || keycode == dKey)
         x++;
-    else if (keycode == left)
+    else if (keycode == left || keycode == aKey)
         x--;
 
     if (game->map[y][x] == '1')
         return 0;
-	if (game->map[y][x] == 'E' && game->key_count != game->total_keys)
+	if (game->map[y][x] == 'E' && game->total_keys != 0)
 		return 0;
 	if (game->map[y][x] == 'C')
 	{
-		game->key_count++;
-		if (game->key_count == game->total_keys)
+		game->total_keys--;
+		game->map[y][x] = '0';
+		if (game->total_keys == 0)
 			display_image(game, open_exit, game->exit_posx * 100, game->exit_posy * 100);
 	}
-	if (game->map[y][x] == 'E' && game->key_count == game->total_keys)
+	if (game->map[y][x] == 'E' && game->total_keys == 0)
 	{
 		ft_printf("u won in here but unfortunately life says otherwise lol\n");
 		close_window(game);
@@ -132,13 +133,14 @@ int close_window(t_game *game)
 }
 int handle_keypress(int keycode, t_game *game)
 {
-	if(keycode == up || keycode == down || keycode == right || keycode == left)
+	if(keycode == up || keycode == down || keycode == right || keycode == left ||
+		keycode == wKey || keycode == aKey || keycode == sKey || keycode == dKey)
 		move_player(keycode, game);
 	else if(keycode == esc)
 		close_window(game);
 	return 0;
 }
-// void animate(char **frames, t_game *game)
+// void animate(char **frames, t_game *game, int pos_x, int pos_y)
 // {
 // 	 int i = 0;
 // 	 int j = 0;
@@ -147,7 +149,7 @@ int handle_keypress(int keycode, t_game *game)
 // 	 while(j < 1)
 // 	 {
 // 		path = frames[i];
-// 		display_image(vars, path, 0 , 0);
+// 		display_image(game, path, pos_x , pos_y);
 // 		i = (i + 1)% 8;
 // 		while (a < 130000000)
 // 			a++;
@@ -155,12 +157,29 @@ int handle_keypress(int keycode, t_game *game)
 // 	 }
 // }
 
-void	print_player(t_game *game)
-{
-	int x = game->player_pos_x * 100;
-	int y = game->player_pos_y * 100;
-	display_image(game, game->player_addr, x, y);
-}
+// void	print_player(t_game *game)
+// {
+// 	int x = game->player_pos_x * 100;
+// 	int y = game->player_pos_y * 100;
+// 	int i = 0;
+// 	char **frames = (char **)malloc(8 * sizeof(char *));
+//     frames[0] = "./textures/player/player.xpm";
+//     frames[1] = "./textures/player/player3.xpm";
+//     frames[2] = "./textures/player/player2.xpm";
+//     frames[3] = "./textures/player/player3.xpm";
+//     frames[4] = "./textures/player/player.xpm";
+// 	frames[5] = "./textures/player/player5.xpm";
+// 	frames[6] = "./textures/player/player4.xpm";
+// 	frames[7] = "./textures/player/player5.xpm";
+// 	display_image(game, frames[i], x, y);
+// 	i = (i + 1) % 8;
+// }
+// void	print_player(t_game *game)
+// {
+// 	int x = game->player_pos_x * 100;
+// 	int y = game->player_pos_y * 100;
+// 	display_image(game, game->player_addr, x, y);
+// }
 
 
 // int	main(void)
