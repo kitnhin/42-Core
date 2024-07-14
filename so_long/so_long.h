@@ -93,9 +93,12 @@ void	print_key(t_game *game);
 //bat
 void	print_bat(t_game *game);
 int total_bats(char **map);
+void	move_bat_left(t_game *game);
+void	move_bat_right(t_game *game);
 
 //animation
 int ft_animate(t_game *game);
 void char_anim(t_game *game);
 void key_anim(t_game *game, t_key *keys);
 void bat_anim(t_game *game, t_bat *bat);
+int	move_bat(t_game *game);

@@ -34,8 +34,7 @@ int main()
 	t_wall	walls;
 	t_key	keys;
 	t_game	game;
-	char *steps;
-	int fd = open("./maps/map1.ber", O_RDWR);
+	int fd = open("./maps/map2.ber", O_RDWR);
 
 	if  (read(fd, NULL, 0) < 0)
 	{
@@ -55,4 +54,6 @@ int main()
 	mlx_hook(game.window, 2, 1L<<0, handle_keypress, &game);
 	mlx_hook(game.window, 17, 0, &close_window, &game);
 	mlx_loop(game.mlx);
+	mlx_destroy_window(game.mlx, game.window);
+	mlx_destroy_display(game.mlx);
 }

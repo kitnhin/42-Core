@@ -55,6 +55,7 @@ void	print_key(t_game *game)
 		x++;
 	}
 	key_anim(game, keys);
+	free(keys);
 }
 // char **readmap(int fd)
 // {

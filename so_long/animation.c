@@ -6,6 +6,7 @@ int ft_animate(t_game *game)
 	int	a;
 
 	a = 0;
+
 	char_anim(game);
 	print_key(game);
 	print_bat(game);
@@ -18,8 +19,6 @@ int ft_animate(t_game *game)
 void char_anim(t_game *game)
 {
 	static int i = 0;
-	 int j = 0;
-	 int a = 0;
 	 char *path;
 
 	char **frames = (char **)malloc(8 * sizeof(char *));
@@ -38,13 +37,13 @@ void char_anim(t_game *game)
 	// a = 0;
 	display_image(game, path, game->player_pos_x * 100 , game->player_pos_y * 100);
 	i = (i + 1)% 8;
+	free(frames);
 }
 
 void key_anim(t_game *game, t_key *keys)
 {
 	static int i = 0;
 	 int j = 0;
-	 int a = 0;
 	 char *path;
 
 	char **frames = (char **)malloc(6 * sizeof(char *));
@@ -62,16 +61,13 @@ void key_anim(t_game *game, t_key *keys)
 		j++;
 	}
 	i = (i + 1)% 6;
-	// while (a < 13000000)
-	// 	a++;
-	a = 0;
+	free(frames);
 }
 
 void bat_anim(t_game *game, t_bat *bat)
 {
 	static int i = 0;
 	 int j = 0;
-	 int a = 0;
 	 char *path;
 
 	char **frames = (char **)malloc(6 * sizeof(char *));
@@ -92,8 +88,26 @@ void bat_anim(t_game *game, t_bat *bat)
 	i = (i + 1)% 6;
 	// while (a < 13000000)
 	// 	a++;
-	a = 0;
+	free(frames);
 }
+
+// int	move_bat(t_game *game)
+// {
+// 	static int a;
+
+// 	a = 0;
+// 	if (a == 0)
+// 	{
+// 		move_bat_right(game);
+// 		a = 1;
+// 	}
+// 	else if (a == 1)
+// 	{
+// 		move_bat_left(game);
+// 		a = 0;
+// 	}
+// 	return 0;
+// }
 
 
 

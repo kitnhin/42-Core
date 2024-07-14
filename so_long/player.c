@@ -50,6 +50,7 @@ void	print_steps(t_game *game)
 	display_image(game, "./textures/walls/up_wall.xpm", 100, 0);
 	mlx_string_put(game->mlx, game->window, 130, 50, 0xFFFFFF, "steps: ");
 	mlx_string_put(game->mlx, game->window, 170, 50, 0xFFFFFF, str);
+	free(str);
 }
 void	move_player(int keycode, t_game *game)
 {
@@ -134,7 +135,6 @@ int check_move_player(int keycode, t_game *game)
 int close_window(t_game *game)
 {
 	mlx_destroy_display(game->mlx);
-	exit(0);
 	return (0);
 }
 int handle_keypress(int keycode, t_game *game)

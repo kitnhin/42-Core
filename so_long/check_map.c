@@ -78,7 +78,7 @@ int check_lines(char **map, int map_width, int map_height)
 
 	i = 0;
 	j = 0;
-	while(map[j])
+	while(j < map_height)
 	{
 		while(map[j][i] && map[j][i] != '\n')
 			i++;
@@ -104,7 +104,7 @@ int check_map_ply_col_exit(char **map, int map_width, int map_height)
 	e_count = 0;
 	c_count = 0;
 
-	while(map[j])
+	while(j < map_height)
 	{
 		if (map[j][i] == 'P')
 			p_count++;
@@ -112,7 +112,7 @@ int check_map_ply_col_exit(char **map, int map_width, int map_height)
 			e_count++;
 		if (map[j][i] == 'C')
 			c_count++;
-		if(map[j][i] == '\0')
+		if(i == map_width)
 		{
 			j++;
 			i = 0;
@@ -188,6 +188,7 @@ int check_map(char **map, int map_width, int map_height)
 	int error;
 	int col = 0;
 	int row = 0;
+	int i = 0;
 	error = 0;
 	char **map_copy = copy_map(map, map_width, map_height);
 	locate_e(map, &col, &row);
@@ -196,6 +197,12 @@ int check_map(char **map, int map_width, int map_height)
 	b = check_bounds(map, map_width, map_height);
 	c = check_lines(map, map_width, map_height);
 
+	while (i < map_height)
+    {
+		free(map_copy[i]);
+		i++;
+	}
+	free(map_copy);
 	if (a == 1 && b == 1 && c == 1 && error == 1)
 		return 1;
 	else

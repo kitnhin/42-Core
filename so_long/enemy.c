@@ -50,4 +50,54 @@ void	print_bat(t_game *game)
 		x++;
 	}
 	bat_anim(game, bat);
+	free(bat);
 }
+
+// void	move_bat_right(t_game *game)
+// {
+// 	int x;
+// 	int y;
+
+// 	x = 0;
+// 	y = 0;
+// 	while(game->map[y])
+// 	{
+// 		if(game->map[y][x] == 'B')
+// 		{
+// 			game->map[y][x] = '0';
+// 			x++;
+// 			game->map[y][x] = 'B';
+// 		}
+// 		if(game->map[y][x] == 0)
+// 		{
+// 			y++;
+// 			x = 0;
+// 		}
+// 		x++;
+// 	}
+// }
+
+// void	move_bat_left(t_game *game)
+// {
+// 	int x;
+// 	int y;
+
+// 	x = 0;
+// 	y = 0;
+// 	while(game->map[y])
+// 	{
+// 		if(game->map[y][x] == 'B')
+// 		{
+// 			game->map[y][x] = '0';
+// 			x--;
+// 			game->map[y][x] = 'B';
+// 			x++;
+// 		}
+// 		if(game->map[y][x] == 0)
+// 		{
+// 			y++;
+// 			x = 0;
+// 		}
+// 		x++;
+// 	}
+// }
