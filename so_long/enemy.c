@@ -27,21 +27,15 @@ void	print_bat(t_game *game)
 {
 	int	x;
 	int	y;
-	int i;
 	t_bat *bat;
 
 	bat = malloc(sizeof(t_key) * game->total_bats);
 	x = 0;
 	y = 0;
-	i = 0;
 	while(game->map[y])
 	{
 		if(game->map[y][x] == 'B')
-		{
-			bat[i].x = x;
-			bat[i].y = y;
-			i++;
-		}
+			bat_anim(game, x, y);
 		if(game->map[y][x] == 0)
 		{
 			y++;
@@ -49,7 +43,6 @@ void	print_bat(t_game *game)
 		}
 		x++;
 	}
-	bat_anim(game, bat);
 	free(bat);
 }
 

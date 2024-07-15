@@ -1,4 +1,4 @@
-SRCS = make_map.c player.c check_map.c main.c keys.c animation.c enemy.c
+SRCS = make_map.c player.c check_map.c main.c keys.c animation.c enemy.c inits.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -6,7 +6,7 @@ NAME = so_long
 
 CC = gcc
 
-SAN = -fsanitize=address -g
+SAN = -g -fsanitize=address
 
 CFLAGS = -Wall -Werror -Wextra
 
@@ -37,5 +37,8 @@ testkey:
 
 key:
 	gcc keys.c -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
+
+pics:
+	gcc display_pics.c -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
 
 .PHONY: all clean fclean re leak

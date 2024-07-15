@@ -54,38 +54,41 @@ void	print_steps(t_game *game)
 }
 void	move_player(int keycode, t_game *game)
 {
-	char *floor = "./textures/floors/floor.xpm";
+	// char *floor = "./textures/floors/floor.xpm";
 	
 	if(check_move_player(keycode, game) == 1)
 	{
 		game->steps++;
 		print_steps(game);
 		ft_printf("number of steps : %d\n", game->steps);
+		handle_image(game);
+		if (game->total_keys == 0)
+			display_image(game, "./textures/others/open_exit.xpm", game->exit_posx * 100, game->exit_posy * 100);
 		if (keycode == up || keycode == wKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
+			// display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_y -= 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
 		else if (keycode == down || keycode == sKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
+			// display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_y += 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
 		else if (keycode == right || keycode == dKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
+			// display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_x += 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
 		else if (keycode == left || keycode == aKey)
 		{
 			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
+			// display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
 			game->player_pos_x -= 1;
 			game->map[game->player_pos_y][game->player_pos_x] = 'P';
 		}
@@ -96,7 +99,6 @@ int check_move_player(int keycode, t_game *game)
 {
     int x = game->player_pos_x;
     int y = game->player_pos_y;
-	char *open_exit = "./textures/others/open_exit.xpm";
 
     if (keycode == up || keycode == wKey)
         y--;
@@ -115,8 +117,6 @@ int check_move_player(int keycode, t_game *game)
 	{
 		game->total_keys--;
 		game->map[y][x] = '0';
-		if (game->total_keys == 0)
-			display_image(game, open_exit, game->exit_posx * 100, game->exit_posy * 100);
 	}
 	if (game->map[y][x] == 'E' && game->total_keys == 0)
 	{

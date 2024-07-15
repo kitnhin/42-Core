@@ -62,20 +62,23 @@ typedef struct s_game{
 	int total_bats;
 } t_game;
 
+// main
 void init_structs(t_wall *walls, t_key *keys, t_game *game);
-char **readmap(int fd);
 void	display_image(t_game *game, char *img_path, int x, int y);
+
+//make_map
+char **readmap(int fd);
 void	put_top_walls(int x, char **map, t_wall *walls, int map_width);
-void    put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width, t_key *keys);
+void    put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width);
 void	make_map(void);
-void	handle_image(t_wall *walls, t_game *game, int map_width, int map_height, t_key *keys);
-void	print_player(t_game *game);
-int		check_move_player(int keycode, t_game *game);
+void	handle_image(t_game *game);
+
+//check_map
 int		check_lines(char **map, int map_width, int map_height); 
 int		height_map(char **map);
 int check_map(char **map, int map_width, int map_height);
 int width_map(char **map);
-void	map_setup(t_game *game, int fd);
+void	map_setup(t_game *game, char *file);
 void locate_e(char **map, int *x, int *y);
 
 //player
@@ -100,5 +103,8 @@ void	move_bat_right(t_game *game);
 int ft_animate(t_game *game);
 void char_anim(t_game *game);
 void key_anim(t_game *game, t_key *keys);
-void bat_anim(t_game *game, t_bat *bat);
+void bat_anim(t_game *game, int x, int y);
 int	move_bat(t_game *game);
+
+//inits
+void init_walls(t_wall *walls);

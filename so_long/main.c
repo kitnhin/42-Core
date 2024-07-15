@@ -1,59 +1,50 @@
 #include "so_long.h"
 
-void init_structs(t_wall *walls, t_key *keys, t_game *game)
+void	display_image(t_game *game, char *img_path, int x, int y)
 {
-    walls->top_left_wall = "./textures/walls/top_left_wall.xpm";
-    walls->up_wall = "./textures/walls/up_wall.xpm";
-    walls->down_wall = "./textures/walls/down_wall.xpm";
-    walls->right_wall = "./textures/walls/right_wall.xpm";
-    walls->up_left_wall = "./textures/walls/up_left_wall.xpm";
-    walls->up_right_wall = "./textures/walls/up_right_wall.xpm";
-    walls->left_wall = "./textures/walls/left_wall.xpm";
-    walls->floor = "./textures/floors/floor.xpm";
-    walls->cross_wall = "./textures/walls/cross_wall.xpm";
-    walls->down_left_wall = "./textures/walls/down_left_wall.xpm";
-    walls->down_right_wall = "./textures/walls/down_right_wall.xpm";
-	walls->exit = "./textures/walls/exit.xpm";
-	keys->addr ="./textures/others/Key.xpm";
-	game->player_addr = "./textures/others/Player_v2.xpm";
-	game->player_pos_x = 0;
-	game->player_pos_y = 0;
-	game->map = NULL;
-	game->steps = 0;
-	game->map_width = 0;
-	game->map_height = 0;
-	game->key_count = 0;
-	game->total_keys = 0;
-	game->exit_posx = 0;
-	game->exit_posy = 0;
-	game->total_bats = 0;
+	void *img;
+	int img_width;
+	int img_height;
+
+	img = mlx_xpm_file_to_image(game->mlx, img_path, &img_width, &img_height);
+	if (img == NULL)
+	{
+		mlx_string_put(game->mlx, game->window, 140, 100, 0xFFFFFF, "invalid");
+		return;
+	}
+	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
+	mlx_destroy_image(game->mlx, img);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	t_wall	walls;
 	t_key	keys;
 	t_game	game;
-	int fd = open("./maps/map2.ber", O_RDWR);
-
-	if  (read(fd, NULL, 0) < 0)
+	// char *path = "./maps/map1.ber";
+	// int fd = open("./maps/map1.ber", O_RDWR);
+	if (argc == 2)
 	{
-		ft_printf("cant read file lol\n");
+		init_structs(&walls, &keys, &game);
+		map_setup(&game, argv[1]);
+		game.mlx = mlx_init();
+		game.window = mlx_new_window(game.mlx, game.map_width * 100, game.map_height * 100, "Hello world!");
+		handle_image(&game);
+		game.total_keys = total_keys(game.map);
+		game.total_bats =  total_bats(game.map);
+		find_player_start(&game);
+		locate_e(game.map, &game.exit_posx, &game.exit_posy);
+		mlx_loop_hook(game.mlx, &ft_animate, &game);
+		mlx_hook(game.window, 2, 1L<<0, handle_keypress, &game);
+		mlx_hook(game.window, 17, 0, &close_window, &game);
+		mlx_loop(game.mlx);
+		mlx_destroy_window(game.mlx, game.window);
+		mlx_destroy_display(game.mlx);
 		return 0;
 	}
-	init_structs(&walls, &keys, &game);
-	map_setup(&game, fd);
-	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, game.map_width * 100, game.map_height * 100, "Hello world!");
-	handle_image(&walls, &game, game.map_width, game.map_height, &keys);
-	game.total_keys = total_keys(game.map);
-	game.total_bats =  total_bats(game.map);
-	find_player_start(&game);
-	locate_e(game.map, &game.exit_posx, &game.exit_posy);
-	mlx_loop_hook(game.mlx, &ft_animate, &game);
-	mlx_hook(game.window, 2, 1L<<0, handle_keypress, &game);
-	mlx_hook(game.window, 17, 0, &close_window, &game);
-	mlx_loop(game.mlx);
-	mlx_destroy_window(game.mlx, game.window);
-	mlx_destroy_display(game.mlx);
+	else
+	{
+		ft_printf("error, follow the syntax ./so_long ./maps/map\n");
+		return 0;
+	}
 }

@@ -42,21 +42,6 @@ char **readmap(int fd)
 	return res;
 }
 
-void	display_image(t_game *game, char *img_path, int x, int y)
-{
-	void *img;
-	int img_width;
-	int img_height;
-
-	img = mlx_xpm_file_to_image(game->mlx, img_path, &img_width, &img_height);
-	if (img == NULL)
-	{
-		mlx_string_put(game->mlx, game->window, 140, 100, 0xFFFFFF, "invalid");
-		return;
-	}
-	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
-}
-
 void	put_top_bottom_walls(int y, t_game *game, t_wall *walls, int map_width)
 {
 	int i = 0;
@@ -71,16 +56,16 @@ void	put_top_bottom_walls(int y, t_game *game, t_wall *walls, int map_width)
 		i++;
 	}
 }
-void	put_others(char c, int x, int y, t_game *game, t_wall *walls, t_key *keys)
+void	put_others(char c, int x, int y, t_game *game, t_wall *walls)
 {
 	if (c == '1')
 		display_image(game, walls->cross_wall, x, y);
 	if (c == 'C')
-		display_image(game, keys->addr, x, y);
+		display_image(game, "textures/others/Key.xpm", x, y);
 	if (c == 'E')
 		display_image(game, walls->exit, x, y);
 }
-void	put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width, t_key *keys)
+void	put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width)
 {
 	int x = 0;
 	int i = 0;
@@ -94,7 +79,7 @@ void	put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width, t
 		while(i < map_width - 1)
 		{
 			if(game->map[j][i] != '0' && game->map[j][i] != 'P')
-				put_others(game->map[j][i], x, y, game, walls, keys);
+				put_others(game->map[j][i], x, y, game, walls);
 			else
 				display_image(game, walls->floor, x, y);
 			x += 100;
@@ -109,27 +94,40 @@ void	put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width, t
 }
 
 
-void	handle_image(t_wall *walls, t_game *game, int map_width, int map_height, t_key *keys)
+void	handle_image(t_game *game)
 {
 	int x = 0;
 	int y = 0;
+	t_wall walls;
 
-	display_image(game, walls->up_left_wall, x , y);
+	init_walls(&walls);
+	display_image(game, walls.up_left_wall, x , y);
 	x += 100;
-	put_top_bottom_walls(y, game, walls, map_width);
-	x = (map_width - 1) * 100;
-	display_image(game, walls->up_right_wall, x, y);
-	put_mid_walls(game, walls, map_height, map_width, keys);
-	y = (map_height - 1) * 100;
+	put_top_bottom_walls(y, game, &walls, game->map_width);
+	x = (game->map_width - 1) * 100;
+	display_image(game, walls.up_right_wall, x, y);
+	put_mid_walls(game, &walls, game->map_height, game->map_width);
+	y = (game->map_height - 1) * 100;
 	x = 0;
-	display_image(game, walls->down_left_wall, x, y);
-	put_top_bottom_walls(y, game, walls, map_width);
-	x = (map_width - 1) * 100;
-	display_image(game, walls->down_right_wall, x,y);
+	display_image(game, walls.down_left_wall, x, y);
+	put_top_bottom_walls(y, game, &walls, game->map_width);
+	x = (game->map_width - 1) * 100;
+	display_image(game, walls.down_right_wall, x,y);
 }
 
-void	map_setup(t_game *game, int fd)
+void	map_setup(t_game *game, char *file)
 {
+	int fd;
+	t_wall walls;
+	t_key keys;
+	t_game test;
+	init_structs(&walls, &keys, &test);
+	fd = open(file, O_RDWR);
+	if  (read(fd, NULL, 0) < 0)
+	{
+		ft_printf("cant read file lol\n");
+		exit(1);
+	}
 	game->map = readmap(fd);
 	game->map_width = width_map(game->map);
 	game->map_height = height_map(game->map);
@@ -139,6 +137,7 @@ void	map_setup(t_game *game, int fd)
 		ft_printf("map error bruh\n");
 		exit(1);
 	}
+	// handle_image(&walls, game, game->map_width, game->map_height, &keys);
 }
 
 // int	main(void)
