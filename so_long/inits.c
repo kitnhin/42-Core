@@ -27,6 +27,7 @@ void init_structs(t_wall *walls, t_key *keys, t_game *game)
 	game->exit_posx = 0;
 	game->exit_posy = 0;
 	game->total_bats = 0;
+	game->frames = 0;
 }
 
 

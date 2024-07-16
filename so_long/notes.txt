@@ -1,1 +1,8 @@
 gcc make_map.c -lft -L. -lmlx -framework OpenGL -framework AppKit -L/usr/X11/lib -lX11 -lXext libft.a
+
+when compile on mac:
+
+$(CC) $(OBJ) -lft -L. -lmlx -framework OpenGL -framework AppKit -Imlx -o $(NAME) libft.a
+change header to <mlx.h>
+change keybinds
+

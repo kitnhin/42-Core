@@ -36,6 +36,7 @@ char **readmap(int fd)
 	if (res[0] == NULL)
 	{
 		ft_printf("file contains nth bruh\n");
+		free(res);
 		exit(1);
 	}
 	res[j] = NULL; 

@@ -15,6 +15,11 @@ void	display_image(t_game *game, char *img_path, int x, int y)
 	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
 	mlx_destroy_image(game->mlx, img);
 }
+int close_window(t_game *game)
+{
+	mlx_destroy_window(game->mlx, game->window);
+	return (0);
+}
 
 int main(int argc, char *argv[])
 {

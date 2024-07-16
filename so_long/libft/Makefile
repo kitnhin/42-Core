@@ -6,7 +6,7 @@
 #    By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 20:06:11 by cheelim           #+#    #+#              #
-#    Updated: 2024/07/08 18:18:43 by ethanlim         ###   ########.fr        #
+#    Updated: 2024/07/16 22:10:02 by ethanlim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,16 +43,16 @@ CFLAGS = -Wall -Werror -Wextra
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
-	$(CC) $(cflags) -c $< -o $@
+	@$(CC) $(cflags) -c $< -o $@
 
 clean :
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re : fclean $(NAME)
 

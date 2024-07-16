@@ -1,6 +1,7 @@
 #include "mlx.h"
 #include <stdio.h>
 #include "libft/libft.h"
+// #include <mlx.h>
 
 # define up 65362
 # define down 65364
@@ -12,10 +13,23 @@
 # define sKey 115
 # define dKey 100
 
+// # define up 126
+// # define down 125
+// # define left 123
+// # define right 124
+// # define esc 53
+// # define wKey 13
+// # define aKey 0
+// # define sKey 1
+// # define dKey 2
+
 typedef struct s_checks{
 	int p_count;
 	int e_count;
 	int c_count;
+	char **map;
+	int width_map;
+	int height_map;
 }	t_checks;
 
 typedef struct s_wall{
@@ -60,11 +74,12 @@ typedef struct s_game{
 	int exit_posx;
 	int exit_posy;
 	int total_bats;
+	int frames;
 } t_game;
 
 // main
-void init_structs(t_wall *walls, t_key *keys, t_game *game);
 void	display_image(t_game *game, char *img_path, int x, int y);
+int	close_window(t_game *game);
 
 //make_map
 char **readmap(int fd);
@@ -74,16 +89,20 @@ void	make_map(void);
 void	handle_image(t_game *game);
 
 //check_map
-int		check_lines(char **map, int map_width, int map_height); 
-int		height_map(char **map);
-int check_map(char **map, int map_width, int map_height);
+void	init_check(t_checks *checks);
 int width_map(char **map);
+int		height_map(char **map);
+int	check_bounds(char **map, int map_width, int map_height);
+int		check_lines(char **map, int map_width, int map_height);
+int	check_map_ply_col_exit(char **map, int map_width, int map_height);
+
+//check_map2
+int check_map(char **map, int map_width, int map_height);
 void	map_setup(t_game *game, char *file);
 void locate_e(char **map, int *x, int *y);
 
 //player
 int handle_keypress(int keycode, t_game *game);
-int close_window(t_game *game);
 void find_player_start(t_game *game);
 void	move_player(int keycode, t_game *game);
 int check_move_player(int keycode, t_game *game);
@@ -104,7 +123,9 @@ int ft_animate(t_game *game);
 void char_anim(t_game *game);
 void key_anim(t_game *game, t_key *keys);
 void bat_anim(t_game *game, int x, int y);
-int	move_bat(t_game *game);
+// int	move_bat(t_game *game);
 
 //inits
 void init_walls(t_wall *walls);
+void init_structs(t_wall *walls, t_key *keys, t_game *game);
+
