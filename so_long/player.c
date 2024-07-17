@@ -1,32 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 20:52:06 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/17 21:42:56 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-// void init_structs(t_wall *walls, t_key *keys, t_game *game)
-// {
-//     walls->top_left_wall = "./textures/walls/top_left_wall.xpm";
-//     walls->up_wall = "./textures/walls/up_wall.xpm";
-//     walls->down_wall = "./textures/walls/down_wall.xpm";
-//     walls->right_wall = "./textures/walls/right_wall.xpm";
-//     walls->up_left_wall = "./textures/walls/up_left_wall.xpm";
-//     walls->up_right_wall = "./textures/walls/up_right_wall.xpm";
-//     walls->left_wall = "./textures/walls/left_wall.xpm";
-//     walls->floor = "./textures/floors/floor.xpm";
-//     walls->cross_wall = "./textures/walls/cross_wall.xpm";
-//     walls->down_left_wall = "./textures/walls/down_left_wall.xpm";
-//     walls->down_right_wall = "./textures/walls/down_right_wall.xpm";
-// 	walls->exit = "./textures/walls/exit.xpm";
-// 	keys->addr ="./textures/others/Key.xpm";
-// 	game->player_addr = "./textures/others/Player_v2.xpm";
-// 	game->player_pos_x = 0;
-// 	game->player_pos_y = 0;
-// 	game->map = NULL;
-// 	game->steps = 0;
-// 	game->map_width = 0;
-// 	game->map_height = 0;
-// }
-void find_player_start(t_game *game)
+void	find_player_start(t_game *game)
 {
-	int x = 0;
-	int y = 0;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
 	while (game->map[y] != NULL && game->map[y][x] != 'P')
 	{
 		x++;
@@ -42,9 +34,10 @@ void find_player_start(t_game *game)
 		game->player_pos_y = y;
 	}
 }
+
 void	print_steps(t_game *game)
 {
-	char *str;
+	char	*str;
 
 	str = ft_itoa(game->steps);
 	display_image(game, "./textures/walls/up_wall.xpm", 100, 0);
@@ -52,95 +45,74 @@ void	print_steps(t_game *game)
 	mlx_string_put(game->mlx, game->window, 170, 50, 0xFFFFFF, str);
 	free(str);
 }
+
+void	move_player_ver(int keycode, t_game *game)
+{
+	char	*floor;
+
+	floor = "./textures/floors/floor.xpm";
+	if (keycode == UP || keycode == WKEY)
+	{
+		game->map[game->player_pos_y][game->player_pos_x] = '0';
+		display_image(game, floor, game->player_pos_x * 100,
+			game->player_pos_y * 100);
+		game->player_pos_y -= 1;
+		game->map[game->player_pos_y][game->player_pos_x] = 'P';
+	}
+	else if (keycode == DOWN || keycode == SKEY)
+	{
+		game->map[game->player_pos_y][game->player_pos_x] = '0';
+		display_image(game, floor, game->player_pos_x * 100,
+			game->player_pos_y * 100);
+		game->player_pos_y += 1;
+		game->map[game->player_pos_y][game->player_pos_x] = 'P';
+	}
+}
+
+void	move_player_hori(int keycode, t_game *game)
+{
+	char	*floor;
+
+	floor = "./textures/floors/floor.xpm";
+	if (keycode == RIGHT || keycode == DKEY)
+	{
+		game->map[game->player_pos_y][game->player_pos_x] = '0';
+		display_image(game, floor, game->player_pos_x * 100,
+			game->player_pos_y * 100);
+		game->player_pos_x += 1;
+		game->map[game->player_pos_y][game->player_pos_x] = 'P';
+	}
+	if (keycode == LEFT || keycode == AKEY)
+	{
+		game->map[game->player_pos_y][game->player_pos_x] = '0';
+		display_image(game, floor, game->player_pos_x * 100,
+			game->player_pos_y * 100);
+		game->player_pos_x -= 1;
+		game->map[game->player_pos_y][game->player_pos_x] = 'P';
+	}
+}
+
 void	move_player(int keycode, t_game *game)
 {
-	char *floor = "./textures/floors/floor.xpm";
-	
-	if(check_move_player(keycode, game) == 1)
+	if (check_move_player(keycode, game) == 1)
 	{
 		game->steps++;
 		print_steps(game);
 		ft_printf("number of steps : %d\n", game->steps);
 		if (game->total_keys == 0)
-			display_image(game, "./textures/others/open_exit.xpm", game->exit_posx * 100, game->exit_posy * 100);
-		if (keycode == up || keycode == wKey)
-		{
-			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
-			game->player_pos_y -= 1;
-			game->map[game->player_pos_y][game->player_pos_x] = 'P';
-		}
-		else if (keycode == down || keycode == sKey)
-		{
-			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
-			game->player_pos_y += 1;
-			game->map[game->player_pos_y][game->player_pos_x] = 'P';
-		}
-		else if (keycode == right || keycode == dKey)
-		{
-			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
-			game->player_pos_x += 1;
-			game->map[game->player_pos_y][game->player_pos_x] = 'P';
-		}
-		else if (keycode == left || keycode == aKey)
-		{
-			game->map[game->player_pos_y][game->player_pos_x] = '0';
-			display_image(game, floor, game->player_pos_x * 100, game->player_pos_y * 100);
-			game->player_pos_x -= 1;
-			game->map[game->player_pos_y][game->player_pos_x] = 'P';
-		}
-		display_image(game,"./textures/player/player.xpm", game->player_pos_x * 100, game->player_pos_y * 100);
+			display_image(game, "./textures/others/open_exit.xpm",
+				game->exit_posx * 100, game->exit_posy * 100);
+		if (keycode == UP || keycode == WKEY
+			|| keycode == DOWN || keycode == SKEY)
+			move_player_ver(keycode, game);
+		else if (keycode == RIGHT || keycode == DKEY
+			|| keycode == LEFT || keycode == AKEY)
+			move_player_hori(keycode, game);
+		display_image(game, "./textures/player/player.xpm",
+			game->player_pos_x * 100, game->player_pos_y * 100);
 	}
 }
-int check_move_player(int keycode, t_game *game)
-{
-    int x = game->player_pos_x;
-    int y = game->player_pos_y;
 
-    if (keycode == up || keycode == wKey)
-        y--;
-    else if (keycode == down || keycode == sKey)
-        y++;
-    else if (keycode == right || keycode == dKey)
-        x++;
-    else if (keycode == left || keycode == aKey)
-        x--;
-
-    if (game->map[y][x] == '1')
-        return 0;
-	if (game->map[y][x] == 'E' && game->total_keys != 0)
-		return 0;
-	if (game->map[y][x] == 'C')
-	{
-		game->total_keys--;
-		game->map[y][x] = '0';
-	}
-	if (game->map[y][x] == 'E' && game->total_keys == 0)
-	{
-		ft_printf("u won in here but unfortunately life says otherwise lol\n");
-		close_window(game);
-		exit(0);
-	}
-	if(game->map[y][x] == 'B')
-	{
-		ft_printf("how tf did u lose u actually suck\n");
-		close_window(game);
-		exit(0);
-	}
-    return 1;
-}
-
-int handle_keypress(int keycode, t_game *game)
-{
-	if(keycode == up || keycode == down || keycode == right || keycode == left ||
-		keycode == wKey || keycode == aKey || keycode == sKey || keycode == dKey)
-		move_player(keycode, game);
-	else if(keycode == esc)
-		close_window(game);
-	return 0;
-}
 // void animate(char **frames, t_game *game, int pos_x, int pos_y)
 // {
 // 	 int i = 0;
@@ -181,7 +153,6 @@ int handle_keypress(int keycode, t_game *game)
 // 	int y = game->player_pos_y * 100;
 // 	display_image(game, game->player_addr, x, y);
 // }
-
 
 // int	main(void)
 // {

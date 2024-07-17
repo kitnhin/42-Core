@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 23:50:26 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/07/17 00:24:44 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:20:30 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,35 @@ int	check_map(char **map, int map_width, int map_height)
 		return (1);
 	else
 		return (0);
+}
+
+int	check_map_ply_col_exit(char **map, int map_width, int map_height)
+{
+	int			i;
+	int			j;
+	t_checks	checks;
+
+	i = 0;
+	j = 0;
+	init_check(&checks);
+	while (j < map_height)
+	{
+		if (map[j][i] == 'P')
+			checks.p_count++;
+		if (map[j][i] == 'E')
+			checks.e_count++;
+		if (map[j][i] == 'C')
+			checks.c_count++;
+		if (i == map_width)
+		{
+			j++;
+			i = 0;
+		}
+		i++;
+	}
+	if (checks.p_count == 1 && checks.e_count == 1 && checks.c_count > 0)
+		return (1);
+	return (0);
 }
 
 // char **readmap(int fd)

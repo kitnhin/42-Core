@@ -1,6 +1,7 @@
 SRCS = \
 make_map.c player.c check_map.c main.c keys.c \
-animation.c enemy.c inits.c check_map2.c
+animation.c enemy.c inits.c check_map2.c \
+player2.c
 
 OBJ = $(SRCS:.c=.o)
 

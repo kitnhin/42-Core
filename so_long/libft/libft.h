@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:27:59 by cheelim           #+#    #+#             */
-/*   Updated: 2024/07/08 17:58:23 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:49:15 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-int	printint(int n);
-int	printchar(int c);
-int	printstr(char *str);
-int	ft_printf(const char *str, ...);
-int	printui(unsigned int n);
-int	printhex(unsigned int n, char *base);
-int	printptr(void *ptr, char *base);
+int		printint(int n);
+int		printchar(int c);
+int		printstr(char *str);
+int		ft_printf(const char *str, ...);
+int		printui(unsigned int n);
+int		printhex(unsigned int n, char *base);
+int		printptr(void *ptr, char *base);
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(char const *str);
