@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 12:56:21 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/17 12:57:56 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int total_bats(char **map)
+int	total_bats(char **map)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
 	j = 0;
@@ -25,18 +37,18 @@ int total_bats(char **map)
 
 void	print_bat(t_game *game)
 {
-	int	x;
-	int	y;
-	t_bat *bat;
+	int		x;
+	int		y;
+	t_bat	*bat;
 
 	bat = malloc(sizeof(t_key) * game->total_bats);
 	x = 0;
 	y = 0;
-	while(game->map[y])
+	while (game->map[y])
 	{
-		if(game->map[y][x] == 'B')
+		if (game->map[y][x] == 'B')
 			bat_anim(game, x, y);
-		if(game->map[y][x] == 0)
+		if (game->map[y][x] == 0)
 		{
 			y++;
 			x = 0;

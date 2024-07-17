@@ -1,55 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 15:02:22 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/17 17:00:00 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-// void init_structs(t_wall *walls, t_key *keys, t_game *game)
-// {
-//     walls->top_left_wall = "./textures/walls/top_left_wall.xpm";
-//     walls->up_wall = "./textures/walls/up_wall.xpm";
-//     walls->down_wall = "./textures/walls/down_wall.xpm";
-//     walls->right_wall = "./textures/walls/right_wall.xpm";
-//     walls->up_left_wall = "./textures/walls/up_left_wall.xpm";
-//     walls->up_right_wall = "./textures/walls/up_right_wall.xpm";
-//     walls->left_wall = "./textures/walls/left_wall.xpm";
-//     walls->floor = "./textures/floors/floor.xpm";
-//     walls->cross_wall = "./textures/walls/cross_wall.xpm";
-//     walls->down_left_wall = "./textures/walls/down_left_wall.xpm";
-//     walls->down_right_wall = "./textures/walls/down_right_wall.xpm";
-// 	walls->exit = "./textures/walls/exit.xpm";
-// 	keys->addr ="./textures/others/Key.xpm";
-// 	game->player_addr = "./textures/others/Player_v2.xpm";
-// 	game->player_pos_x = 0;
-// 	game->player_pos_y = 0;
-// 	game->map = NULL;
-// 	game->steps = 0;
-// 	game->map_width = 0;
-// 	game->map_height = 0;
-// 	game->key_count = 0;
-// 	game->total_keys = 0;
-// }
-
-char **readmap(int fd)
+char	**readmap(int fd)
 {
-	char **res;
-	int j = 0;
-	res = (char **)malloc(sizeof(char *) * 100); 
-	while ((res[j] = get_next_line(fd)) != NULL)
-		j++;
+	char	**res;
+	int		j;
+
+	j = 0;
+	res = (char **)malloc(sizeof(char *) * 10000);
+	if (!res)
+		return (NULL);
+	res[0] = get_next_line(fd);
+	while (res[j++] != NULL)
+		res[j] = get_next_line(fd);
 	if (res[0] == NULL)
 	{
 		ft_printf("file contains nth bruh\n");
 		free(res);
 		exit(1);
 	}
-	res[j] = NULL; 
-	return res;
+	res[j] = NULL;
+	return (res);
 }
 
 void	put_top_bottom_walls(int y, t_game *game, t_wall *walls, int map_width)
 {
-	int i = 0;
-	int x = 100;
-	while(i < map_width - 2)
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 100;
+	while (i < map_width - 2)
 	{
-		if(y == 0)
+		if (y == 0)
 			display_image(game, walls->up_wall, x, y);
 		else
 			display_image(game, walls->down_wall, x, y);
@@ -57,40 +51,43 @@ void	put_top_bottom_walls(int y, t_game *game, t_wall *walls, int map_width)
 		i++;
 	}
 }
-void	put_others(char c, int x, int y, t_game *game, t_wall *walls)
+
+void	put_others(char c, int x, int y, t_game *game)
 {
 	if (c == '1')
-		display_image(game, walls->cross_wall, x, y);
+		display_image(game, "textures/walls/cross_wall.xpm", x, y);
 	if (c == 'C')
 		display_image(game, "textures/others/Key.xpm", x, y);
 	if (c == 'E')
-		display_image(game, walls->exit, x, y);
+		display_image(game, "textures/walls/exit.xpm", x, y);
 }
+
 void	put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width)
 {
-	int x = 0;
-	int i = 0;
-	int j = 1;
-	int y = 100;
-	while(game->map[j] && j < map_height - 1)
+	int x;
+	int i;
+	int j;
+	int y;
+
+	x = 0;
+	j = 0;
+	y = 100;
+	while(game->map[++j] && j < map_height - 1)
 	{
 		display_image(game, walls->left_wall, x ,y);
-		i++;
+		i = 0;
 		x += 100;
-		while(i < map_width - 1)
+		while(++i < map_width - 1)
 		{
 			if(game->map[j][i] != '0' && game->map[j][i] != 'P')
-				put_others(game->map[j][i], x, y, game, walls);
+				put_others(game->map[j][i], x, y, game);
 			else
 				display_image(game, walls->floor, x, y);
 			x += 100;
-			i++;
 		}
 		display_image(game, walls->right_wall, x, y);
 		x = 0;
 		y += 100;
-		i = 0;
-		j++;
 	}
 }
 
@@ -126,7 +123,7 @@ void	map_setup(t_game *game, char *file)
 	fd = open(file, O_RDWR);
 	if  (read(fd, NULL, 0) < 0)
 	{
-		ft_printf("cant read file lol\n");
+		ft_printf("Error cant read file lol\n");
 		exit(1);
 	}
 	game->map = readmap(fd);
@@ -135,7 +132,7 @@ void	map_setup(t_game *game, char *file)
 	int map_error = check_map(game->map, game->map_width, game->map_height);
 	if (map_error == 0)
 	{
-		ft_printf("map error bruh\n");
+		ft_printf("Error map bruh\n");
 		exit(1);
 	}
 	// handle_image(&walls, game, game->map_width, game->map_height, &keys);

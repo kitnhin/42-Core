@@ -87,6 +87,7 @@ void	put_top_walls(int x, char **map, t_wall *walls, int map_width);
 void    put_mid_walls(t_game *game, t_wall *walls, int map_height, int map_width);
 void	make_map(void);
 void	handle_image(t_game *game);
+void	put_others(char c, int x, int y, t_game *game);
 
 //check_map
 void	init_check(t_checks *checks);
@@ -111,6 +112,7 @@ void	print_player(t_game *game);
 // keys
 int total_keys(char **map);
 void	print_key(t_game *game);
+t_key	*find_key(t_game *game, t_key *keys, int x, int y);
 
 //bat
 void	print_bat(t_game *game);

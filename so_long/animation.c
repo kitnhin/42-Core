@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 22:52:35 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/07/16 23:12:02 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:21:28 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	char_anim(t_game *game)
 	char		*path;
 
 	frames = (char **)malloc(8 * sizeof(char *));
+	if (!frames)
+		return ;
 	frames[0] = "./textures/player/player.xpm";
 	frames[1] = "./textures/player/player3.xpm";
 	frames[2] = "./textures/player/player2.xpm";
@@ -58,6 +60,8 @@ void	key_anim(t_game *game, t_key *keys)
 
 	j = 0;
 	frames = (char **)malloc(6 * sizeof(char *));
+	if (!frames)
+		return ;
 	frames[0] = "./textures/keys/key1.xpm";
 	frames[1] = "./textures/keys/key2.xpm";
 	frames[2] = "./textures/keys/key3.xpm";
@@ -81,6 +85,8 @@ void	bat_anim(t_game *game, int x, int y)
 	char		**frames;
 
 	frames = (char **)malloc(11 * sizeof(char *));
+	if (!frames)
+		return ;
 	frames[0] = "./textures/bats/bat1.xpm";
 	frames[1] = "./textures/bats/bat1.xpm";
 	frames[2] = "./textures/bats/bat2.xpm";

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 13:02:10 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/17 14:45:57 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int total_keys(char **map)
+int	total_keys(char **map)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
 	j = 0;
@@ -28,34 +40,47 @@ void	init_key_struct(t_key *key)
 	key->x = 0;
 	key->y = 0;
 }
+
 void	print_key(t_game *game)
 {
-	int	x;
-	int	y;
-	int i;
-	t_key *keys;
+	int		x;
+	int		y;
+	t_key	*keys;
 
-	keys = malloc(sizeof(t_key) * game->total_keys);
 	x = 0;
 	y = 0;
-	i = 0;
-	while(game->map[y])
+	keys = malloc(sizeof(t_key) * game->total_keys);
+	if (!keys)
 	{
-		if(game->map[y][x] == 'C')
+		ft_printf("malloc fail for keys array");
+		return ;
+	}
+	keys = find_key(game, keys, x, y);
+	key_anim(game, keys);
+	free(keys);
+}
+
+t_key	*find_key(t_game *game, t_key *keys, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	while (game->map[y])
+	{
+		if (game->map[y][x] == 'C')
 		{
 			keys[i].x = x;
 			keys[i].y = y;
 			i++;
 		}
-		if(game->map[y][x] == 0)
+		if (game->map[y][x] == 0)
 		{
 			y++;
 			x = 0;
 		}
 		x++;
 	}
-	key_anim(game, keys);
-	free(keys);
+	return (keys);
 }
 // char **readmap(int fd)
 // {
