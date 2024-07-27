@@ -27,15 +27,11 @@ void	push(t_stack_node **dest, t_stack_node **src)
 void	pa(t_stack_node **a, t_stack_node **b, int print)
 {
 	push(a, b);
-	// printf("stack_a -----------------\n");
-	// print_stack(*a);
-	// printf("stack_b -----------------\n");
-	// print_stack(*b);
 	if (print == 1)
 		ft_printf("pa\n");
 }
 
-void	pb(t_stack_node **b, t_stack_node **a, int print)
+void	pb(t_stack_node **a, t_stack_node **b, int print)
 {
 	push(b, a);
 	if (print == 1)

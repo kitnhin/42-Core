@@ -7,11 +7,13 @@ void	swap(t_stack_node **head)
 
 	first_node = *head;
 	sec_node = (*head)->next;
+	*head= sec_node; 
 	first_node->prev = sec_node;
 	first_node->next = sec_node->next;
-	sec_node->next = first_node;
+	if (sec_node->next)
+		sec_node->next->prev = first_node;
 	sec_node->prev = NULL;
-	*head= sec_node; 
+	sec_node->next = first_node;
 }
 
 void	sa(t_stack_node **a, int print)

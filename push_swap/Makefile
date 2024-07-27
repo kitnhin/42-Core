@@ -1,7 +1,8 @@
 SRCS = \
 rotate.c main.c rev_rotate.c swap.c utils.c \
 sort.c split.c push.c utils2.c inits.c \
-commands.c utils3.c
+utils3.c int_array.c sort_100_utils.c \
+sort_500_utils.c costs.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -11,7 +12,7 @@ CC = gcc
 
 SAN = -g -fsanitize=address
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 
 LIB = libft.a
 
@@ -43,4 +44,8 @@ fclean : clean
 
 re : fclean all
 
+test:
+	make re
+	cp push_swap Push-Swap-Tester/
+	
 .PHONY: all clean fclean re leak

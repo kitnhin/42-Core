@@ -6,9 +6,9 @@ void	rotate(t_stack_node **stack)
 
 	last_node = find_last(*stack);
 	last_node->next = *stack;
+	(*stack)->prev = last_node;
 	(*stack) = (*stack)->next;
 	(*stack)->prev = NULL;
-	last_node->next->prev = last_node;
 	last_node->next->next = NULL;
 }
 

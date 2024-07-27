@@ -16,8 +16,8 @@ void	init_stack_a(t_stack_node **a, char **argv)
 
 void	init_nodes_a(t_stack_node *a, t_stack_node *b)
 {
-	current_index(a);
-	current_index(b);
+	current_index(&a);
+	current_index(&b);
 	set_target_a(a, b);
 	push_costs_a(a, b);
 	set_cheapest(a);
@@ -25,7 +25,7 @@ void	init_nodes_a(t_stack_node *a, t_stack_node *b)
 
 void	init_nodes_b(t_stack_node *a, t_stack_node *b)
 {
-	current_index(a);
-	current_index(b);
+	current_index(&a);
+	current_index(&b);
 	set_target_b(a, b);
 }

@@ -12,35 +12,37 @@ void	sort_three(t_stack_node **stack)
 		sa(stack, 1);
 }
 
-void	sort_stacks(t_stack_node **a, t_stack_node **b)
+void	sort_stacks_500(t_stack_node **a, t_stack_node **b)
+{
+	int	stack_len_a;
+
+	stack_len_a = stack_len(*a);
+	init_sorted_index(a);
+	move_a_to_b_500(a, b);
+	sort_three(a);
+	move_b_to_a_500(a, b);
+	bring_min_top(a);
+}
+
+void	sort_stacks_100(t_stack_node **a, t_stack_node **b)
 {
 	int	stack_len_a;
 
 	stack_len_a = stack_len(*a);
 	if (stack_len_a-- > 3 && stack_sorted(*a) == 0)
-		pb(b , a, 1);
+		pb(a , b, 1);
 	if (stack_len_a-- > 3 && stack_sorted(*a) == 0)
-		pb(b, a, 1);
-	// print_stack(*a);
-	// printf("--------------------------------------\n");
-	// print_stack(*b);
+		pb(a, b, 1);
 	while (stack_len_a-- > 3 && stack_sorted(*a) == 0)
 	{
 		init_nodes_a(*a, *b);
-		move_a_to_b(a, b);
+		move_a_to_b_100(a, b);
 	}
-	// print_stack(*a);
-	printf("--------------------------------------\n");
-	// print_stack(*b);
 	sort_three(a);
-	// print_stack(*a);
-	printf("--------------------------------------\n");
-	// print_stack(*b);
 	while (*b)
 	{
 		init_nodes_b(*a, *b);
-		move_b_to_a(a, b);
+		move_b_to_a_100(a, b);
 	}
-	current_index(*a);
 	bring_min_top(a);
 }

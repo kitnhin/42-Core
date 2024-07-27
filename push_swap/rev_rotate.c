@@ -17,10 +17,6 @@ void	rev_rotate(t_stack_node **stack)
 void	rra(t_stack_node **a, int print)
 {
 	rev_rotate(a);
-	// printf("stack_a -----------------\n");
-	// print_stack(*a);
-	// printf("stack_b -----------------\n");
-	// print_stack(*b);
 	if(print == 1)
 		ft_printf("rra\n");
 }

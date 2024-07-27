@@ -84,10 +84,25 @@ void print_cheapest(t_stack_node *stack)
     }
 }
 
+void print_sorted_index(t_stack_node *stack)
+{
+    if (!stack)
+	{
+		printf("NULL\n");
+		return ;
+	}
+	while (stack) 
+	{
+        printf("s_index value = %d\n", stack->sorted_index);
+        stack = stack->next;
+    }
+}
+
 int main(int argc, char *argv[])
 {
 	t_stack_node	*a;
 	t_stack_node	*b;
+	int		*int_array;
 
 	a = NULL;
 	b = NULL;
@@ -99,18 +114,16 @@ int main(int argc, char *argv[])
 	if (argc == 2)
 		argv = ft_split_special(argv[1], ' ');
 	init_stack_a(&a, argv + 1);
-	print_stack(a);
-	printf("----------------------------------\n");
 	if(!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
 			sa(&a, 1);
-		if (stack_len(a) == 3)
+		else if (stack_len(a) == 3)
 			sort_three(&a);
+		else if (stack_len(a) > 100 && stack_len(a) <= 500)
+			sort_stacks_500(&a, &b);
 		else
-			sort_stacks(&a, &b);
+			sort_stacks_100(&a, &b);
 	}
-	printf("----------------------------------\n");
-	print_stack(a);
 	return (0);
 }

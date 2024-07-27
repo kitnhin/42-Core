@@ -12,6 +12,7 @@ typedef struct s_stack_node
 {
 	int		nbr;
 	int		index;
+	int		sorted_index;
 	int		push_cost;
 	int		above_median;
 	int		cheapest;
@@ -31,20 +32,30 @@ int	stack_len(t_stack_node *stack);
 t_stack_node *find_max(t_stack_node *stack);
 t_stack_node *find_min(t_stack_node *stack);
 
-void	current_index(t_stack_node *stack);
+void	current_index(t_stack_node **stack);
 void	set_target_a(t_stack_node *a, t_stack_node *b);
-void	push_costs_a(t_stack_node *a, t_stack_node *b);
+void	push_costs_b(t_stack_node *a, t_stack_node *b);
 void	set_cheapest(t_stack_node *stack);
 void	set_target_b(t_stack_node *a, t_stack_node *b);
+void	push_costs_a(t_stack_node *a, t_stack_node *b);
 
 t_stack_node	*find_cheapest(t_stack_node *stack);
 void	bring_min_top(t_stack_node **stack);
+void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node, char stack_name);
+
+//int array
+void	init_sorted_index(t_stack_node **stack);
 
 //commands
-void	rotate_both(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
-void	rev_rotate_both(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
-void	move_a_to_b(t_stack_node **a, t_stack_node **b);
-void	move_b_to_a(t_stack_node **a, t_stack_node **b);
+void	rotate_both_500(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
+void	rev_rotate_both_500(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
+void	rotate_both_100(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
+void	rev_rotate_both_100(t_stack_node **stack_a, t_stack_node **stack_b, t_stack_node *cheapest_node);
+void	move_a_to_b_500(t_stack_node **a, t_stack_node **b);
+void	move_b_to_a_500(t_stack_node **a, t_stack_node **b);
+void	move_a_to_b_100(t_stack_node **a, t_stack_node **b);
+void	move_b_to_a_100(t_stack_node **a, t_stack_node **b);
+
 
 //inits
 void	init_stack_a(t_stack_node **a, char **argv);
@@ -71,8 +82,16 @@ void	pb(t_stack_node **b, t_stack_node **a, int print);
 //sorts
 
 void	sort_three(t_stack_node **stack);
-void	sort_stacks(t_stack_node **a, t_stack_node **b);
+void	sort_stacks_500(t_stack_node **a, t_stack_node **b);
+void	sort_stacks_100(t_stack_node **a, t_stack_node **b);
 
 char	**ft_split_special(char const *s, char c);
 
 void print_stack(t_stack_node *stack);
+void print_sorted_index(t_stack_node *stack);
+void print_index(t_stack_node *stack);
+void print_median(t_stack_node *stack);
+void print_target(t_stack_node *stack);
+void print_push_cost(t_stack_node *stack);
+void print_cheapest(t_stack_node *stack);
+void print_sorted_index(t_stack_node *stack);
