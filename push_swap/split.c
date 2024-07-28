@@ -43,13 +43,6 @@ char	**ft_split_special(char const *s, char c)
 		return (NULL);
 	while (s[i] != '\0')
 	{
-		if (j == 0)
-		{
-			str[j] = (char *)malloc(sizeof(char));
-			if (!str[j])
-				return NULL;
-			str[j++] = ft_strdup("");
-		}
 		while (s[i] == c)
 			i++;
 		start = i;
@@ -61,3 +54,10 @@ char	**ft_split_special(char const *s, char c)
 	str[j] = NULL;
 	return (str);
 }
+
+// void	string_to_stack(char **argv, t_stack_node *a)
+// {
+// 	argv = ft_split_special(argv[1], ' ');
+// 	init_stack_a(&a, argv + 1);
+// 	free_array(argv);
+// }

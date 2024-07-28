@@ -42,6 +42,8 @@ void	push_costs_a(t_stack_node *a, t_stack_node *b);
 t_stack_node	*find_cheapest(t_stack_node *stack);
 void	bring_min_top(t_stack_node **stack);
 void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node, char stack_name);
+void	free_stack(t_stack_node **stack);
+void	free_array(char **argv);
 
 //int array
 void	init_sorted_index(t_stack_node **stack);
@@ -86,6 +88,9 @@ void	sort_stacks_500(t_stack_node **a, t_stack_node **b);
 void	sort_stacks_100(t_stack_node **a, t_stack_node **b);
 
 char	**ft_split_special(char const *s, char c);
+void	string_to_stack(char **argv, t_stack_node *a);
+
+void	validate_input(char **argv);
 
 void print_stack(t_stack_node *stack);
 void print_sorted_index(t_stack_node *stack);

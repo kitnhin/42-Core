@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 	t_stack_node	*a;
 	t_stack_node	*b;
 	int		*int_array;
+	char **res;
 
 	a = NULL;
 	b = NULL;
@@ -112,18 +113,26 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	if (argc == 2)
-		argv = ft_split_special(argv[1], ' ');
-	init_stack_a(&a, argv + 1);
+	{
+		res = ft_split_special(argv[1], ' ');
+		validate_input(res);
+		init_stack_a(&a, res);
+		free_array(res);
+	}
+	else
+		init_stack_a(&a, argv + 1);
 	if(!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
 			sa(&a, 1);
 		else if (stack_len(a) == 3)
 			sort_three(&a);
-		else if (stack_len(a) > 100 && stack_len(a) <= 500)
+		else if (stack_len(a) > 100 && stack_len(a) <= 501)
 			sort_stacks_500(&a, &b);
 		else
 			sort_stacks_100(&a, &b);
 	}
+	free_stack(&a);
+	free(a);
 	return (0);
 }

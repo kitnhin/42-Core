@@ -47,3 +47,29 @@ void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node, char stack_
 		}
 	}
 }
+
+void	free_stack(t_stack_node **stack)
+{
+	t_stack_node *temp;
+	while(*stack)
+	{
+		temp = *stack;
+		*stack = (*stack)->next;
+		temp->next = NULL;
+		temp->prev = NULL;
+		free(temp);
+	}
+}
+
+void	free_array(char **argv)
+{
+	int i;
+
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}

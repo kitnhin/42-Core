@@ -2,7 +2,7 @@ SRCS = \
 rotate.c main.c rev_rotate.c swap.c utils.c \
 sort.c split.c push.c utils2.c inits.c \
 utils3.c int_array.c sort_100_utils.c \
-sort_500_utils.c costs.c
+sort_500_utils.c costs.c validate_input.c \
 
 OBJ = $(SRCS:.c=.o)
 
@@ -44,8 +44,8 @@ fclean : clean
 
 re : fclean all
 
-test:
-	make re
-	cp push_swap Push-Swap-Tester/
+test: re
+	@cp push_swap Push-Swap-Tester
+	@cd Push-Swap-Tester && bash push_swap_test.sh
 	
 .PHONY: all clean fclean re leak
