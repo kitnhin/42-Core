@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/29 17:50:01 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/29 17:53:04 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_stack_node	*find_last(t_stack_node *stack)
 {
-	if(!stack)
-		return NULL;
-	while(stack->next)
+	if (!stack)
+		return (NULL);
+	while (stack->next)
 		stack = stack->next;
-	return stack;
+	return (stack);
 }
 
 int	whitespace(char *str)
@@ -21,9 +33,9 @@ int	whitespace(char *str)
 
 long	ft_atol(char *str)
 {
-	int	sign;
+	int		sign;
 	long	res;
-	int	i;
+	int		i;
 
 	sign = 1;
 	res = 0;
@@ -47,14 +59,14 @@ void	append_node(t_stack_node **stack, int n)
 	t_stack_node	*newnode;
 	t_stack_node	*last_node;
 
-	if(!stack)
+	if (!stack)
 		return ;
-	newnode =(t_stack_node *)malloc(sizeof(t_stack_node));
-	if(!newnode)
+	newnode = (t_stack_node *)malloc(sizeof(t_stack_node));
+	if (!newnode)
 		return ;
 	newnode->next = NULL;
 	newnode->nbr = n;
-	if(!(*stack))
+	if (!(*stack))
 	{
 		*stack = newnode;
 		newnode->prev = NULL;
@@ -73,58 +85,11 @@ int	stack_len(t_stack_node *stack)
 
 	count = 0;
 	if (!stack)
-		return 0;
-	while(stack)
+		return (0);
+	while (stack)
 	{
 		stack = stack->next;
 		count++;
 	}
-	return count;
-}
-
-int	stack_sorted(t_stack_node *stack)
-{
-	while(stack->next)
-	{
-		if(stack->nbr > stack->next->nbr)
-			return (0);
-		stack = stack->next;
-	}
-	return (1);
-}
-
-t_stack_node *find_max(t_stack_node *stack)
-{
-	long	max;
-	t_stack_node	*max_node;
-
-	max = LONG_MIN;
-	while(stack)
-	{
-		if (stack->nbr > max)
-		{
-			max_node = stack;
-			max = stack->nbr;
-		}
-		stack = stack->next;
-	}
-	return (max_node);
-}
-
-t_stack_node *find_min(t_stack_node *stack)
-{
-	long	min;
-	t_stack_node	*min_node;
-
-	min = LONG_MAX;
-	while(stack)
-	{
-		if (stack->nbr < min)
-		{
-			min_node = stack;
-			min = stack->nbr;
-		}
-		stack = stack->next;
-	}
-	return (min_node);
+	return (count);
 }

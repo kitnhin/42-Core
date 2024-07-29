@@ -15,7 +15,6 @@ void	push_b_to_a(t_stack_node **a, t_stack_node **b)
 }
 void	move_a_to_b_500(t_stack_node **a, t_stack_node **b)
 {
-	t_stack_node	*temp;
 	int		len_to_push;
 	int		mid;
 	int		i;

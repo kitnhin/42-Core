@@ -14,9 +14,6 @@ void	sort_three(t_stack_node **stack)
 
 void	sort_stacks_500(t_stack_node **a, t_stack_node **b)
 {
-	int	stack_len_a;
-
-	stack_len_a = stack_len(*a);
 	init_sorted_index(a);
 	move_a_to_b_500(a, b);
 	sort_three(a);

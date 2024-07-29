@@ -4,7 +4,7 @@ void	rev_rotate(t_stack_node **stack)
 {
 	t_stack_node *last_node;
 
-	if (!stack || !(*stack)->next)
+	if (!(*stack)|| !stack || !(*stack)->next)
 		return ;
 	last_node = find_last(*stack);
 	last_node->prev->next = NULL;

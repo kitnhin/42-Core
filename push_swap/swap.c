@@ -5,6 +5,8 @@ void	swap(t_stack_node **head)
 	t_stack_node *first_node;
 	t_stack_node *sec_node;
 
+	if (!head || !(*head) || !(*head)->next)
+		return ;
 	first_node = *head;
 	sec_node = (*head)->next;
 	*head= sec_node; 

@@ -79,7 +79,7 @@ void	sb(t_stack_node **b, int print);
 void	ss(t_stack_node **a, t_stack_node**b, int print);
 
 void	pa(t_stack_node **a, t_stack_node **b, int print);
-void	pb(t_stack_node **b, t_stack_node **a, int print);
+void	pb(t_stack_node **a, t_stack_node **b, int print);
 
 //sorts
 
@@ -92,6 +92,14 @@ void	string_to_stack(char **argv, t_stack_node *a);
 
 void	validate_input(char **argv, int argc);
 
+//error checks
+void	print_error(void);
+int	check_nums(char *str);
+int	check_sign(char *str);
+int	check_dup(char **argv);
+int	check_int(char *str);
+
+//print
 void print_stack(t_stack_node *stack);
 void print_sorted_index(t_stack_node *stack);
 void print_index(t_stack_node *stack);

@@ -1,108 +1,34 @@
 #include "push_swap.h"
 
-void print_stack(t_stack_node *stack)
+void	validate_input(char **argv, int argc)
 {
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("value at node = %d\n", stack->nbr);
-        stack = stack->next;
-    }
-}
+	int		i;
+	char	**input;
 
-void print_index(t_stack_node *stack)
-{
-    if (!stack)
+	i = 0;
+	if (argv[0][0] == '\0')
+		print_error();
+	if (argc == 2)
+		input = ft_split_special(argv[0], ' ');
+	else
+		input = argv;
+	while (i < argc - 1)
 	{
-		printf("NULL\n");
-		return ;
+		if (check_nums(input[i]) == 0 || check_sign(input[i]) == 0
+			|| check_int(input[i]) == 0)
+			print_error();
+		i++;
 	}
-	while (stack) 
-	{
-        printf("index at node = %d\n", stack->index);
-        stack = stack->next;
-    }
-}
-void print_median(t_stack_node *stack)
-{
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("median at node = %d\n", stack->above_median);
-        stack = stack->next;
-    }
-}
-
-void print_target(t_stack_node *stack)
-{
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("value at target node = %d\n", stack->target_node->nbr);
-        stack = stack->next;
-    }
-}
-
-
-void print_push_cost(t_stack_node *stack)
-{
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("push cost at node = %d\n", stack->push_cost);
-        stack = stack->next;
-    }
-}
-
-void print_cheapest(t_stack_node *stack)
-{
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("cheapest value = %d\n", stack->cheapest);
-        stack = stack->next;
-    }
-}
-
-void print_sorted_index(t_stack_node *stack)
-{
-    if (!stack)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (stack) 
-	{
-        printf("s_index value = %d\n", stack->sorted_index);
-        stack = stack->next;
-    }
+	if (check_dup(input) == 0)
+		print_error();
+	if (argc == 2)
+		free_array(input);
 }
 
 int main(int argc, char *argv[])
 {
 	t_stack_node	*a;
 	t_stack_node	*b;
-	int		*int_array;
 	char **res;
 
 	a = NULL;

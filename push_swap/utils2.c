@@ -22,3 +22,49 @@ void	current_index(t_stack_node **stack)
 		i++;
 	}
 }
+int	stack_sorted(t_stack_node *stack)
+{
+	while (stack->next)
+	{
+		if (stack->nbr > stack->next->nbr)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+t_stack_node	*find_max(t_stack_node *stack)
+{
+	long			max;
+	t_stack_node	*max_node;
+
+	max = LONG_MIN;
+	while (stack)
+	{
+		if (stack->nbr > max)
+		{
+			max_node = stack;
+			max = stack->nbr;
+		}
+		stack = stack->next;
+	}
+	return (max_node);
+}
+
+t_stack_node	*find_min(t_stack_node *stack)
+{
+	long			min;
+	t_stack_node	*min_node;
+
+	min = LONG_MAX;
+	while (stack)
+	{
+		if (stack->nbr < min)
+		{
+			min_node = stack;
+			min = stack->nbr;
+		}
+		stack = stack->next;
+	}
+	return (min_node);
+}
