@@ -90,7 +90,7 @@ void	sort_stacks_100(t_stack_node **a, t_stack_node **b);
 char	**ft_split_special(char const *s, char c);
 void	string_to_stack(char **argv, t_stack_node *a);
 
-void	validate_input(char **argv);
+void	validate_input(char **argv, int argc);
 
 void print_stack(t_stack_node *stack);
 void print_sorted_index(t_stack_node *stack);

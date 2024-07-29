@@ -107,20 +107,22 @@ int main(int argc, char *argv[])
 
 	a = NULL;
 	b = NULL;
+	validate_input(argv + 1, argc);
 	if (argc < 2)
 	{
-		ft_printf("Error/n");
+		write(2,"Error\n",6);
 		return 1;
 	}
 	if (argc == 2)
 	{
 		res = ft_split_special(argv[1], ' ');
-		validate_input(res);
 		init_stack_a(&a, res);
 		free_array(res);
 	}
 	else
+	{
 		init_stack_a(&a, argv + 1);
+	}
 	if(!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
