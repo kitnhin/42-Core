@@ -30,32 +30,45 @@ LIB = libft.a
 
 LIBDIR = libft
 
+#COLORS!
+RED = \033[0;31m
+GREEN = \033[0;32m
+NC = \033[0m
+
 all : $(NAME)
 
 $(NAME): $(OBJ) $(LIB)
+	@echo "${GREEN}compiling push_swap...${NC}"
 	@$(CC) $(OBJ) -lft -L. -o $(NAME) libft.a
+	@echo "${GREEN}compile push_swap success!!${NC}"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-$(LIB) : 
+$(LIB) :
+	@echo "${GREEN}compiling libft...${NC}"
 	@$(MAKE) -C $(LIBDIR)
 	@mv $(LIBDIR)/$(LIB) .
+	@echo "${GREEN}compile libft success!!${NC}"
 
 $(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
+	@echo "${GREEN}compiling checker...${NC}"
 	@$(CC) $(BONUS_OBJ) -lft -L. -o $(BONUS_NAME) libft.a
+	@echo "${GREEN}compile checker success!!${NC}"
 
 bonus : $(BONUS_NAME)
 
 clean :
+	@echo "${GREEN}cleaning...${NC}"
 	@rm -f ${OBJ}
 	@rm -f $(LIB)
-	$(MAKE) -C $(LIBDIR) clean
+	@$(MAKE) -C $(LIBDIR) clean
+	@echo "${GREEN}clean success!!${NC}"
 
 fclean : clean
 	@rm -f $(NAME) $(BONUS_NAME)
 
-re : fclean all
+re: fclean all
 
 test: re
 	@cp push_swap Push-Swap-Tester

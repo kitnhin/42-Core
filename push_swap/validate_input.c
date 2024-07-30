@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:23:05 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/07/29 19:07:47 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:25:29 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int	check_nums(char *str)
 void	print_error(void)
 {
 	write(2, "Error\n", 6);
-	exit(1);
+	exit(0);
 }
