@@ -78,6 +78,7 @@ void	pb(t_stack_node **b, t_stack_node **a, int print);
 void	sort_three(t_stack_node **stack);
 void	sort_stacks(t_stack_node **a, t_stack_node **b);
 
+
 char	**ft_split_special(char const *s, char c);
 
 void print_stack(t_stack_node *stack);
