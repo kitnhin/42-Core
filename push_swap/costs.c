@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   costs.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 11:57:31 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/30 11:58:52 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	set_target_a(t_stack_node *a, t_stack_node *b)
 {
-	long	current_target_value;
+	long			current_target_value;
 	t_stack_node	*node_b;
 	t_stack_node	*current_target_node;
 
@@ -50,9 +62,9 @@ void	push_costs_b(t_stack_node *a, t_stack_node *b)
 
 void	set_cheapest(t_stack_node *stack)
 {
-	t_stack_node *cheapest_node;
-	t_stack_node *tempstack;
-	long	cheapest_value;
+	t_stack_node	*cheapest_node;
+	t_stack_node	*tempstack;
+	long			cheapest_value;
 
 	tempstack = stack;
 	cheapest_value = LONG_MAX;
@@ -75,7 +87,7 @@ void	set_cheapest(t_stack_node *stack)
 
 void	set_target_b(t_stack_node *a, t_stack_node *b)
 {
-	long	current_target_value;
+	long			current_target_value;
 	t_stack_node	*node_a;
 	t_stack_node	*current_target_node;
 

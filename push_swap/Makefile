@@ -1,14 +1,14 @@
 SRCS = \
 rotate.c main.c rev_rotate.c swap.c utils.c \
-sort.c split.c push.c utils2.c inits.c \
-utils3.c int_array.c sort_100_utils.c \
+sort.c push.c utils2.c inits.c \
+utils3.c s_index.c sort_100_utils.c \
 sort_500_utils.c costs.c validate_input.c \
 print.c
 
 BONUS_SRCS = \
 rotate.c checker.c rev_rotate.c swap.c utils.c \
-sort.c split.c push.c utils2.c inits.c \
-utils3.c int_array.c sort_100_utils.c \
+sort.c push.c utils2.c inits.c \
+utils3.c s_index.c sort_100_utils.c \
 sort_500_utils.c costs.c validate_input.c \
 print.c
 
@@ -63,5 +63,6 @@ test: re
 	
 testb: fclean bonus
 	@cp checker Push-Swap-Tester
-	
+	@cd Push-Swap-Tester && bash push_swap_test.sh -b
+
 .PHONY: all clean fclean re leak

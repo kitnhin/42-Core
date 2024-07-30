@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils3.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 15:59:24 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/30 15:59:25 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_stack_node	*find_cheapest(t_stack_node *stack)
 {
 	while (stack)
 	{
-		if(stack->cheapest == 1)
+		if (stack->cheapest == 1)
 			return (stack);
 		stack = stack->next;
 	}
@@ -14,7 +26,7 @@ t_stack_node	*find_cheapest(t_stack_node *stack)
 void	bring_min_top(t_stack_node **stack)
 {
 	t_stack_node	*smallest_node;
-	int	smallest_nbr;
+	int				smallest_nbr;
 
 	smallest_node = find_min(*stack);
 	smallest_nbr = smallest_node->nbr;
@@ -27,7 +39,8 @@ void	bring_min_top(t_stack_node **stack)
 	}
 }
 
-void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node, char stack_name)
+void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node,
+		char stack_name)
 {
 	while (*stack != top_node)
 	{
@@ -50,8 +63,9 @@ void	bring_node_to_top(t_stack_node **stack, t_stack_node *top_node, char stack_
 
 void	free_stack(t_stack_node **stack)
 {
-	t_stack_node *temp;
-	while(*stack)
+	t_stack_node	*temp;
+
+	while (*stack)
 	{
 		temp = *stack;
 		*stack = (*stack)->next;
@@ -63,7 +77,7 @@ void	free_stack(t_stack_node **stack)
 
 void	free_array(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])

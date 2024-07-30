@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 11:54:03 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/30 15:26:08 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	validate_input(char **argv, int argc)
@@ -9,7 +21,7 @@ void	validate_input(char **argv, int argc)
 	if (argv[0][0] == '\0')
 		print_error();
 	if (argc == 2)
-		input = ft_split_special(argv[0], ' ');
+		input = ft_split(argv[0], ' ');
 	else
 		input = argv;
 	while (i < argc - 1)
@@ -24,6 +36,7 @@ void	validate_input(char **argv, int argc)
 	if (argc == 2)
 		free_array(input);
 }
+
 void	do_commands(char *command, t_stack_node **a, t_stack_node **b)
 {
 	if (ft_strncmp(command, "sa\n", 3) == 0)
@@ -54,13 +67,13 @@ void	do_commands(char *command, t_stack_node **a, t_stack_node **b)
 
 void	checker(t_stack_node **a, t_stack_node **b)
 {
-	char *read;
+	char	*read;
 
 	while (1)
 	{
 		read = get_next_line(0);
 		if (read == NULL)
-			break;
+			break ;
 		do_commands(read, a, b);
 		free(read);
 	}
@@ -71,23 +84,21 @@ void	checker(t_stack_node **a, t_stack_node **b)
 	else if (stack_sorted(*a) == 0)
 		write(1, "KO\n", 3);
 }
-int main(int argc, char *argv[])
+
+int	main(int argc, char *argv[])
 {
 	t_stack_node	*a;
 	t_stack_node	*b;
-	char **res;
+	char			**res;
 
 	a = NULL;
 	b = NULL;
 	validate_input(argv + 1, argc);
 	if (argc < 2)
-	{
-		write(2,"Error\n",6);
-		return 1;
-	}
+		print_error();
 	if (argc == 2)
 	{
-		res = ft_split_special(argv[1], ' ');
+		res = ft_split(argv[1], ' ');
 		init_stack_a(&a, res);
 		free_array(res);
 	}

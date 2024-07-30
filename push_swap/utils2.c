@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 15:52:58 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/30 15:52:59 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	current_index(t_stack_node **stack)
 {
-	int	i;
-	int	median;
-	t_stack_node *temp;
+	int				i;
+	int				median;
+	t_stack_node	*temp;
 
 	i = 0;
 	if (!stack)
 		return ;
 	temp = *stack;
 	median = stack_len(*stack) / 2;
-	while(temp)
+	while (temp)
 	{
 		temp->index = i;
 		if (i <= median)
@@ -22,6 +34,7 @@ void	current_index(t_stack_node **stack)
 		i++;
 	}
 }
+
 int	stack_sorted(t_stack_node *stack)
 {
 	while (stack->next)

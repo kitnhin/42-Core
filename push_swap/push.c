@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 13:10:27 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/07/30 13:10:39 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	push(t_stack_node **dest, t_stack_node **src)
 {
-	t_stack_node *push_node;
+	t_stack_node	*push_node;
 
 	if (!(*src))
 		return ;
