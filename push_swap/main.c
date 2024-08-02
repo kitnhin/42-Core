@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:09:05 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/07/30 15:37:55 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/08/02 00:10:22 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	main(int argc, char *argv[])
 
 	a = NULL;
 	b = NULL;
-	validate_input(argv + 1, argc);
 	if (argc < 2)
 		print_error();
+	validate_input(argv + 1, argc);
 	if (argc == 2)
 	{
 		res = ft_split(argv[1], ' ');
