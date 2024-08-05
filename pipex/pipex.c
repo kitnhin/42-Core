@@ -1,29 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/06 00:43:56 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/08/06 01:07:01 by ethanlim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-void	exit_error(int n)
-{
-	if (n == 1)
-		write(2, "Error: wrong pipex usage\n", 25);
-	else
-		perror("Error");
-	exit(1);
-}
-
-void	exit_error_str(char *str, int n)
-{
-	int len;
-
-	len = ft_strlen(str);
-	if (n == 1)
-		write(2,"Error: command not found: ",26);
-	else
-		write(2,"Error: no such file or directory: ", 35);
-	write(2,str,len);
-	write(2,"\n",1);
-	exit(1);
-}
-
-char *get_path(char **envp, char *cmd)
+char	*get_path(char **envp, char *cmd)
 {
 	int		i;
 	char	**paths_list;
@@ -32,12 +21,12 @@ char *get_path(char **envp, char *cmd)
 	char	*temp;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
 	paths_string = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	paths_list = ft_split(paths_string, ':');
-	i = 0;
-	while (paths_list[i])
+	i = -1;
+	while (paths_list[++i])
 	{
 		temp = ft_strjoin(paths_list[i], "/");
 		full_path = ft_strjoin(temp, cmd);
@@ -45,23 +34,16 @@ char *get_path(char **envp, char *cmd)
 			return (full_path);
 		free(temp);
 		free(full_path);
-		i++;
 	}
-	i = 0;
-	while (paths_list[i])
-	{
-		free(paths_list[i]);
-		i++;
-	}
-	free(paths_list);
+	free_2d_array(paths_list);
 	exit_error_str(cmd, 1);
 	return (NULL);
 }
 
 void	execute(char *argv, char **envp)
 {
-	char **cmd;
-	char *path;
+	char	**cmd;
+	char	*path;
 
 	cmd = ft_split(argv, ' ');
 	path = get_path(envp, cmd[0]);
@@ -95,16 +77,18 @@ void	parent(int *pipe_fd, char **argv, char **envp)
 	execute(argv[3], envp);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
 
 	if (argc == 5)
 	{
-		if(pipe(pipe_fd) == -1)
+		if (pipe(pipe_fd) == -1)
 			exit_error(0);
 		pid = fork();
+		if (pid == -1)
+			exit_error(0);
 		if (pid == 0)
 			child(pipe_fd, argv, envp);
 		else
@@ -115,5 +99,5 @@ int main(int argc, char **argv, char **envp)
 	}
 	else
 		exit_error(1);
-    return 0;
+	return (0);
 }

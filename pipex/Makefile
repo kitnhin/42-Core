@@ -1,8 +1,8 @@
 SRCS = \
-pipex.c
+pipex.c utils.c
 
 BONUS_SRCS = \
-pipex_bonus.c
+pipex_bonus.c utils_bonus.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -14,7 +14,7 @@ BONUS_NAME = pipex_bonus
 
 CC = gcc
 
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra
 
 LIB = libft.a
 
@@ -46,6 +46,7 @@ $(LIB) :
 clean :
 	@echo "${GREEN}cleaning...${NC}"
 	@rm -f ${OBJ}
+	@rm -f ${BONUS_OBJ}
 	@rm -f $(LIB)
 	@$(MAKE) -C $(LIBDIR) clean
 	@echo "${GREEN}clean success!!${NC}"
@@ -64,13 +65,5 @@ $(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
 	@echo "${GREEN}------------------------------${NC}"
 
 bonus : fclean $(BONUS_NAME)
-
-test: re
-	@cp push_swap Push-Swap-Tester
-	@cd Push-Swap-Tester && bash push_swap_test.sh
-	
-testb: fclean bonus
-	@cp checker Push-Swap-Tester
-	@cd Push-Swap-Tester && bash push_swap_test.sh -b
 
 .PHONY: all clean fclean re leak bonus

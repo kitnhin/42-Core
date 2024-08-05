@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/06 00:52:26 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/08/06 02:13:56 by ethanlim         ###   ########.fr       */
+/*   Created: 2024/08/06 02:09:59 by ethanlim          #+#    #+#             */
+/*   Updated: 2024/08/06 02:14:04 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	exit_error(int n)
 {
@@ -48,3 +48,13 @@ void	free_2d_array(char **str)
 	free(str);
 }
 
+void	execute(char *argv, char **envp)
+{
+	char	**cmd;
+	char	*path;
+
+	cmd = ft_split(argv, ' ');
+	path = get_path(envp, cmd[0]);
+	if (execve(path, cmd, envp) == -1)
+		exit_error(0);
+}
