@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 02:20:01 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/08/06 02:21:17 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/08/06 02:22:34 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 // utils
 void	exit_error(int n);
