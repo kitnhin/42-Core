@@ -2,6 +2,7 @@ SRCS = \
 pipex.c
 
 BONUS_SRCS = \
+pipex_bonus.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -9,7 +10,7 @@ BONUS_OBJ = $(BONUS_SRCS:.c=.o)
 
 NAME = pipex
 
-BONUS_NAME = 
+BONUS_NAME = pipex_bonus
 
 CC = gcc
 
@@ -42,14 +43,6 @@ $(LIB) :
 	@echo "${GREEN}compile libft success!!${NC}"
 	@echo "${GREEN}------------------------------${NC}"
 
-$(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
-	@echo "${GREEN}compiling checker...${NC}"
-	@$(CC) $(BONUS_OBJ) -lft -L. -o $(BONUS_NAME) libft.a
-	@echo "${GREEN}compile checker success!!${NC}"
-	@echo "${GREEN}------------------------------${NC}"
-
-bonus : $(BONUS_NAME)
-
 clean :
 	@echo "${GREEN}cleaning...${NC}"
 	@rm -f ${OBJ}
@@ -59,9 +52,18 @@ clean :
 	@echo "${GREEN}------------------------------${NC}"
 
 fclean : clean
-	@rm -f $(NAME) $(BONUS_NAME)
+	@rm -f $(NAME)
+	@rm -f $(BONUS_NAME)
 
 re: fclean all
+
+$(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
+	@echo "${GREEN}compiling bonus...${NC}"
+	@$(CC) $(BONUS_OBJ) -lft -L. -o pipex libft.a
+	@echo "${GREEN}compile bonus success!!${NC}"
+	@echo "${GREEN}------------------------------${NC}"
+
+bonus : fclean $(BONUS_NAME)
 
 test: re
 	@cp push_swap Push-Swap-Tester
@@ -71,4 +73,4 @@ testb: fclean bonus
 	@cp checker Push-Swap-Tester
 	@cd Push-Swap-Tester && bash push_swap_test.sh -b
 
-.PHONY: all clean fclean re leak
+.PHONY: all clean fclean re leak bonus

@@ -6,7 +6,7 @@
 #    By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 20:06:11 by cheelim           #+#    #+#              #
-#    Updated: 2024/07/16 22:10:02 by ethanlim         ###   ########.fr        #
+#    Updated: 2024/08/05 15:49:06 by ethanlim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 ft_putnbr_fd.c ft_memcmp.c \
 ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
-ft_lstmap.c \
+ft_lstmap.c ft_strcmp.c \
 gnl/get_next_line.c gnl/get_next_line_utils.c \
 ft_printf/ft_printchar.c \
 ft_printf/ft_printf.c \
