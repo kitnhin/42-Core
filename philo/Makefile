@@ -53,4 +53,7 @@ $(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
 
 bonus : fclean $(BONUS_NAME)
 
+testb: re
+	cd LazyPhilosophersTester && ./test.sh ../philo
+
 .PHONY: all clean fclean re leak bonus

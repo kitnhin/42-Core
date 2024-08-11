@@ -8,8 +8,8 @@ void	eat(t_philo *philo)
 	print_action(data, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(data->fork[philo->right_fork_id]));
 	print_action(data, philo->id, "has taken a fork");
-	print_action(data, philo->id, "is eating");
 	philo->last_ate = gettime();
+	print_action(data, philo->id, "is eating");
 	// usleep(data->eating_time * 1000);
 	timer(data->eating_time);
 	philo->num_of_meals++;
@@ -49,12 +49,15 @@ void	end_checker(t_data *data)
 	{
 		while(i < data->total_philo_num)
 		{
+			// pthread_mutex_lock(&(data->checks_lock));
 			if (gettime() - data->philo[i].last_ate > data->death_time)
 			{
 				print_action(data, i, "died");
 				free_exit(data);
 			}
+			// pthread_mutex_unlock(&(data->checks_lock));
 			i++;
+			timer(100);
 		}
 		i = 0;
 		if (data->total_meals != -1)

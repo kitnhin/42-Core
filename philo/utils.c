@@ -46,6 +46,14 @@ void	print_action(t_data *data, int id, char *str)
 
 void	free_exit(t_data *data)
 {
+	int	i;
+
+	i = 0;
+	// while (i < data->total_philo_num)
+	// {
+	// 	pthread_join(data->philo[i].thread, NULL);
+	// 	i++;
+	// }
 	exit(0);
 }
 
@@ -58,5 +66,6 @@ void	timer(long long int time)
 	{
 		if (gettime() - current >= time)
 			break;
+		usleep(50);
 	}
 }
