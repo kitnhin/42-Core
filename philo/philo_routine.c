@@ -57,7 +57,7 @@ void	end_checker(t_data *data)
 			}
 			// pthread_mutex_unlock(&(data->checks_lock));
 			i++;
-			timer(100);
+			usleep(100);
 		}
 		i = 0;
 		if (data->total_meals != -1)

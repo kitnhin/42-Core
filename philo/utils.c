@@ -66,6 +66,6 @@ void	timer(long long int time)
 	{
 		if (gettime() - current >= time)
 			break;
-		usleep(50);
+		usleep(200);
 	}
 }

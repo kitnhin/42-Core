@@ -76,8 +76,8 @@ void	init_all(t_data *data, char **argv, int argc)
 	}
 	else
 		data->total_meals = -1;
-	if (data->total_philo_num < 1 || data->death_time < 0 || data->eating_time < 0 
-		|| data->sleeping_time < 0 || data->total_philo_num > 200)
+	if (data->total_philo_num < 1 || data->death_time < 60 || data->eating_time < 60 
+		|| data->sleeping_time < 60 || data->total_philo_num > 200)
 		print_error(2);
 	init_mutex(data);
 	init_philo(data);
