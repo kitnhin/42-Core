@@ -1,5 +1,5 @@
 SRCS = \
-main.c init.c utils.c philo_routine.c
+main.c init.c philo_routine.c
 
 BONUS_SRCS = \
 
@@ -47,7 +47,7 @@ re: fclean all
 
 $(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
 	@echo "${GREEN}compiling bonus...${NC}"
-	@$(CC) $(BONUS_OBJ) -lft -L. -o pipex libft.a
+	@$(CC) $(BONUS_OBJ) -lft -L. -o bonus libft.a
 	@echo "${GREEN}compile bonus success!!${NC}"
 	@echo "${GREEN}------------------------------${NC}"
 
