@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:11:50 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/08/17 02:58:18 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/08/17 03:02:30 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	run(t_data *data)
 	data->start_time = gettime();
 	while (i < data->total_philo_num)
 	{
-		// data->philo[i].last_ate = gettime();
 		error = pthread_create(&(data->philo[i].thread), NULL, routine,
 				&(data->philo[i]));
 		if (error != 0)
