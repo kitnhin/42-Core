@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:11:50 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/08/12 17:29:45 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/08/17 02:58:18 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	*routine(void *philosopher)
 	t_data	*data;
 
 	philo = (t_philo *)philosopher;
+	philo->last_ate = gettime();
 	data = philo->data;
 	if (philo->id % 2 == 0)
 	{
@@ -65,6 +66,7 @@ void	end_checker(t_data *data)
 	int	i;
 
 	i = 0;
+	usleep(50);
 	while (1)
 	{
 		while (i < data->total_philo_num)
@@ -96,7 +98,7 @@ void	run(t_data *data)
 	data->start_time = gettime();
 	while (i < data->total_philo_num)
 	{
-		data->philo[i].last_ate = gettime();
+		// data->philo[i].last_ate = gettime();
 		error = pthread_create(&(data->philo[i].thread), NULL, routine,
 				&(data->philo[i]));
 		if (error != 0)

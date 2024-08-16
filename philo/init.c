@@ -6,7 +6,7 @@
 /*   By: ethanlim <ethanlim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:27:05 by ethanlim          #+#    #+#             */
-/*   Updated: 2024/08/12 17:30:19 by ethanlim         ###   ########.fr       */
+/*   Updated: 2024/08/17 02:53:39 by ethanlim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void	init_mutex(t_data *data)
 		i++;
 	}
 	error = pthread_mutex_init(&(data->writing_lock), NULL);
-	if (error != 0)
-		print_error(3);
-	error = pthread_mutex_init(&(data->checks_lock), NULL);
 	if (error != 0)
 		print_error(3);
 }
