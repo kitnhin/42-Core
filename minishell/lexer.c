@@ -80,8 +80,8 @@ char **lexer(char *line, char **envp)
 		}
 		else
         {
-            while (line[i] && line[i] != ' ' && line[i] != '|')
-                i++;
+			while (line[i] && line[i] != ' ' && line[i] != '|')
+				i++;
 			if (line[i] == '|')
 			{
 				res[j] = substr_expand(line, envp, i, start);
