@@ -5,9 +5,9 @@ int handle_quotes(char *line, int i)
 {
 	if (line[i] == '\'')
 	{
-    	i++;
+		i++;
 		while (line[i] && line[i] != '\'')
-            i++;
+			i++;
 		if (line[i] == '\0')
 		{
 			printf("Unclosed quote detected\n");
