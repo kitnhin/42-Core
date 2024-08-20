@@ -38,35 +38,36 @@ char	*substr_expand(char *line, char **envp, int i, int start)
 	free(temp);
 	return res;
 }
+
 char **lexer(char *line, char **envp)
 {
-    int i = 0;
+	int i = 0;
 	int single_quote_check = 0;
-    char **res = malloc(sizeof(char *) * 1024);
-    if (!res)
-    {
-        printf("Memory allocation failed\n");
-        return NULL;
-    }
-    int j = 0;
-    int start;
-    while (line[i])
-    {
-        while (line[i] == ' ')
-            i++;
-        start = i;
-        if (line[i] == '\'')
-        {
-            start++;
+	char **res = malloc(sizeof(char *) * 1024);
+	if (!res)
+	{
+		printf("Memory allocation failed\n");
+		return NULL;
+	}
+	int j = 0;
+	int start;
+	while (line[i])
+	{
+		while (line[i] == ' ')
+			i++;
+		start = i;
+		if (line[i] == '\'')
+		{
+			start++;
 			if(handle_quotes(line, i) == -1)
 				return NULL;
 			else
 				i = handle_quotes(line, i);
 			res[j] = ft_substr(line, start, i - start);
 		}
-	    else if (line[i] == '\"')
-        {
-            start++;
+		else if (line[i] == '\"')
+		{
+			start++;
 			if(handle_quotes(line, i) == -1)
 				return NULL;
 			else
@@ -79,7 +80,7 @@ char **lexer(char *line, char **envp)
 				i++;
 		}
 		else
-        {
+		{
 			while (line[i] && line[i] != ' ' && line[i] != '|')
 				i++;
 			if (line[i] == '|')
@@ -91,13 +92,13 @@ char **lexer(char *line, char **envp)
 			}
 			else
 				res[j] = substr_expand(line, envp, i, start);
-        }
+		}
 		if (line[i] == '\'' || line[i] == '\"')
 			i++;
-        j++;
-    }
-    res[j] = NULL;
-    return res;
+		j++;
+	}
+	res[j] = NULL;
+	return res;
 }
 
 // void	print_token(char **str)
