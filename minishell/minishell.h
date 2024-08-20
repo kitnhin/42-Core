@@ -10,13 +10,11 @@
 
 typedef struct s_data
 {
-	char **envp;
+	char	**envp;
+	char	*input_line;
+	char	**tokens;
 }	t_data;
 
-typedef struct s_token
-{
-	char *token;
-}	t_token;
 
 extern void rl_replace_line(const char *, int);
 char **lexer(char *line, char **envp);

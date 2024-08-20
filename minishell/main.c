@@ -75,11 +75,23 @@ void	execute(char *argv, char **envp)
 {
 	char	**cmd;
 	char	*path;
+	pid_t	pid;
 
+
+	pid = fork();
 	cmd = lexer(argv, envp);
-	path = get_path(envp, cmd[0]);
-	if (execve(path, cmd, envp) == -1)
-		exit_error(0);
+	if (pid == 0)
+	{	
+		// cmd = lexer(argv, envp);
+		path = get_path(envp, cmd[0]);
+		execve(path, cmd, envp);
+	}
+	else
+		waitpid(pid, NULL, 0);
+	// if (execve(path, cmd, envp) == -1)
+	// 	exit_error(0);
+	if(ft_strcmp(cmd[0], "cat") == 0)
+		ft_printf("\n");
 }
 
 void	signal_handler(int sig)
@@ -121,6 +133,22 @@ char	*get_readline_prompt(char **env)
 	return res;
 }
 
+int	run(char *line, char **envp)
+{
+	t_data	data;
+	pid_t	pid;
+
+	data.input_line = line;
+	data.envp = envp;
+	data.tokens = lexer(line, envp);
+	// pid = fork();
+	// if (pid == 0)
+	// 	execute(line, envp);
+	// else
+	// 	waitpid(pid, NULL, 0);
+	execute(data.input_line, data.envp);
+	return 0;
+}
 int main(int argc, char **argv, char **envp) 
 {
 	t_data	data;
@@ -138,16 +166,16 @@ int main(int argc, char **argv, char **envp)
 		readline_prompt = get_readline_prompt(envp);
     	line = readline(readline_prompt);
 		if (line == NULL)
+		{
+			write(1,"exit",4);
 			break ;
+		}
 		if (line)
 			add_history(line);
+		// print_history();
 		if (line)
 		{
-			pid = fork();
-			if (pid == 0)
-				execute(line, envp);
-			else
-				waitpid(pid, NULL, 0);
+			run(line, envp);
 		}
     }
     return 0;

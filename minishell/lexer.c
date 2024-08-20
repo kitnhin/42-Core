@@ -73,11 +73,24 @@ char **lexer(char *line, char **envp)
 				i = handle_quotes(line, i);
 			res[j] = substr_expand(line, envp, i, start);
 		}
-        else
+		else if(line[i] == '|')
+		{
+				res[j] = ft_substr(line, i, 1);
+				i++;
+		}
+		else
         {
-            while (line[i] && line[i] != ' ')
+            while (line[i] && line[i] != ' ' && line[i] != '|')
                 i++;
-			res[j] = substr_expand(line, envp, i, start);
+			if (line[i] == '|')
+			{
+				res[j] = substr_expand(line, envp, i, start);
+				j++;
+				res[j] = ft_substr(line, i, 1);
+				i++;
+			}
+			else
+				res[j] = substr_expand(line, envp, i, start);
         }
 		if (line[i] == '\'' || line[i] == '\"')
 			i++;
@@ -86,3 +99,19 @@ char **lexer(char *line, char **envp)
     res[j] = NULL;
     return res;
 }
+
+// void	print_token(char **str)
+// {
+// 	int i = 0;
+// 	while(str[i])
+// 	{
+// 		printf("token %d = %s\n", i, str[i]);
+// 		i++;
+// 	}
+// }
+// // int main(int argc, char **argv, char **envp)
+// // {
+// // 	char *string = "cat | '$USER' main.c|sort";
+// // 	char **lex = lexer(string, envp);
+// // 	print_token(lex);
+// // }
