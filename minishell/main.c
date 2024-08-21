@@ -113,9 +113,6 @@ char	*get_readline_prompt(char **env)
 	int		i;
 
 	i = 0;
-	// temp1 = get_expand_string("USER", env);
-	// temp2 = ft_strjoin(get_expand_string("USER", env), "@Minishell$ ");
-	// temp5 = ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ "));
 	temp1 = ft_strjoin(ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ ")), "\033[0m");
 	if (getcwd(temp_buffer,sizeof(temp_buffer)) == NULL)
 	{

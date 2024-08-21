@@ -15,6 +15,16 @@ typedef struct s_data
 	char	**tokens;
 }	t_data;
 
+typedef struct s_lexing
+{
+	char *line;
+	char **res;
+	int start;
+	int i;
+	char **envp;
+	int j;
+}	t_lexing;
+
 
 extern void rl_replace_line(const char *, int);
 char **lexer(char *line, char **envp);
