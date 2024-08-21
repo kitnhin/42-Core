@@ -150,7 +150,7 @@ char **lexer(char *line, char **envp)
 // }
 // int main(int argc, char **argv, char **envp)
 // {
-// 	char *string = "$USER'$USER'\"$USER\"";
+// 	char *string = "./minishell";
 // 	char **lex = lexer(string, envp);
 // 	print_token(lex);
 // }

@@ -81,9 +81,14 @@ void	execute(char *argv, char **envp)
 	pid = fork();
 	cmd = lexer(argv, envp);
 	if (pid == 0)
-	{	
+	{
 		// cmd = lexer(argv, envp);
-		path = get_path(envp, cmd[0]);
+		if (cmd[0][0] == '.' && cmd[0][1] == '/')
+		{
+			path = ft_strdup(cmd[0]);
+		}
+		else
+			path = get_path(envp, cmd[0]);
 		execve(path, cmd, envp);
 	}
 	else
@@ -130,6 +135,14 @@ char	*get_readline_prompt(char **env)
 	return res;
 }
 
+void	process_tokens(t_data *data)
+{
+	if (data->tokens[0][0] == '.' && data->tokens[0][1] == '/')
+	{
+		data->tokens[0] = ft_substr(data->tokens[0], 2, ft_strlen(data->tokens[0]));
+	}
+	return ;
+}
 int	run(char *line, char **envp)
 {
 	t_data	data;
@@ -138,13 +151,9 @@ int	run(char *line, char **envp)
 	data.input_line = line;
 	data.envp = envp;
 	data.tokens = lexer(line, envp);
+	// process_tokens(&data);
 	if (data.tokens == NULL)
 		return 1;
-	// pid = fork();
-	// if (pid == 0)
-	// 	execute(line, envp);
-	// else
-	// 	waitpid(pid, NULL, 0);
 	execute(data.input_line, data.envp);
 	return 0;
 }

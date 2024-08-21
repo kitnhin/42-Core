@@ -68,4 +68,7 @@ $(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
 
 bonus : fclean $(BONUS_NAME)
 
+testlex:
+	gcc expansion.c lexer.c libft.a
+
 .PHONY: all clean fclean re leak bonus
