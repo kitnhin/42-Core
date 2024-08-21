@@ -129,16 +129,7 @@ char **lexer(char *line, char **envp)
 		}
 		else
 		{
-			while (lexer.line[lexer.i] && lexer.line[lexer.i] != ' '
-					&& lexer.line[lexer.i] != '|' && lexer.line[lexer.i] != '>' && lexer.line[lexer.i] != '<'
-					&& lexer.line[lexer.i] != '\'' && lexer.line[lexer.i] != '\"')
-				lexer.i++;
-			if (lexer.line[lexer.i] == '|' || lexer.line[lexer.i] == '>' || lexer.line[lexer.i] == '<' || lexer.line[lexer.i] == '\'' || lexer.line[lexer.i] == '\"')
-			{
-				lexer.res[lexer.j] = substr_expand(line, envp, lexer.i, lexer.start);
-			}
-			else
-				lexer.res[lexer.j] = substr_expand(line, envp, lexer.i, lexer.start);
+			lexer_helper3(&lexer);
 		}
 		if (lexer.line[lexer.i] == '\'' || lexer.line[lexer.i] == '\"')
 			lexer.i++;
@@ -148,18 +139,18 @@ char **lexer(char *line, char **envp)
 	return lexer.res;
 }
 
-// void	print_token(char **str)
-// {
-// 	int i = 0;
-// 	while(str[i])
-// 	{
-// 		printf("token %d = %s\n", i, str[i]);
-// 		i++;
-// 	}
-// }
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char *string = "0123\"$USER\"0123>|";
-// 	char **lex = lexer(string, envp);
-// 	print_token(lex);
-// }
+void	print_token(char **str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		printf("token %d = %s\n", i, str[i]);
+		i++;
+	}
+}
+int main(int argc, char **argv, char **envp)
+{
+	char *string = "01>23|\"$USER\"|0>>123>|";
+	char **lex = lexer(string, envp);
+	print_token(lex);
+}

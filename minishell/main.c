@@ -138,6 +138,8 @@ int	run(char *line, char **envp)
 	data.input_line = line;
 	data.envp = envp;
 	data.tokens = lexer(line, envp);
+	if (data.tokens == NULL)
+		return 1;
 	// pid = fork();
 	// if (pid == 0)
 	// 	execute(line, envp);
