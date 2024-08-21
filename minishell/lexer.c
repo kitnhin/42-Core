@@ -81,12 +81,11 @@ int lexer_helper3(t_lexing *lexer)
 			&& lexer->line[lexer->i] != '|' && lexer->line[lexer->i] != '>' && lexer->line[lexer->i] != '<'
 			&& lexer->line[lexer->i] != '\'' && lexer->line[lexer->i] != '\"')
 				lexer->i++;
-	if (lexer->line[lexer->i] == '|' || lexer->line[lexer->i] == '>' || lexer->line[lexer->i] == '<'
-		|| lexer->line[lexer->i] == '\'' || lexer->line[lexer->i] == '\"')
-	{
-		lexer->res[lexer->j] = substr_expand(lexer->line, lexer->envp, lexer->i, lexer->start);
-	}
-	else
+	// if (lexer->line[lexer->i] == '\'')
+	// {
+	// 	lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
+	// }
+	// else
 		lexer->res[lexer->j] = substr_expand(lexer->line, lexer->envp, lexer->i, lexer->start);
 	return 0;
 }
@@ -122,6 +121,7 @@ char **lexer(char *line, char **envp)
 		{
 			if (lexer_helper1(&lexer) == -1)
 				return NULL;
+			lexer.i++;
 		}
 		else if(lexer.line[lexer.i] == '|' || lexer.line[lexer.i] == '>' || lexer.line[lexer.i] == '<')
 		{
@@ -131,26 +131,26 @@ char **lexer(char *line, char **envp)
 		{
 			lexer_helper3(&lexer);
 		}
-		if (lexer.line[lexer.i] == '\'' || lexer.line[lexer.i] == '\"')
-			lexer.i++;
+		// if (lexer.line[lexer.i] == '\'' || lexer.line[lexer.i] == '\"')
+		// 	lexer.i++;
 		lexer.j++;
 	}
 	lexer.res[lexer.j] = NULL;
 	return lexer.res;
 }
 
-void	print_token(char **str)
-{
-	int i = 0;
-	while(str[i])
-	{
-		printf("token %d = %s\n", i, str[i]);
-		i++;
-	}
-}
-int main(int argc, char **argv, char **envp)
-{
-	char *string = "01>23|\"$USER\"|0>>123>|";
-	char **lex = lexer(string, envp);
-	print_token(lex);
-}
+// void	print_token(char **str)
+// {
+// 	int i = 0;
+// 	while(str[i])
+// 	{
+// 		printf("token %d = %s\n", i, str[i]);
+// 		i++;
+// 	}
+// }
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char *string = "$USER'$USER'\"$USER\"";
+// 	char **lex = lexer(string, envp);
+// 	print_token(lex);
+// }
