@@ -39,26 +39,14 @@ char	*substr_expand(char *line, char **envp, int i, int start)
 }
 int	lexer_helper1(t_lexing *lexer)
 {
-	if (lexer->line[lexer->i] == '\'')
-		{
-			lexer->start++;
-			if(handle_quotes(lexer->line, lexer->i) == -1)
-				return -1;
-			else
-				lexer->i = handle_quotes(lexer->line, lexer->i);
-			lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
-		}
-		else if (lexer->line[lexer->i] == '\"')
-		{
-			lexer->start++;
-			if(handle_quotes(lexer->line, lexer->i) == -1)
-				return -1;
-			else
-				lexer->i = handle_quotes(lexer->line, lexer->i);
-			lexer->res[lexer->j] = substr_expand(lexer->line, lexer->envp, lexer->i, lexer->start);
-		}
+	if(handle_quotes(lexer->line, lexer->i) == -1)
+		return -1;
+	else
+		lexer->i = handle_quotes(lexer->line, lexer->i) + 1;
+	lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
 	return 0;
 }
+
 int	lexer_helper2(t_lexing *lexer)
 {
 	if ((lexer->line[lexer->i] == '>' && lexer->line[lexer->i + 1] == '>') || (lexer->line[lexer->i] == '<'
@@ -81,11 +69,6 @@ int lexer_helper3(t_lexing *lexer)
 			&& lexer->line[lexer->i] != '|' && lexer->line[lexer->i] != '>' && lexer->line[lexer->i] != '<'
 			&& lexer->line[lexer->i] != '\'' && lexer->line[lexer->i] != '\"')
 				lexer->i++;
-	// if (lexer->line[lexer->i] == '\'')
-	// {
-	// 	lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
-	// }
-	// else
 		lexer->res[lexer->j] = substr_expand(lexer->line, lexer->envp, lexer->i, lexer->start);
 	return 0;
 }
@@ -139,18 +122,19 @@ char **lexer(char *line, char **envp)
 	return lexer.res;
 }
 
-// void	print_token(char **str)
-// {
-// 	int i = 0;
-// 	while(str[i])
-// 	{
-// 		printf("token %d = %s\n", i, str[i]);
-// 		i++;
-// 	}
-// }
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char *string = "./minishell";
-// 	char **lex = lexer(string, envp);
-// 	print_token(lex);
-// }
+void	print_token(char **str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		printf("token %d = %s\n", i, str[i]);
+		i++;
+	}
+}
+
+int main(int argc, char **argv, char **envp)
+{
+	char *string = "01>2334\"$US>>ER\"012>|>33";
+	char **lex = lexer(string, envp);
+	print_token(lex);
+}

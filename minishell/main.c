@@ -108,41 +108,41 @@ void	signal_handler(int sig)
 	rl_redisplay();
 }
 
-char	*get_readline_prompt(char **env)
-{
-	char	*temp1;
-	char	**temp_split;
-	char	temp_buffer[1024];
-	char	*temp2;
-	char	*res;
-	int		i;
+// char	*get_readline_prompt(char **env)
+// {
+// 	char	*temp1;
+// 	char	**temp_split;
+// 	char	temp_buffer[1024];
+// 	char	*temp2;
+// 	char	*res;
+// 	int		i;
 
-	i = 0;
-	temp1 = ft_strjoin(ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ ")), "\033[0m");
-	if (getcwd(temp_buffer,sizeof(temp_buffer)) == NULL)
-	{
-		perror("getcwd error");
-		exit(1);
-	}
-	temp_split = ft_split(temp_buffer, '/');
-	while(temp_split[i + 1] != NULL)
-		i++;
-	temp2 = ft_strjoin(temp1, temp_split[i]);
-	res = ft_strjoin(temp2, ":");
-	free(temp1);
-	free(temp2);
-	free_2d_array(temp_split);
-	return res;
-}
+// 	i = 0;
+// 	temp1 = ft_strjoin(ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ ")), "\033[0m");
+// 	if (getcwd(temp_buffer,sizeof(temp_buffer)) == NULL)
+// 	{
+// 		perror("getcwd error");
+// 		exit(1);
+// 	}
+// 	temp_split = ft_split(temp_buffer, '/');
+// 	while(temp_split[i + 1] != NULL)
+// 		i++;
+// 	temp2 = ft_strjoin(temp1, temp_split[i]);
+// 	res = ft_strjoin(temp2, ":");
+// 	free(temp1);
+// 	free(temp2);
+// 	free_2d_array(temp_split);
+// 	return res;
+// }
 
-void	process_tokens(t_data *data)
-{
-	if (data->tokens[0][0] == '.' && data->tokens[0][1] == '/')
-	{
-		data->tokens[0] = ft_substr(data->tokens[0], 2, ft_strlen(data->tokens[0]));
-	}
-	return ;
-}
+// void	process_tokens(t_data *data)
+// {
+// 	if (data->tokens[0][0] == '.' && data->tokens[0][1] == '/')
+// 	{
+// 		data->tokens[0] = ft_substr(data->tokens[0], 2, ft_strlen(data->tokens[0]));
+// 	}
+// 	return ;
+// }
 int	run(char *line, char **envp)
 {
 	t_data	data;
@@ -157,11 +157,12 @@ int	run(char *line, char **envp)
 	execute(data.input_line, data.envp);
 	return 0;
 }
+
 int main(int argc, char **argv, char **envp) 
 {
 	t_data	data;
 	pid_t	pid;
-	char *line;
+	char	*line;
 	char	*readline_prompt;
 
 	data.envp = envp;
@@ -172,10 +173,10 @@ int main(int argc, char **argv, char **envp)
     while (1)
 	{
 		readline_prompt = get_readline_prompt(envp);
-    	line = readline(readline_prompt);
+    	line = readline("Minishell$");
 		if (line == NULL)
 		{
-			write(1,"exit",4);
+			write(1,"exit\n",5);
 			break ;
 		}
 		if (line)
