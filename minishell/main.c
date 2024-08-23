@@ -1,104 +1,5 @@
 #include "minishell.h"
 
-void	free_2d_array(char **str)
-{
-	int i = 0;
-	while(str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str[i]);
-}
-void	exit_error(int n)
-{
-	if (n == 1)
-		write(2, "Error: wrong pipex usage\n", 25);
-	else
-		perror("Error");
-	exit(1);
-}
-
-void	exit_error_str(char *str, int n)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	if (n == 1)
-		write(2, "Error: command not found: ", 26);
-	else
-		write(2, "Error: no such file or directory: ", 35);
-	write(2, str, len);
-	write(2, "\n", 1);
-	exit(1);
-}
-
-char	*get_path(char **envp, char *cmd)
-{
-	int		i;
-	char	**paths_list;
-	char	*paths_string;
-	char	*full_path;
-	char	*temp;
-
-	i = 0;
-	while (ft_strncmp(envp[i], "PATH", 4) != 0)
-		i++;
-	paths_string = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-	paths_list = ft_split(paths_string, ':');
-	i = -1;
-	while (paths_list[++i])
-	{
-		temp = ft_strjoin(paths_list[i], "/");
-		full_path = ft_strjoin(temp, cmd);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(temp);
-		free(full_path);
-	}
-	free_2d_array(paths_list);
-	exit_error_str(cmd, 1);
-	return (NULL);
-}
-
-void	print_2d_array(char **cmd)
-{
-	int i = 0;
-	while(cmd[i])
-	{
-		printf("token %d = %s\n", i, cmd[i]);
-		i++;
-	}
-}
-
-void	execute(char *argv, char **envp)
-{
-	char	**cmd;
-	char	*path;
-	pid_t	pid;
-
-
-	pid = fork();
-	cmd = lexer(argv, envp);
-	if (pid == 0)
-	{
-		// cmd = lexer(argv, envp);
-		if (cmd[0][0] == '.' && cmd[0][1] == '/')
-		{
-			path = ft_strdup(cmd[0]);
-		}
-		else
-			path = get_path(envp, cmd[0]);
-		execve(path, cmd, envp);
-	}
-	else
-		waitpid(pid, NULL, 0);
-	// if (execve(path, cmd, envp) == -1)
-	// 	exit_error(0);
-	if(ft_strcmp(cmd[0], "cat") == 0)
-		ft_printf("\n");
-}
-
 void	signal_handler(int sig)
 {
 	write(1,"^C",2);
@@ -108,41 +9,60 @@ void	signal_handler(int sig)
 	rl_redisplay();
 }
 
-// char	*get_readline_prompt(char **env)
-// {
-// 	char	*temp1;
-// 	char	**temp_split;
-// 	char	temp_buffer[1024];
-// 	char	*temp2;
-// 	char	*res;
-// 	int		i;
+char	*get_readline_prompt(char **env)
+{
+	char	*temp1;
+	char	**temp_split;
+	char	temp_buffer[1024];
+	char	*temp2;
+	char	*res;
+	int		i;
 
-// 	i = 0;
-// 	temp1 = ft_strjoin(ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ ")), "\033[0m");
-// 	if (getcwd(temp_buffer,sizeof(temp_buffer)) == NULL)
-// 	{
-// 		perror("getcwd error");
-// 		exit(1);
-// 	}
-// 	temp_split = ft_split(temp_buffer, '/');
-// 	while(temp_split[i + 1] != NULL)
-// 		i++;
-// 	temp2 = ft_strjoin(temp1, temp_split[i]);
-// 	res = ft_strjoin(temp2, ":");
-// 	free(temp1);
-// 	free(temp2);
-// 	free_2d_array(temp_split);
-// 	return res;
-// }
+	i = 0;
+	temp1 = ft_strjoin(ft_strjoin("\033[34m", ft_strjoin(get_expand_string("USER", env), "@Minishell$ ")), "\033[0m");
+	if (getcwd(temp_buffer,sizeof(temp_buffer)) == NULL)
+	{
+		perror("getcwd error");
+		exit(1);
+	}
+	temp_split = ft_split(temp_buffer, '/');
+	while(temp_split[i + 1] != NULL)
+		i++;
+	temp2 = ft_strjoin(temp1, temp_split[i]);
+	res = ft_strjoin(temp2, ":");
+	free(temp1);
+	free(temp2);
+	free_2d_array(temp_split);
+	return res;
+}
 
-// void	process_tokens(t_data *data)
-// {
-// 	if (data->tokens[0][0] == '.' && data->tokens[0][1] == '/')
-// 	{
-// 		data->tokens[0] = ft_substr(data->tokens[0], 2, ft_strlen(data->tokens[0]));
-// 	}
-// 	return ;
-// }
+t_tokens*	process_tokens(t_data *data)
+{
+	t_tokens *list;
+	t_tokens *newnode;
+	int i;
+
+	i = 0;
+	while(data->tokens[i])
+	{
+		newnode = malloc(sizeof(t_tokens *));
+		newnode->token = data->tokens[i];
+		if(!list)
+		{
+			list = newnode;
+			newnode->next = NULL;
+			newnode->prev = NULL;
+		}
+		else
+		{
+			list->next = newnode;
+			newnode->prev = list;
+			newnode->next = NULL;
+		}
+		i++;
+	}
+	return list;
+}
 int	run(char *line, char **envp)
 {
 	t_data	data;
@@ -154,7 +74,7 @@ int	run(char *line, char **envp)
 	// process_tokens(&data);
 	if (data.tokens == NULL)
 		return 1;
-	execute(data.input_line, data.envp);
+	execute(data.tokens, data.envp);
 	return 0;
 }
 
@@ -173,7 +93,7 @@ int main(int argc, char **argv, char **envp)
     while (1)
 	{
 		readline_prompt = get_readline_prompt(envp);
-    	line = readline("Minishell$");
+    	line = readline(readline_prompt);
 		if (line == NULL)
 		{
 			write(1,"exit\n",5);

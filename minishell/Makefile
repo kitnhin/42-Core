@@ -1,6 +1,6 @@
 SRCS = \
 main.c rl_redisplay_line.c lexer.c expansion.c \
-execution.c
+execve.c cd.c echo.c env.c lexer2.c pwd.c
 
 BONUS_SRCS = \
 pipex_bonus.c utils_bonus.c
