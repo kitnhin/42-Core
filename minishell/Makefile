@@ -11,8 +11,6 @@ BONUS_OBJ = $(BONUS_SRCS:.c=.o)
 
 NAME = minishell
 
-BONUS_NAME = pipex_bonus
-
 CC = gcc
 
 CFLAGS =
@@ -61,15 +59,12 @@ fclean : clean
 
 re: fclean all
 
-$(BONUS_NAME) : $(BONUS_OBJ) $(LIB)
-	@echo "${GREEN}compiling bonus...${NC}"
-	@$(CC) $(BONUS_OBJ) -lft -L. -o pipex libft.a
-	@echo "${GREEN}compile bonus success!!${NC}"
-	@echo "${GREEN}------------------------------${NC}"
-
 bonus : fclean $(BONUS_NAME)
 
 testlex:
-	gcc expansion.c lexer.c libft.a
+	gcc expansion.c lexer.c lexer2.c libft.a 
+
+testlist:
+	gcc expansion.c lexer.c lexer2.c parsing_list.c libft.a
 
 .PHONY: all clean fclean re leak bonus

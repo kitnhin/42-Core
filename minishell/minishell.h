@@ -7,13 +7,15 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include "libft/libft.h"
+#include <string.h>
+#include <limits.h>
 
 
 #define string 1
 #define operator 2
 #define single_quote_string 3
 #define double_quote_string 4
-#define pipe 5
+#define Pipe 5
 #define redir_input 6
 #define heredoc 7
 #define redir_out_overwrite 8
@@ -26,7 +28,7 @@
 #define outfile_overwrite 24
 #define outfile_append 25
 //-----------------------------------------
-#define simple_command 31
+#define s_command 31
 
 
 typedef struct s_data
@@ -80,6 +82,10 @@ typedef struct s_pipe
 	int *pipe_fd;
 } t_pipe;
 
+typedef struct s_heredoc
+{
+	char *limiter;
+} t_heredoc;
 
 typedef struct s_node
 {
@@ -128,4 +134,13 @@ int	env(char **envp);
 
 //cd
 int cd(char **cmd, char **envp);
+
+void	print_token_array(char **str);
+int	check_valid_list(t_tokens *list);
+int check_operator(int n);
+void	identify_tokens_list2(t_tokens *list);
+void	identify_tokens_list(t_tokens *tokens);
+t_tokens* init_token_list(t_data *data);
+char **lexer(char *line, char **envp);
+void print_tokens_list(t_tokens *list) ;
 #endif

@@ -30,19 +30,24 @@ char	*expansion(char *line, char **envp)
 		if (line[j] == '$')
 		{
 			start = j + 1;
-			while(line[j] && line[j] != ' ')
-				j++;
-			temp = get_expand_string(ft_substr(line, start, j - start), envp);
-			if (temp != NULL)
+			if(line[start] == '\0')
+				res[i] = '$';
+			else
 			{
-				k = 0;
-				while(temp[k])
+				while(line[j] && line[j] != ' ')
+					j++;
+				temp = get_expand_string(ft_substr(line, start, j - start), envp);
+				if (temp != NULL)
 				{
-					res[i] = temp[k];
-					i++;
-					k++;
+					k = 0;
+					while(temp[k])
+					{
+						res[i] = temp[k];
+						i++;
+						k++;
+					}
+					free(temp);
 				}
-				free(temp);
 			}
 		}
 		res[i++] = line[j++];

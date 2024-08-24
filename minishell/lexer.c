@@ -65,7 +65,7 @@ void	identify_tokens_list(t_tokens *tokens)
 	while(tokens)
 	{
 		if(tokens->token[0] == '|')
-			tokens->type = pipe;
+			tokens->type = Pipe;
 		else if(tokens->token[0] == '>')
 		{
 			if(tokens->token[1] == '>')
@@ -117,12 +117,11 @@ void	identify_tokens_list2(t_tokens *list)
 	{
 		if(list == first_token)
 		{
-			if(first_token->type == string)
-				first_token->type = command;
+			first_token->type = command;
 		}
 		else
 		{
-			if(list->type == string && list->prev->type == pipe)
+			if(list->type == string && list->prev->type == Pipe)
 				list->type = command;
 			else if(list->type == string && list->prev && list->prev->type == redir_input)
 				list->type = infile;
@@ -139,7 +138,7 @@ void	identify_tokens_list2(t_tokens *list)
 
 int check_operator(int n)
 {
-	if(n == pipe || n == redir_input
+	if(n == Pipe || n == redir_input
 		|| n == redir_out_append || n == redir_out_overwrite
 		|| n == heredoc)
 		return 1;
@@ -199,7 +198,7 @@ void	print_token_array(char **str)
 // int	main(int argc, char **argv, char **envp)
 // {
 // 	t_tokens *list;
-// 	char *str = "cat |< infile >| outfile";
+// 	char *str = "cat INVALID$";
 // 	t_data data;
 // 	data.tokens = lexer(str,envp);
 // 	print_token_array(data.tokens);
