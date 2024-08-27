@@ -63,9 +63,43 @@ t_tokens*	process_tokens(t_data *data)
 	}
 	return list;
 }
+int the_real_actual_main(t_data *data)
+{
+    t_node *list;
+	pid_t pid;
+
+    list = data->instr_list;
+	// print_final_list(list);
+    while (list)
+    {
+        if (list->type == s_command)
+        {
+            if (list->prev && list->prev->type == Pipe)
+            {
+                dup2(list->prev->piping.pipe_fd[0], 0);
+            }
+            if (list->next && list->next->type == Pipe)
+            {
+                dup2(list->prev->piping.pipe_fd[1], 1);
+            }
+            if (list->next && list->next->type == redir_input)
+            {
+                dup2(list->next->redir_in.fd, 0);
+            }
+            if (list->next && (list->next->type == redir_out_append || list->next->type == redir_out_overwrite))
+            {
+                dup2(list->next->redir_out.fd, 1);
+            }
+            execute(list->simple_cmd.array, data->envp);
+        }
+        list = list->next;
+    }
+    return 0;
+}
 int	run(char *line, char **envp)
 {
 	t_data	data;
+	t_tokens	*list;
 	pid_t	pid;
 
 	data.input_line = line;
@@ -74,7 +108,17 @@ int	run(char *line, char **envp)
 	// process_tokens(&data);
 	if (data.tokens == NULL)
 		return 1;
-	execute(data.tokens, data.envp);
+	list = init_token_list(&data);
+	identify_tokens_list(list);
+	identify_tokens_list2(list);
+	if(check_valid_list(list) == 1)
+		exit(1);
+	// printf("----------------------");
+	data.instr_list = make_final_list(list);
+	// execute(data.tokens, data.envp);
+	// print_final_list(data.instr_list);
+	if(data.instr_list != NULL)
+		the_real_actual_main(&data);
 	return 0;
 }
 

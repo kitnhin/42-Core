@@ -30,14 +30,6 @@
 //-----------------------------------------
 #define s_command 31
 
-
-typedef struct s_data
-{
-	char	**envp;
-	char	*input_line;
-	char	**tokens;
-}	t_data;
-
 typedef struct s_lexing
 {
 	char *line;
@@ -79,7 +71,7 @@ typedef struct s_redir_in
 
 typedef struct s_pipe
 {
-	int *pipe_fd;
+	int pipe_fd[2];
 } t_pipe;
 
 typedef struct s_heredoc
@@ -99,6 +91,13 @@ typedef struct s_node
 	struct s_node *prev;
 }	t_node;
 
+typedef struct s_data
+{
+	char	**envp;
+	char	*input_line;
+	char	**tokens;
+	t_node	*instr_list;
+}	t_data;
 
 extern void rl_replace_line(const char *, int);
 char **lexer(char *line, char **envp);
@@ -123,6 +122,10 @@ int	lexer_helper2(t_lexing *lexer);
 int lexer_helper3(t_lexing *lexer);
 int	init_lexer_struct(t_lexing *lexer, char **envp, char *line);
 
+
+//parse_list
+t_node	*make_final_list(t_tokens *tokens);
+
 //pwd
 int	pwd(void);
 
@@ -142,5 +145,6 @@ void	identify_tokens_list2(t_tokens *list);
 void	identify_tokens_list(t_tokens *tokens);
 t_tokens* init_token_list(t_data *data);
 char **lexer(char *line, char **envp);
-void print_tokens_list(t_tokens *list) ;
+void print_tokens_list(t_tokens *list);
+void	print_final_list(t_node *list);
 #endif

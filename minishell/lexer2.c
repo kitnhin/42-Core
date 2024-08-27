@@ -24,6 +24,7 @@ int handle_quotes(char *line, int i)
 			return -1;
 		}
 	}
+	i--;
 	return i;
 }
 
@@ -39,11 +40,23 @@ char	*substr_expand(char *line, char **envp, int i, int start)
 }
 int	lexer_helper1(t_lexing *lexer)
 {
-	if(handle_quotes(lexer->line, lexer->i) == -1)
-		return -1;
+	lexer->start++;
+	if(lexer->line[lexer->i] == '\'')
+	{
+		if(handle_quotes(lexer->line, lexer->i) == -1)
+			return -1;
+		else
+			lexer->i = handle_quotes(lexer->line, lexer->i) + 1;
+		lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
+	}
 	else
-		lexer->i = handle_quotes(lexer->line, lexer->i) + 1;
-	lexer->res[lexer->j] = ft_substr(lexer->line, lexer->start, lexer->i - lexer->start);
+	{
+		if(handle_quotes(lexer->line, lexer->i) == -1)
+			return -1;
+		else
+			lexer->i = handle_quotes(lexer->line, lexer->i) + 1;
+		lexer->res[lexer->j] = substr_expand(lexer->line, lexer->envp, lexer->i, lexer->start);
+	}
 	return 0;
 }
 

@@ -198,7 +198,7 @@ void	print_token_array(char **str)
 // int	main(int argc, char **argv, char **envp)
 // {
 // 	t_tokens *list;
-// 	char *str = "cat INVALID$";
+// 	char *str = "echo \"$USER\"";
 // 	t_data data;
 // 	data.tokens = lexer(str,envp);
 // 	print_token_array(data.tokens);

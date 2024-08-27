@@ -25,6 +25,20 @@ void	init_pipe_node(t_node *node)
 
 // 	}
 // }
+
+void	error_str(int n, char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (n == 1)
+		write(2, "Error: command not found: ", 26);
+	else
+		write(2, "Error: no such file or directory: ", 35);
+	write(2, str, len);
+	write(2, "\n", 1);
+}
+
 t_node	*make_final_list(t_tokens *tokens)
 {
 	t_node *list = NULL;
@@ -44,20 +58,26 @@ t_node	*make_final_list(t_tokens *tokens)
 			init_pipe_node(newnode);
 			token = token->next;
 		}
-		// else if(token->type == redir_input)
-		// {
-		// 	newnode->type = redir_input;
-		// 	if(token->next->type == infile)
-		// 	{
-		// 		newnode->redir_in.in_file = token->next->token;
-		// 		newnode->redir_in.fd = open(newnode->redir_in.in_file, O_RDONLY);
-		// 		token = token->next;
-		// 	}
-		// 	else
-		// 	{
-		// 		printf("infile redir error");
-		// 	}
-		// }
+		else if(token->type == redir_input)
+		{
+			newnode->type = redir_input;
+			if(token->next->type == infile)
+			{
+				newnode->redir_in.in_file = token->next->token;
+				newnode->redir_in.fd = open(newnode->redir_in.in_file, O_RDONLY);
+				if(newnode->redir_in.fd == -1)
+				{
+					error_str(2, newnode->redir_in.in_file);
+					return NULL;
+				}
+				token = token->next;
+				token = token->next;
+			}
+			else
+			{
+				printf("infile redir error");
+			}
+		}
 		else if(token->type == redir_out_append)
 		{
 			newnode->type = redir_out_append;
@@ -103,10 +123,7 @@ t_node	*make_final_list(t_tokens *tokens)
 				newnode->simple_cmd.array[i] = ft_strdup(token->token);
 				i++;
 				// j++;
-				if(token->next)
-					token = token->next;
-				else
-					break;
+				token = token->next;
 			}
 			// newnode->simple_cmd.args[j] = NULL;
 			newnode->simple_cmd.array[i] = NULL;
@@ -157,29 +174,29 @@ void	print_final_list(t_node *list)
 		{
 			printf("|outfile: %s, fd : %d|", list->redir_out.outfile, list->redir_out.fd);
 		}
-		// if (list->type == Pipe)
-		// {
-		// 	printf("pipe fd[0] = %d, fd[1] = %d", list->piping.pipe_fd[0], list->piping.pipe_fd[1]);
-		// }
+		if (list->type == Pipe)
+		{
+			printf("pipe fd[0] = %d, fd[1] = %d", list->piping.pipe_fd[0], list->piping.pipe_fd[1]);
+		}
 		list = list->next;
 		printf("\n");
 	}
 }
-int	main(int argc, char **argv, char **envp)
-{
-	t_tokens *list;
-	t_node	*final_list;
-	char *str = "ls -l -f > outfile";
-	t_data data;
-	data.tokens = lexer(str,envp);
-	// print_token_array(data.tokens);
-	printf("-----------------------------------\n");
-	list = init_token_list(&data);
-	identify_tokens_list(list);
-	identify_tokens_list2(list);
-	if(check_valid_list(list) == 1)
-		exit(1);
-	// print_tokens_list(list);
-	final_list = make_final_list(list);
-	print_final_list(final_list);
-}
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_tokens *list;
+// 	t_node	*final_list;
+// 	char *str = "cat testfile >> outfile";
+// 	t_data data;
+// 	data.tokens = lexer(str,envp);
+// 	// print_token_array(data.tokens);
+// 	printf("-----------------------------------\n");
+// 	list = init_token_list(&data);
+// 	identify_tokens_list(list);
+// 	identify_tokens_list2(list);
+// 	if(check_valid_list(list) == 1)
+// 		exit(1);
+// 	// print_tokens_list(list);
+// 	final_list = make_final_list(list);
+// 	print_final_list(final_list);
+// }
