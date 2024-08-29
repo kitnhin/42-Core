@@ -113,7 +113,6 @@ t_node	*make_final_list(t_tokens *tokens)
 			newnode->type = s_command;
 			newnode->simple_cmd.cmd = ft_strdup(token->token);
 			newnode->simple_cmd.array = malloc(sizeof(char *) * 1000);
-			newnode->simple_cmd.args = malloc(sizeof(char *) * 1000);
 			newnode->simple_cmd.array[i] = ft_strdup(token->token);
 			i++;
 			token = token->next;
@@ -186,7 +185,7 @@ void	print_final_list(t_node *list)
 // {
 // 	t_tokens *list;
 // 	t_node	*final_list;
-// 	char *str = "cat testfile >> outfile";
+// 	char *str = "echo \"0324$USER 234\"";
 // 	t_data data;
 // 	data.tokens = lexer(str,envp);
 // 	// print_token_array(data.tokens);

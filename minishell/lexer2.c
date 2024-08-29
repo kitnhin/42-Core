@@ -86,6 +86,31 @@ int lexer_helper3(t_lexing *lexer)
 	return 0;
 }
 
+int	count_lexer_array(char *line)
+{
+	int	count;
+	int	i;
+
+	count = 3;
+	i = 0;
+	while(line[i])
+	{
+		if(line[i] == '\"' || line[i] == '\'')
+		{
+			i++;
+			while(line[i] && (line[i] == '\"' || line[i] == '\''))
+				i++;
+			count++;
+			if(line[i] == '\0')
+				return count;
+		}
+		if(line[i] == ' ' || line[i] == '|' || line[i] == '>' || line[i] == '<')
+			count++;
+			i++;
+	}
+	return count;
+}
+
 int	init_lexer_struct(t_lexing *lexer, char **envp, char *line)
 {
 	lexer->envp = envp;
@@ -93,7 +118,7 @@ int	init_lexer_struct(t_lexing *lexer, char **envp, char *line)
 	lexer->i = 0;
 	lexer->start = 0;
 	lexer->j = 0;
-	lexer->res = malloc(sizeof(char *) * 1024);
+	lexer->res = malloc(sizeof(char *) * count_lexer_array(line) + 1);
 	if (!lexer->res)
 	{
 		printf("Memory allocation failed\n");

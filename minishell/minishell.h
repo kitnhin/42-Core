@@ -52,7 +52,6 @@ typedef struct s_token
 typedef struct s_simple_command
 {
 	char *cmd;
-	char **args;
 	char **array;
 } t_simple_command;
 

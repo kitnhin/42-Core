@@ -188,6 +188,11 @@ void print_tokens_list(t_tokens *list)
 void	print_token_array(char **str)
 {
 	int i = 0;
+	if(!str)
+	{
+		printf("ERORRR LOLLL\n");
+		return ;
+	}
 	while(str[i])
 	{
 		printf("token %d = %s\n", i, str[i]);
@@ -211,9 +216,9 @@ void	print_token_array(char **str)
 // 	print_tokens_list(list);
 // }
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char *str = "012\"3$USER01\"23";
-// 	char **lex = lexer(str, envp);
-// 	print_token(lex);
-// }
+int main(int argc, char **argv, char **envp)
+{
+	char *str = "echo \"fsfsffsf";
+	char **lex = lexer(str, envp);
+	print_token_array(lex);
+}
