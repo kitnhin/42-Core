@@ -112,6 +112,4 @@ void	execute(char **cmd, char **envp)
 		waitpid(pid, NULL, 0);
 	// if (execve(path, cmd, envp) == -1)
 	// 	exit_error(0);
-	if(ft_strcmp(cmd[0], "cat") == 0)
-		ft_printf("\n");
 }
