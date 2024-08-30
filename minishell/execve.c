@@ -66,7 +66,7 @@ int buildins(char **cmd, t_data **data)
 		// data->envp = unset_array(data->envp, cmd[1]);
 		// return 0;
 		unset(&(*data)->envp, cmd[1]);
-		print_env((*data)->envp);
+		// print_env((*data)->envp);
 		return 0;
 		// return(unset(&data->envp, cmd[1]));
 	}

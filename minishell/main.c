@@ -96,45 +96,46 @@ int the_real_actual_main(t_data *data)
     }
     return 0;
 }
-int	run(char *line, char **envp)
+int	run(char *line, t_data *data)
 {
-	t_data	data;
 	t_tokens	*list;
 	pid_t	pid;
 
-	data.input_line = line;
-	data.envp = malloc(sizeof(char *) * (total_strings(envp) + 1));
-	malloc_dup_env(data.envp, envp);
-	data.tokens = lexer(line, envp);
+	data->input_line = line;
+	data->tokens = lexer(line, data->envp);
 	// process_tokens(&data);
-	if (data.tokens == NULL)
+	if (data->tokens == NULL)
 	{
-		free(data.envp);
+		free(data->envp);
 		return 1;
 	}
-	list = init_token_list(&data);
+	list = init_token_list(data);
 	identify_tokens_list(list);
 	identify_tokens_list2(list);
 	if(check_valid_list(list) == 1)
-		exit(1);
+		return(1);
 	// printf("----------------------");
-	data.instr_list = make_final_list(list);
+	data->instr_list = make_final_list(list);
 	// execute(data.tokens, data.envp);
 	// print_final_list(data.instr_list);
-	if(data.instr_list != NULL)
-		the_real_actual_main(&data);
+	if(data->instr_list != NULL)
+		the_real_actual_main(data);
 	return 0;
 }
 
+void	init_data_struct(t_data *data, char **envp)
+{
+	data->envp = malloc(sizeof(char *) * (total_strings(envp) + 1));
+	malloc_dup_env(data->envp, envp);
+}
 int main(int argc, char **argv, char **envp) 
 {
 	pid_t	pid;
+	t_data	data;
 	char	*line;
 	char	*readline_prompt;
 
-	char **env = envp;
-    rl_initialize();
-
+	init_data_struct(&data, envp);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
     while (1)
@@ -151,7 +152,7 @@ int main(int argc, char **argv, char **envp)
 		// print_history();
 		if (line)
 		{
-			run(line, env);
+			run(line, &data);
 		}
     }
     return 0;
