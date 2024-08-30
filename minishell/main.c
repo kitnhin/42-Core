@@ -90,7 +90,7 @@ int the_real_actual_main(t_data *data)
             {
                 dup2(list->next->redir_out.fd, 1);
             }
-            execute(list->simple_cmd.array, data->envp);
+            execute(list->simple_cmd.array, &data);
         }
         list = list->next;
     }
@@ -103,11 +103,15 @@ int	run(char *line, char **envp)
 	pid_t	pid;
 
 	data.input_line = line;
-	data.envp = envp;
+	data.envp = malloc(sizeof(char *) * (total_strings(envp) + 1));
+	malloc_dup_env(data.envp, envp);
 	data.tokens = lexer(line, envp);
 	// process_tokens(&data);
 	if (data.tokens == NULL)
+	{
+		free(data.envp);
 		return 1;
+	}
 	list = init_token_list(&data);
 	identify_tokens_list(list);
 	identify_tokens_list2(list);
@@ -124,12 +128,11 @@ int	run(char *line, char **envp)
 
 int main(int argc, char **argv, char **envp) 
 {
-	t_data	data;
 	pid_t	pid;
 	char	*line;
 	char	*readline_prompt;
 
-	data.envp = envp;
+	char **env = envp;
     rl_initialize();
 
 	signal(SIGINT, signal_handler);
@@ -148,7 +151,7 @@ int main(int argc, char **argv, char **envp)
 		// print_history();
 		if (line)
 		{
-			run(line, envp);
+			run(line, env);
 		}
     }
     return 0;

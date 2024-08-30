@@ -108,10 +108,11 @@ char	*expansion(char *line, char **envp);
 
 //utils
 void	free_2d_array(char **str);
+void	print_2d_array(char **cmd);
 
 //execve
 char	*get_path(char **envp, char *cmd);
-void	execute(char **cmd, char **envp);
+int		execute(char **cmd, t_data **data);
 
 //lexer2
 int handle_quotes(char *line, int i);
@@ -132,7 +133,7 @@ int	pwd(void);
 int	echo(char **cmd);
 
 //env
-int	env(char **envp);
+int	env(t_data *data);
 
 //cd
 int cd(char **cmd, char **envp);
@@ -146,4 +147,14 @@ t_tokens* init_token_list(t_data *data);
 char **lexer(char *line, char **envp);
 void print_tokens_list(t_tokens *list);
 void	print_final_list(t_node *list);
+
+//export
+void	malloc_dup_env(char **dest, char **env);
+int total_strings(char **env);
+int export(char ***env, char *str);
+
+//unset
+int unset(char ***env, char *str);
+void	print_env(char **env);
+char **unset_array(char **env, char *str);
 #endif

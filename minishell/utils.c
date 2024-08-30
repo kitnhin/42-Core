@@ -12,3 +12,13 @@ void	free_2d_array(char **str)
 	}
 	free(str);
 }
+
+void	print_2d_array(char **cmd)
+{
+	int i = 0;
+	while(cmd[i])
+	{
+		printf("token %d = %s\n", i, cmd[i]);
+		i++;
+	}
+}

@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-int	env(char **envp)
+int	env(t_data *data)
 {
 	int i;
 
 	i = 0;
-	while(envp[i])
+	while(data->envp[i])
 	{
-		printf("%s\n", envp[i]);
+		printf("%s\n", data->envp[i]);
 		i++;
 	}
 	return 0;

@@ -4,6 +4,8 @@ char **lexer(char *line, char **envp)
 {
 	t_lexing lexer;
 
+	if(!line || line[0] == '\0')
+		return NULL;
 	if (init_lexer_struct(&lexer, envp, line) == 1)
 		return NULL;
 	while (lexer.line[lexer.i])
@@ -216,9 +218,9 @@ void	print_token_array(char **str)
 // 	print_tokens_list(list);
 // }
 
-int main(int argc, char **argv, char **envp)
-{
-	char *str = "echo \"fsfsffsf";
-	char **lex = lexer(str, envp);
-	print_token_array(lex);
-}
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char *str = "echo \"fsfsffsf";
+// 	char **lex = lexer(str, envp);
+// 	print_token_array(lex);
+// }

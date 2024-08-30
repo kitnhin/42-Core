@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-void	free_2d_array(char **str)
-{
-	int i = 0;
-	while(str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str[i]);
-}
 void	exit_error(int n)
 {
 	if (n == 1)
@@ -61,26 +51,54 @@ char	*get_path(char **envp, char *cmd)
 	return (NULL);
 }
 
-void	print_2d_array(char **cmd)
+int buildins(char **cmd, t_data **data)
 {
-	int i = 0;
-	while(cmd[i])
-	{
-		printf("token %d = %s\n", i, cmd[i]);
-		i++;
-	}
-}
-
-void	execute(char **cmd, char **envp)
-{
-	char	*path;
-	pid_t	pid;
-
 	if(ft_strcmp(cmd[0], "cd") == 0)
 	{
-		cd(cmd, envp);
-		return ;
+		return(cd(cmd, (*data)->envp));
 	}
+	if(ft_strcmp(cmd[0], "export") == 0)
+	{
+		return(export(&(*data)->envp, cmd[1]));
+	}
+	if(ft_strcmp(cmd[0], "unset") == 0)
+	{
+		// data->envp = unset_array(data->envp, cmd[1]);
+		// return 0;
+		unset(&(*data)->envp, cmd[1]);
+		print_env((*data)->envp);
+		return 0;
+		// return(unset(&data->envp, cmd[1]));
+	}
+	if(ft_strcmp(cmd[0], "env") == 0)
+	{
+		return(env(*data));
+	}
+	if(ft_strcmp(cmd[0], "pwd") == 0)
+	{
+		return(pwd());
+	}
+	if(ft_strcmp(cmd[0], "echo") == 0)
+	{
+		return(echo(cmd));
+	}
+	return 1;
+}
+int	execute(char **cmd, t_data **data)
+{
+	char	*path;
+	int		*exit_status;
+	pid_t	pid;
+
+	if (ft_strcmp(cmd[0], "echo") == 0 ||
+		ft_strcmp(cmd[0], "pwd") == 0 ||
+		ft_strcmp(cmd[0], "env") == 0 ||
+		ft_strcmp(cmd[0], "unset") == 0 ||
+		ft_strcmp(cmd[0], "export") == 0 ||
+		ft_strcmp(cmd[0], "cd") == 0)
+		{
+			return(buildins(cmd, data));
+		}
 	pid = fork();
 	if (cmd == NULL)
 		exit_error(0);
@@ -89,27 +107,13 @@ void	execute(char **cmd, char **envp)
 		// cmd = lexer(argv, envp);
 		if (cmd[0][0] == '.' && cmd[0][1] == '/')
 			path = ft_strdup(cmd[0]);
-		else if(ft_strcmp(cmd[0], "pwd") == 0)
-		{
-			pwd();
-			exit(0);
-		}
-		else if(ft_strcmp(cmd[0], "echo") == 0)
-		{
-			echo(cmd);
-			exit(0);
-		}
-		else if(ft_strcmp(cmd[0], "env") == 0)
-		{
-			env(envp);
-			exit(0);
-		}
 		else
-			path = get_path(envp, cmd[0]);
-		execve(path, cmd, envp);
+			path = get_path((*data)->envp, cmd[0]);
+		return(execve(path, cmd, (*data)->envp));
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, exit_status, 0);
 	// if (execve(path, cmd, envp) == -1)
 	// 	exit_error(0);
+	return(*exit_status);
 }
