@@ -25,6 +25,7 @@ void	print_2d_array(char **cmd)
 
 int	exit_process()
 {
+	write(1,"exit\n", 5);
 	exit(0);
 	return 0;
 }
