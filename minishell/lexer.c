@@ -173,12 +173,12 @@ int	check_valid_list(t_tokens *list)
 
 	if(first_node->type == Pipe)
 	{
-		ft_printf("syntax error near unexpected token '|'", last_node->token);
+		ft_printf("syntax error near unexpected token '|'\n", last_node->token);
 		return 1;
 	}
 	if(check_operator(last_node->type) == 1)
 		{
-			ft_printf("syntax error near unexpected token '%s'", last_node->token);
+			ft_printf("syntax error near unexpected token '%s'\n", last_node->token);
 			return 1;
 		}
 	if(last_node->type == dollar_sign && last_node->prev)

@@ -111,6 +111,8 @@ int	execute(char **cmd, t_data **data)
 		// cmd = lexer(argv, envp);
 		if (cmd[0][0] == '.' && cmd[0][1] == '/')
 			path = ft_strdup(cmd[0]);
+		else if(cmd[0][0] == '/')
+			path = ft_strdup(cmd[0]);
 		else
 			path = get_path((*data)->envp, cmd[0]);
 		return(execve(path, cmd, (*data)->envp));

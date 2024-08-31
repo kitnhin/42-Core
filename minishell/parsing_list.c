@@ -181,21 +181,21 @@ void	print_final_list(t_node *list)
 		printf("\n");
 	}
 }
-int	main(int argc, char **argv, char **envp)
-{
-	t_tokens *list;
-	t_node	*final_list;
-	char *str = "< testfile | cat | sort >> outfile";
-	t_data data;
-	data.tokens = lexer(str,envp);
-	// print_token_array(data.tokens);
-	printf("-----------------------------------\n");
-	list = init_token_list(&data);
-	identify_tokens_list(list);
-	identify_tokens_list2(list);
-	if(check_valid_list(list) == 1)
-		exit(1);
-	// print_tokens_list(list);
-	final_list = make_final_list(list);
-	print_final_list(final_list);
-}
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_tokens *list;
+// 	t_node	*final_list;
+// 	char *str = "< testfile | cat | sort >> outfile";
+// 	t_data data;
+// 	data.tokens = lexer(str,envp);
+// 	// print_token_array(data.tokens);
+// 	printf("-----------------------------------\n");
+// 	list = init_token_list(&data);
+// 	identify_tokens_list(list);
+// 	identify_tokens_list2(list);
+// 	if(check_valid_list(list) == 1)
+// 		exit(1);
+// 	// print_tokens_list(list);
+// 	final_list = make_final_list(list);
+// 	print_final_list(final_list);
+// }
