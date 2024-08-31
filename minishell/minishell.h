@@ -109,6 +109,7 @@ char	*expansion(char *line, char **envp);
 //utils
 void	free_2d_array(char **str);
 void	print_2d_array(char **cmd);
+int		exit_process();
 
 //execve
 char	*get_path(char **envp, char *cmd);

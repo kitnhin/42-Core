@@ -119,7 +119,22 @@ void	identify_tokens_list2(t_tokens *list)
 	{
 		if(list == first_token)
 		{
-			first_token->type = command;
+			if(list->type != string) 
+			{
+				if(list->type == redir_input)
+					list->next->type = infile;
+				else if(list->type == redir_out_append)
+					list->next->type = outfile_append;
+				else if(list->type == redir_out_overwrite)
+					list->next->type = outfile_overwrite;
+				if(list->type != Pipe)
+				{
+					list = list->next;
+					list = list->next;
+				}
+			}
+			if(list->type == string)
+				list->type = command;
 		}
 		else
 		{
@@ -149,11 +164,18 @@ int check_operator(int n)
 int	check_valid_list(t_tokens *list)
 {
 	t_tokens *last_node;
+	t_tokens *first_node;
 	t_tokens *temp;
 
+	first_node = list;
 	last_node = get_last_node(list);
 	temp = list;
 
+	if(first_node->type == Pipe)
+	{
+		ft_printf("syntax error near unexpected token '|'", last_node->token);
+		return 1;
+	}
 	if(check_operator(last_node->type) == 1)
 		{
 			ft_printf("syntax error near unexpected token '%s'", last_node->token);

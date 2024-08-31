@@ -63,12 +63,7 @@ int buildins(char **cmd, t_data **data)
 	}
 	if(ft_strcmp(cmd[0], "unset") == 0)
 	{
-		// data->envp = unset_array(data->envp, cmd[1]);
-		// return 0;
-		unset(&(*data)->envp, cmd[1]);
-		// print_env((*data)->envp);
-		return 0;
-		// return(unset(&data->envp, cmd[1]));
+		return(unset(&(*data)->envp, cmd[1]));
 	}
 	if(ft_strcmp(cmd[0], "env") == 0)
 	{
@@ -81,6 +76,14 @@ int buildins(char **cmd, t_data **data)
 	if(ft_strcmp(cmd[0], "echo") == 0)
 	{
 		return(echo(cmd));
+	}
+	if(ft_strcmp(cmd[0], "echo") == 0)
+	{
+		return(echo(cmd));
+	}
+	if(ft_strcmp(cmd[0], "exit") == 0)
+	{
+		return(exit_process());
 	}
 	return 1;
 }
@@ -95,7 +98,8 @@ int	execute(char **cmd, t_data **data)
 		ft_strcmp(cmd[0], "env") == 0 ||
 		ft_strcmp(cmd[0], "unset") == 0 ||
 		ft_strcmp(cmd[0], "export") == 0 ||
-		ft_strcmp(cmd[0], "cd") == 0)
+		ft_strcmp(cmd[0], "cd") == 0 ||
+		ft_strcmp(cmd[0], "exit") == 0)
 		{
 			return(buildins(cmd, data));
 		}

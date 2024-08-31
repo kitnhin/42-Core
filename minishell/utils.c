@@ -22,3 +22,9 @@ void	print_2d_array(char **cmd)
 		i++;
 	}
 }
+
+int	exit_process()
+{
+	exit(0);
+	return 0;
+}
