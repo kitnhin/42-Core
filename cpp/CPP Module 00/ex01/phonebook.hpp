@@ -1,3 +1,6 @@
+#IFNDEF PHONEBOOK_HPP
+#define PHONEBOOK_HPP
+
 #include <iostream>
 #include <string>
 
@@ -30,3 +33,5 @@ class Phonebook
 	void	do_search(int curr_index);
 
 };
+
+#endif
