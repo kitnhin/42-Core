@@ -24,6 +24,15 @@ void	Harl::error(void)
 	cout << "This is unacceptable! I want to speak to the manager now." << endl;
 }
 
+Harl::Harl()
+{
+	cout << "Harl is made :)" << endl;
+}
+
+Harl::~Harl()
+{
+	cout << "Harl destroyed :(" << endl;
+}
 void    Harl::complain(std::string level)
 {
 	void (Harl::*functions[])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
@@ -40,7 +49,7 @@ void    Harl::complain(std::string level)
 	return ;
 }
 
-//array of function pointers explanation::
+// array of function pointers explanation::
 // basically make an array of pointers which point to different functions
 // first void is to specify functions return void
 // second (void) is to specify functions take in void

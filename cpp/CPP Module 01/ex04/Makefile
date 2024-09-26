@@ -1,9 +1,9 @@
 SRCS = \
-main.cpp Harl.cpp
+main.cpp
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = harl
+NAME = sed
 
 CC = c++
 

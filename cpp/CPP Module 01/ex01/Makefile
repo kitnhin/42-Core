@@ -1,9 +1,9 @@
 SRCS = \
-main.cpp Harl.cpp
+main.cpp Zombie.cpp zombieHorde.cpp
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = harl
+NAME = zombiehorde
 
 CC = c++
 
