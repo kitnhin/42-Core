@@ -40,15 +40,36 @@ void    Harl::complain(std::string level)
 {
 	void (Harl::*functions[])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 	std::string levels[] = {"debug", "info", "warning", "error"};
-	for(int i = 0; i < 4; i++)
+	int i = 0;
+	while(i < 4)
 	{
 		if(level == levels[i])
+			break;
+		i++;
+	}
+	switch(i)
+	{
+		case(0):
 		{
-			(this->*functions[i])();
-			return;
+			(this->*functions[0])();
+			break;
+		}
+		case(1):
+		{
+			(this->*functions[1])();
+			break;
+		}
+		case(2):
+		{
+			(this->*functions[2])();
+			break;
+		}
+		case(3):
+		{
+			(this->*functions[3])();
+			break;
 		}
 	}
-	cout << "invalid input bruh" << endl;
 	return ;
 }
 
