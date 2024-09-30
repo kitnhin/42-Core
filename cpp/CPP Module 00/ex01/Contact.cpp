@@ -1,4 +1,4 @@
-#include "phonebook.hpp"
+#include "Phonebook.hpp"
 
 using std::string;
 using std::cout;
@@ -27,25 +27,25 @@ string format_string(string str)
 void	Contact::display_contact_short(int index)
 {
 	cout << "|         " << index + 1 << "|";
-	cout << format_string(_firstname) << "|";
-    cout << format_string(_lastname) << "|";
-    cout << format_string(_nickname) << "|" << endl;
+	cout << format_string(firstname) << "|";
+    cout << format_string(lastname) << "|";
+    cout << format_string(nickname) << "|" << endl;
 }
 
 void	Contact::display_full_contact()
 {
-	cout << "Firstname : " << _firstname << endl;
-	cout << "Lastname : " << _lastname << endl;
-	cout << "Nickname : " << _nickname << endl;
-	cout << "Phonenumber : " << _phonenum << endl;
-	cout << "Darkest Secret : " << _secret << endl;
+	cout << "Firstname : " << firstname << endl;
+	cout << "Lastname : " << lastname << endl;
+	cout << "Nickname : " << nickname << endl;
+	cout << "Phonenumber : " << phonenum << endl;
+	cout << "Darkest Secret : " << secret << endl;
 }
 
 void	Contact::setcontact(string firstname, string lastname, string nickname, string phonenum, string secret)
 {
-	_firstname = firstname;
-	_lastname = lastname;
-	_nickname = nickname;
-	_phonenum = phonenum;
-	_secret = secret;
+	this->firstname = firstname;
+	this->lastname = lastname;
+	this->nickname = nickname;
+	this->phonenum = phonenum;
+	this->secret = secret;
 }

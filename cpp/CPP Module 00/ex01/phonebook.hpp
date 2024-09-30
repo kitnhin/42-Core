@@ -10,11 +10,11 @@ class Contact
 {
 	private:
 
-	string _firstname;
-	string _lastname;
-	string _nickname;
-	string _phonenum;
-	string _secret;
+	string firstname;
+	string lastname;
+	string nickname;
+	string phonenum;
+	string secret;
 
 	public:
 	void	setcontact(string firstname, string lastname, string nickname, string phonenum, string secret);
