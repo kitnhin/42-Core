@@ -1,5 +1,6 @@
 SRCS = \
-main.c parsing1.c parsing_utils.c utils.c checkmap.c img.c
+main.c parsing1.c parsing_utils.c utils.c checkmap.c img.c background.c \
+player1.c print.c raycast.c movement.c
 
 TESTIMG = testimg.c
 
@@ -9,7 +10,7 @@ NAME = cub3d
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS =
 
 LIB = libft.a
 

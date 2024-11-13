@@ -1,1 +1,4 @@
 *.o
+test.c
+test2.c
+*.a

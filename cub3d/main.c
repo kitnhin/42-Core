@@ -6,16 +6,23 @@ void	init_game_data(t_game *game)
 	game->map = NULL;
 	game->textures.ceilingcolor = malloc(sizeof(int) * 3);
 	game->textures.floorcolor = malloc(sizeof(int) * 3);
-	game->textures.north_texture = NULL;
-	game->textures.south_texture = NULL;
-	game->textures.east_texture = NULL;
-	game->textures.west_texture = NULL;
+	game->screen.img_ptr = mlx_new_image(game->mlx, WIN_WIDTH, WIN_HEIGHT);
+	game->screen.img_data = (int*)mlx_get_data_addr(game->screen.img_ptr, &game->screen.bitsperpixel, &game->screen.linesize, &game->screen.endian);
+	game->player.curr_dir = 0;
+	game->player.curr_tileX = 0;
+	game->player.curr_tileY = 0;
+	game->player.dirX = 0;
+	game->player.dirY = 0;
+	game->player.planeX = 0;
+	game->player.planeY = 0;
+	game->player.posX = 0;
+	game->player.posY = 0;
 }
 
 int	main_helper(char **argv, t_game *game)
 {
-	int		fd;
-	int		len;
+	int			fd;
+	int			len;
 
 	len = ft_strlen(argv[1]);
 	if(argv[1][len - 1] != 'b' || argv[1][len - 2] != 'u' || argv[1][len - 3] != 'c' || argv[1][len - 4] != '.')
@@ -25,19 +32,20 @@ int	main_helper(char **argv, t_game *game)
 		return(print_error("Error: invalid file\n"));
 	init_game_data(game);
 	game->filedata = readfile(fd);
-	// print_2d_array(game.filedata);
-	printf("--------------------------------------------\n");
 	get_game_data(game);
 	if (check_map(game) != 0)
-		return (1);
+		ft_exit();
+	init_player_struct(game, &game->player);
 	print_textures(game);
+	print_player_stats(&game->player);
+	// castRay(game, game->player.posX, game->player.posY, game->player.curr_dir);
 	return(0);
 }
 
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->window);
-	exit(0);
+	ft_exit();
 	return (0);
 }
 
@@ -70,6 +78,19 @@ int	handle_keypress(int keycode, t_game *game)
 		|| keycode == WKEY || keycode == AKEY
 		|| keycode == SKEY || keycode == DKEY)
 		print_key(keycode);
+	if(keycode == RIGHT || keycode == LEFT)
+	{
+		rotate_player(game, keycode);
+		printf("curr dir: %f\n", game->player.curr_dir);
+		// castRay(game, game->player.posX, game->player.posY, game->player.curr_dir);
+	}
+	if(keycode == WKEY || keycode == AKEY
+		|| keycode == SKEY || keycode == DKEY)
+	{
+		move_player(game, keycode);
+		print_player_stats(&game->player);
+		// castRay(game, game->player.posX, game->player.posY, game->player.curr_dir);
+	}
 	else if (keycode == ESC)
 	{
 		while (game->map[i])
@@ -83,19 +104,19 @@ int	handle_keypress(int keycode, t_game *game)
 	return (0);
 }
 
-
 int main(int argc, char **argv)
 {
-	t_game game;
-	int n;
-	if(argc != 2)
-		return(print_error("Syntax incorrect\n"));
-	n = main_helper(argv, &game);
+	t_game	game;
+
+	if (argc != 2)
+		return (print_error("Syntax incorrect\n"));
 	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, 1000, 1000, "cub3d");
-	img_main_control_function(&game);
+	game.window = mlx_new_window(game.mlx, WIN_HEIGHT, WIN_WIDTH, "cub3d");
+	if(main_helper(argv, &game) != 0)
+		return (1);
 	mlx_hook(game.window, 2, 1L << 0, handle_keypress, &game);
+	mlx_loop_hook(game.mlx, &render_screen, &game);
 	mlx_hook(game.window, 17, 0, &close_window, &game);
 	mlx_loop(game.mlx);
-	return n;
+	return 0;
 }

@@ -27,7 +27,9 @@ int	get_textures_2(t_game *game, int i)
 
 	if (game->filedata[i] && ft_strncmp(game->filedata[i], "F ", 2) == 0)
 	{
-		temp = ft_split(game->filedata[i] + 3, ',');
+		temp = ft_split(game->filedata[i] + 2, ',');
+		if (count_2d_arr(temp) != 3)
+			return (-2);
 		game->textures.floorcolor[0] = ft_atoi(temp[0]);
 		game->textures.floorcolor[1] = ft_atoi(temp[1]);
 		game->textures.floorcolor[2] = ft_atoi(temp[2]);
@@ -38,7 +40,9 @@ int	get_textures_2(t_game *game, int i)
 	free_2d_array(temp);
 	if (game->filedata[i] && ft_strncmp(game->filedata[i], "C ", 2) == 0)
 	{
-		temp = ft_split(game->filedata[i] + 3, ',');
+		temp = ft_split(game->filedata[i] + 2, ',');
+		if (count_2d_arr(temp) != 3)
+			return (-2);
 		game->textures.ceilingcolor[0] = ft_atoi(temp[0]);
 		game->textures.ceilingcolor[1] = ft_atoi(temp[1]);
 		game->textures.ceilingcolor[2] = ft_atoi(temp[2]);
@@ -82,7 +86,7 @@ void	get_game_data(t_game *game)
 	if(i == -2)
 	{
 		print_error("smth wrong about floor or ceiling colors in .cub file\n");
-		return ;
+		ft_exit() ;
 	}
 	while(game->filedata[i] == NULL || (game->filedata[i] && (game->filedata[i][0] == '\n' || game->filedata[i][0] == '\0')))
 		i++;
