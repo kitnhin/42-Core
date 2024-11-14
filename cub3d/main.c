@@ -19,6 +19,11 @@ void	init_game_data(t_game *game)
 	game->player.posY = 0;
 }
 
+void	init_texs(t_game *game)
+{
+	game->n_tex.img_ptr = mlx_xpm_file_to_image(game->mlx, "textures/testimg2.xpm", &game->n_tex.img_width, &game->n_tex.img_height);
+	game->n_tex.img_data = (int*)mlx_get_data_addr(game->n_tex.img_ptr, &game->n_tex.bitsperpixel, &game->n_tex.linesize, &game->n_tex.endian);
+}
 int	main_helper(char **argv, t_game *game)
 {
 	int			fd;
@@ -38,6 +43,7 @@ int	main_helper(char **argv, t_game *game)
 	init_player_struct(game, &game->player);
 	print_textures(game);
 	print_player_stats(&game->player);
+	init_texs(game);
 	// castRay(game, game->player.posX, game->player.posY, game->player.curr_dir);
 	return(0);
 }

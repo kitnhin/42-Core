@@ -19,8 +19,6 @@ void	init_ray_values(t_game *game, int x)
 	game->ray.rayDirY = game->player.dirY + (game->player.planeY * cameraX);
 	game->ray.deltaDistX = sqrt(1 + (game->ray.rayDirY * game->ray.rayDirY) / (game->ray.rayDirX * game->ray.rayDirX));
 	game->ray.deltaDistY = sqrt(1 + (game->ray.rayDirX * game->ray.rayDirX) / (game->ray.rayDirY * game->ray.rayDirY));
-	// game->ray.deltaDistX = fabs(1/ game->ray.rayDirX);
-	// game->ray.deltaDistY = fabs(1 / game->ray.rayDirY);
 	game->ray.mapX = game->player.curr_tileX;
 	game->ray.mapY = game->player.curr_tileY;
 }
@@ -48,6 +46,8 @@ void	calc_first_part_of_ray_distance(t_game *game)
 		game->ray.sideDistY = (TILE_SIZE - game->player.posY + game->player.curr_tileY) * game->ray.deltaDistY;
 	}
 }
+
+//increasing sideDistX last will ALWAYS ALWAYS hit the horizontal side
 
 void	DDA(t_game *game)
 {
@@ -93,41 +93,6 @@ void	raycasting(t_game *game, int x)
 	calc_first_part_of_ray_distance(game);
 	DDA(game);
 	calc_perp_dist(game);
-}
-
-//--texture--
-
-void	calc_tex(t_game *game)
-{
-	double wallX;
-    if (game->ray.verti_side_hit == 0)
-        wallX = game->player.posY + game->ray.perp_wall_dist * game->ray.rayDirY;
-    else
-        wallX = game->player.posX + game->ray.perp_wall_dist * game->ray.rayDirX;
-    wallX -= floor(wallX);
-
-	
-}
-
-
-void	draw_line(t_game *game, int x)
-{
-	int		line_height;
-    double	draw_start;
-	double	draw_end;
-
-	line_height = (int)(WIN_HEIGHT / game->ray.perp_wall_dist);
-	draw_start = (WIN_HEIGHT / 2) - (line_height / 2);
-    if (draw_start < 0)
-		draw_start = 0.00001;
-	draw_end = (WIN_HEIGHT / 2) + (line_height / 2);
-    if (draw_end >= WIN_HEIGHT)
-		draw_end = WIN_HEIGHT - 1;
-	while (draw_start < draw_end)
-	{
-		game->screen.img_data[(int)draw_start * WIN_WIDTH + x] = 0xFFFFFF;
-		draw_start++;
-	}
 }
 
 int	render_screen(t_game *game)

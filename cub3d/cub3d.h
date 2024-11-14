@@ -20,8 +20,8 @@
 # define DKEY 100
 
 
-#define WIN_HEIGHT 1000
-#define WIN_WIDTH 1000
+#define WIN_HEIGHT 800
+#define WIN_WIDTH 800
 
 #define PI 3.141592653589793238462643383279502884197
 #define TILE_SIZE 1
@@ -48,6 +48,8 @@ typedef struct s_ray
 	int		mapY;
 	double	drawstart;
 	double	drawend;
+
+	int		texX;
 }	t_ray;
 
 typedef struct s_textures
@@ -90,18 +92,36 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_draw
+{
+	t_img	tex;
+
+	double	line_height;
+	double	draw_start;
+	double	draw_end;
+	double	step;
+	double	tex_pos;
+	int	tex_y;
+	int color;
+}	t_draw;
+
 typedef struct s_game
 {
 	t_textures	textures;
 	t_player	player;
 	t_img		screen;
 	t_ray		ray;
+	t_draw		draw;
 
 	char		**filedata;
 	char		**map;
 	void		*mlx;
 	void		*window;
-	
+
+	t_img	n_tex;
+	t_img	s_tex;
+	t_img	w_tex;
+	t_img	e_tex;
 }	t_game;
 
 typedef struct s_mapchecks
@@ -158,5 +178,8 @@ void		move_front(t_game *game);
 void		move_back(t_game *game);
 void		move_left(t_game *game);
 void		move_right(t_game *game);
+
+//draw
+void	draw_line(t_game *game, int x);
 
 #endif

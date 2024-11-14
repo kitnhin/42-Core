@@ -1,6 +1,6 @@
 SRCS = \
 main.c parsing1.c parsing_utils.c utils.c checkmap.c img.c background.c \
-player1.c print.c raycast.c movement.c
+player1.c print.c raycast.c movement.c draw.c
 
 TESTIMG = testimg.c
 
