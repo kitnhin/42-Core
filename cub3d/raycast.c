@@ -47,7 +47,7 @@ void	calc_first_part_of_ray_distance(t_game *game)
 	}
 }
 
-//increasing sideDistX last will ALWAYS ALWAYS hit the horizontal side
+//when u increase sideDistX ray will ALWAYSSSS hit the vertical side
 
 void	DDA(t_game *game)
 {
@@ -57,13 +57,13 @@ void	DDA(t_game *game)
 		{
 			game->ray.sideDistX += game->ray.deltaDistX;
 			game->ray.mapX += game->ray.stepX;
-			game->ray.verti_side_hit = 0;
+			game->ray.hori_side_hit = 0;
 		}
 		else
 		{
 			game->ray.sideDistY += game->ray.deltaDistY;
 			game->ray.mapY += game->ray.stepY;
-			game->ray.verti_side_hit = 1;
+			game->ray.hori_side_hit = 1;
 		}
 		if (game->map[game->ray.mapY][game->ray.mapX] == '1')
 			break;
@@ -72,7 +72,7 @@ void	DDA(t_game *game)
 
 void	calc_perp_dist(t_game *game)
 {
-	if (game->ray.verti_side_hit == 0)
+	if (game->ray.hori_side_hit == 0)
 	{
 		if (game->ray.stepX == -1)
 			game->ray.perp_wall_dist = (game->ray.mapX - game->player.posX + 1.0) / game->ray.rayDirX;

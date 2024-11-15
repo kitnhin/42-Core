@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <math.h>
 #include "libft/libft.h"
+#include <stdbool.h>
 
 //Definition
 # define UP 65362
@@ -20,13 +21,15 @@
 # define DKEY 100
 
 
-#define WIN_HEIGHT 800
-#define WIN_WIDTH 800
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
 
-#define PI 3.141592653589793238462643383279502884197
-#define TILE_SIZE 1
-#define MOV_SPEED 0.2
-#define ROT_SPEED 4
+# define PI 3.141592653589793238462643383279502884197
+# define TILE_SIZE 1
+# define MOV_SPEED 0.1
+# define ROT_SPEED 3
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
 
 //structs
 
@@ -40,7 +43,7 @@ typedef struct s_ray
 	int		stepX;
 	int		stepY;
 	int		hitflag;
-	int		verti_side_hit;
+	int		hori_side_hit;
 	double	perp_wall_dist;
 	double	sideDistX;
 	double	sideDistY;
@@ -61,6 +64,16 @@ typedef struct s_textures
 	int		*floorcolor;
 	int		*ceilingcolor;
 }t_textures;
+
+typedef struct	s_movement
+{
+	bool	front;
+	bool	back;
+	bool	right;
+	bool	left;
+	bool	rot_left;
+	bool	rot_right;
+}	t_movement;
 
 typedef struct s_player
 {
@@ -112,6 +125,7 @@ typedef struct s_game
 	t_img		screen;
 	t_ray		ray;
 	t_draw		draw;
+	t_movement	movement;
 
 	char		**filedata;
 	char		**map;
@@ -163,8 +177,8 @@ void	draw_ceiling(t_game *game);
 int		locate_player_row(char **map);
 int		locate_player_col(char **map);
 void	init_player_struct(t_game* game, t_player *player);
-void	rotate_player(t_game *game, int key);
-void	move_player(t_game *game, int key);
+void	rotate_player(t_game *game);
+void	move_player(t_game *game);
 
 //print
 void	print_player_stats(t_player *player);

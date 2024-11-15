@@ -89,10 +89,10 @@ void	init_player_struct(t_game* game, t_player *player)
 	game->player.curr_dir = 0;
 }
 
-void	rotate_player(t_game *game, int key)
+void	rotate_player(t_game *game)
 {
 	double	temp;
-	if (key == LEFT)
+	if (game->movement.rot_left == true)
 	{
 		temp = game->player.dirX;
 		game->player.dirX = game->player.dirX * cos(deg_to_rad(-ROT_SPEED)) - game->player.dirY * sin(deg_to_rad(-ROT_SPEED));
@@ -101,7 +101,7 @@ void	rotate_player(t_game *game, int key)
 		game->player.planeX = game->player.planeX * cos(deg_to_rad(-ROT_SPEED)) - game->player.planeY * sin(deg_to_rad(-ROT_SPEED));
 		game->player.planeY = game->player.planeY * cos(deg_to_rad(-ROT_SPEED)) + temp * sin(deg_to_rad(-ROT_SPEED));
 	}
-	if (key == RIGHT)
+	if (game->movement.rot_right == true)
 	{
 		temp = game->player.dirX;
 		game->player.dirX = game->player.dirX * cos(deg_to_rad(ROT_SPEED)) - game->player.dirY * sin(deg_to_rad(ROT_SPEED));
@@ -112,45 +112,15 @@ void	rotate_player(t_game *game, int key)
 	}
 }
 
-// PLS PLS RMB GOING DOWN INCREASES Y UNITS NOT DECREASE
-//therefore need to invert calculations for Y components
-
-// void	move_player(t_game *game, int key)
-// {
-// 	if (key == WKEY)
-// 	{
-// 		game->player.posX += cos(deg_to_rad(game->player.curr_dir)) * MOV_SPEED;
-// 		game->player.posY -= sin(deg_to_rad(game->player.curr_dir)) * MOV_SPEED;
-// 		game->player
-// 	}
-// 	else if (key == SKEY)
-// 	{
-// 		game->player.posX += cos(deg_to_rad(game->player.curr_dir + 180)) * MOV_SPEED;
-// 		game->player.posY -= sin(deg_to_rad(game->player.curr_dir + 180)) * MOV_SPEED;
-// 	}
-// 	else if (key == AKEY)
-// 	{
-// 		game->player.posX += cos(deg_to_rad(game->player.curr_dir + 90)) * MOV_SPEED;
-// 		game->player.posY -= sin(deg_to_rad(game->player.curr_dir + 90)) * MOV_SPEED;
-// 	}
-// 	else if (key == DKEY)
-// 	{
-// 		game->player.posX += cos(deg_to_rad(game->player.curr_dir + 270)) * MOV_SPEED;
-// 		game->player.posY -= sin(deg_to_rad(game->player.curr_dir + 270)) * MOV_SPEED;
-// 	}
-// 	game->player.curr_tileX = (int)game->player.posX / TILE_SIZE;
-// 	game->player.curr_tileY = (int)game->player.posY / TILE_SIZE;
-// }
-
-void	move_player(t_game *game, int key)
+void	move_player(t_game *game)
 {
-	if (key == WKEY)
+	if (game->movement.front == true)
 		move_front(game);
-	else if (key == SKEY)
+	else if (game->movement.back == true)
 		move_back(game);
-	else if (key == AKEY)
+	else if (game->movement.left == true)
 		move_left(game);
-	else if (key == DKEY)
+	else if (game->movement.right == true)
 		move_right(game);
 	game->player.curr_tileX = (int)game->player.posX / TILE_SIZE;
 	game->player.curr_tileY = (int)game->player.posY / TILE_SIZE;

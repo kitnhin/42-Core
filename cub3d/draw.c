@@ -13,17 +13,13 @@ void	calc_tex(t_game *game)
 {
 	double wallX;
 
-    if (game->ray.verti_side_hit == 0)
+    if (game->ray.hori_side_hit == 0)
         wallX = game->player.posY + game->ray.perp_wall_dist * game->ray.rayDirY;
     else
         wallX = game->player.posX + game->ray.perp_wall_dist * game->ray.rayDirX;
     wallX -= floor(wallX);
 
 	game->ray.texX = (int)(wallX * game->n_tex.img_width);
-	// if (game->ray.verti_side_hit == 0 && game->ray.rayDirX > 0)
-    //     game->ray.texX = game->n_tex.img_width - game->ray.texX - 1;
-    // if (game->ray.verti_side_hit == 1 && game->ray.rayDirY < 0)
-    //     game->ray.texX = game->n_tex.img_width - game->ray.texX - 1;
 }
 
 void	calc_draw_values(t_game *game)
@@ -46,17 +42,42 @@ void	actually_drawing(t_game *game, int x)
 	int	y;
 
 	y = game->draw.draw_start - 1;
-	game->draw.step = (double)game->n_tex.img_height / game->draw.line_height;
+	game->draw.step = (double)game->draw.tex.img_height / game->draw.line_height;
 	game->draw.tex_pos = (game->draw.draw_start - WIN_HEIGHT / 2 + game->draw.line_height / 2) * game->draw.step;
 	while(++y < game->draw.draw_end)
 	{
-		game->draw.color = game->n_tex.img_data[game->n_tex.img_height * (int)game->draw.tex_pos + (game->ray.texX % game->n_tex.img_width)];
+		game->draw.color = game->draw.tex.img_data[game->n_tex.img_height * (int)game->draw.tex_pos + (game->ray.texX % game->n_tex.img_width)];
 		game->screen.img_data[y * WIN_WIDTH + x] = game->draw.color;
 		game->draw.tex_pos += game->draw.step;
 	}
 }
+
+// see which texture to draw
+// line 1: if hit vertical side (east or west)
+// line 3: then see if rayDirX < 0, means ray travelling to the left, also means east direction
+// line 8: if hit horizontal side (north or south)
+// line 10: then see if rayDirY < 0, that means travelling up (in this game y decrease as it goes up), so north dir
+void	get_tex_to_draw(t_game *game)
+{
+	if (game->ray.hori_side_hit == 0)
+	{
+		if (game->ray.rayDirX < 0)
+			game->draw.tex = game->e_tex;
+		else
+			game->draw.tex = game->w_tex;
+	}
+	else
+	{
+		if (game->ray.rayDirY < 0)
+			game->draw.tex= game->n_tex;
+		else
+			game->draw.tex = game->s_tex;
+	}
+}
+
 void	draw_line(t_game *game, int x)
 {
+	get_tex_to_draw(game);
 	calc_draw_values(game);
 	calc_tex(game);
 	actually_drawing(game, x);
