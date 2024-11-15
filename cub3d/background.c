@@ -14,7 +14,7 @@ int	convert_to_hex(int *arr)
 	return res;
 }
 // shift red value by 16 bits because red is the most left component
-// same thing
+// shift green by 8 bits cuz middle component
 
 void	draw_rectangle_into_dest_img(int color, int *data, int start, int end)
 {

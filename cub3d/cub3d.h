@@ -26,7 +26,7 @@
 
 # define PI 3.141592653589793238462643383279502884197
 # define TILE_SIZE 1
-# define MOV_SPEED 0.1
+# define MOV_SPEED 0.065
 # define ROT_SPEED 3
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
@@ -81,7 +81,6 @@ typedef struct s_player
 	double	posY;
 	int		curr_tileX;
 	int		curr_tileY;
-	double	curr_dir;
 	double	dirX;
 	double	dirY;
 	double	planeX;
@@ -180,12 +179,15 @@ void	init_player_struct(t_game* game, t_player *player);
 void	rotate_player(t_game *game);
 void	move_player(t_game *game);
 
+//player2
+char	get_player_start_dir(char **map);
+int	locate_player_col(char **map);
+int	locate_player_row(char **map);
+
 //print
 void	print_player_stats(t_player *player);
 void	print_textures(t_game *game);
-
-//raycast
-int			render_screen(t_game *game);
+void	print_key(int keycode);
 
 //movement
 void		move_front(t_game *game);
@@ -195,5 +197,17 @@ void		move_right(t_game *game);
 
 //draw
 void	draw_line(t_game *game, int x);
+
+//handle
+int	handle_keypress(int keycode, t_game *game);
+int	handle_keyrelease(int keycode, t_game *game);
+int	loop_handle(t_game *game);
+
+//handle_fts
+void	change_movement_status(t_game *game, int keycode, int status);
+void	render_screen(t_game *game);
+
+//raycast
+void	raycasting(t_game *game, int x);
 
 #endif

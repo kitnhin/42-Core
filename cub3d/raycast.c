@@ -94,20 +94,3 @@ void	raycasting(t_game *game, int x)
 	DDA(game);
 	calc_perp_dist(game);
 }
-
-int	render_screen(t_game *game)
-{
-	int	x;
-
-	x = 0;
-	draw_ceiling(game);
-	draw_floor(game);
-	while (x < WIN_WIDTH)
-	{
-		raycasting(game, x);
-		draw_line(game, x);
-		x++;
-	}
-	mlx_put_image_to_window(game->mlx, game->window, game->screen.img_ptr, 0, 0);
-	return (1);
-}

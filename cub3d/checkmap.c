@@ -88,9 +88,6 @@ int	check_map(t_game *game)
 		return (1);
 	}
 	check_bounds(&check, locate_player_row(check.map), locate_player_col(check.map));
-	// printf("++++++++++++++++++++++++++++++++++++++\n");
-	// print_2d_array(check.map);
-	// printf("++++++++++++++++++++++++++++++++++++++\n");
 	if(check_bounds_helper(check.map) == 1)
 	{
 		print_error("map is NOT bounded by walls\n");
