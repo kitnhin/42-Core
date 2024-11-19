@@ -3,7 +3,7 @@
 void	init_game_data(t_game *game)
 {
 	game->mlx = mlx_init();
-	game->window = mlx_new_window(game->mlx, WIN_HEIGHT, WIN_WIDTH, "cub3d");
+	game->window = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	game->filedata = NULL;
 	game->map = NULL;
 	game->textures.ceilingcolor = malloc(sizeof(int) * 3);

@@ -6,9 +6,6 @@
 // rayDirX = 1
 // rayDirY = -0.66 (left) to 0.66 (right)
 // line 4 and 5: calculates how much the rays length increase due to one unit of increase in X or Y
-// First main part : calculate distance of ray from player to first grid intersection
-// second main part : DDA 
-// third part : calculate perp dist
 
 void	init_ray_values(t_game *game, int x)
 {
@@ -87,6 +84,10 @@ void	calc_perp_dist(t_game *game)
 			game->ray.perp_wall_dist = (game->ray.mapY - game->player.posY) / game->ray.rayDirY;
 	}
 }
+// First main part : calculate distance of ray from player to first grid intersection
+// second main part : DDA 
+// third main part : calculate perp dist
+
 void	raycasting(t_game *game, int x)
 {
 	init_ray_values(game, x);

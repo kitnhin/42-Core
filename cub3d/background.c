@@ -35,7 +35,7 @@ void	draw_floor(t_game *game)
 	int		hex_color;
 
 	hex_color = convert_to_hex(game->textures.floorcolor);
-	draw_rectangle_into_dest_img(hex_color, game->screen.img_data, WIN_WIDTH / 2, WIN_WIDTH);
+	draw_rectangle_into_dest_img(hex_color, game->screen.img_data, WIN_HEIGHT / 2, WIN_HEIGHT);
 }
 
 void	draw_ceiling(t_game *game)
@@ -43,5 +43,5 @@ void	draw_ceiling(t_game *game)
 	int		hex_color;
 
 	hex_color = convert_to_hex(game->textures.ceilingcolor);
-	draw_rectangle_into_dest_img(hex_color, game->screen.img_data, 0, WIN_WIDTH / 2);
+	draw_rectangle_into_dest_img(hex_color, game->screen.img_data, 0, WIN_HEIGHT / 2);
 }

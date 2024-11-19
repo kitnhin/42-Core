@@ -21,11 +21,10 @@
 # define DKEY 100
 
 
-# define WIN_HEIGHT 800
-# define WIN_WIDTH 800
-
+# define WIN_HEIGHT 900
+# define WIN_WIDTH 900
 # define PI 3.141592653589793238462643383279502884197
-# define TILE_SIZE 1
+# define TILE_SIZE 1 // not working one lol dont change (i lazy fix dy)
 # define MOV_SPEED 0.065
 # define ROT_SPEED 3
 # define KEY_PRESS 2
