@@ -1,63 +1,57 @@
 #include <iostream>
-#include <string>
 #include <fstream>
 
 using std::cout;
 using std::endl;
-using std::string;
 using std::ifstream;
 using std::ofstream;
+using std::string;
 
-int replace_str(char **argv, string buffer)
+int replacewords(string buffer, char **argv)
 {
-	ofstream outfile;
-	outfile.open(string(argv[1]) + ".replace");
-	if(outfile.is_open())
+	string outfile_name = (string)argv[1] + ".replace";
+	string ori_word = (string)argv[2];
+	string new_word = (string)argv[3];
+
+	ofstream outfile(outfile_name);
+	if(!outfile.is_open())
 	{
-		for(int i = 0; buffer[i] != '\0' ; i++)
-		{
-			int pos = buffer.find(argv[2], i);
-			if(pos == i)
-			{
-				outfile << argv[3];
-				i += string(argv[2]).size() - 1; // need -1 if not will skip the next char
-				// tried without the -1 and without the else below, will have weird behavior when the substr is at the EOF
-			}
-			else
-				outfile << buffer[i];
-		}
-		return 0;
-	}
-	else
-	{
-		cout << "Error cannnot open outfile: " << string(argv[1]) << ".replace";
+		cout << "failed to open outfile rip" << endl;
 		return 1;
 	}
+	for(int i = 0; buffer[i] != '\0'; i++)
+	{
+		int pos = buffer.find(ori_word, i); //find postion of next word that we wanna replace
+		if(i == pos)
+		{
+			outfile << new_word;
+			i += string(ori_word).length() - 1;
+		}
+		else
+			outfile << buffer[i];
+	}
+	return 0;
 }
 int main(int argc, char **argv)
 {
+	char temp;
 	string buffer;
-	char c;
 	if(argc != 4)
 	{
-		cout << "Dont try to be funny, syntax : <filename> <s1> <s2>" << endl;
+		cout << "dont try to be funny use the correct syntax" << endl;
 		return 1;
 	}
-	ifstream infile;
-	infile.open(argv[1]);
-	if(infile.is_open())
+	ifstream infile(argv[1]); //constructor can help open
+	if(!infile.is_open())
 	{
-		while(infile >> std::noskipws >> c)
-			buffer += c;
-		buffer += '\0';
-		infile.close();
-		if (replace_str(argv, buffer) == 1)
-			return 1;
-		return 0;
-	}
-	else
-	{
-		cout << "unable to open file" << endl;
+		cout << "infile cant be opened" << endl;
 		return 1;
 	}
+	while (infile >> std::noskipws >>temp)
+		buffer += temp;
+	buffer += '\0';
+	infile.close();
+	if (replacewords(buffer, argv))
+		return 1; 
+	return 0;
 }
