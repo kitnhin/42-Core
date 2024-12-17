@@ -1,4 +1,3 @@
-#include <string>
 #include <iostream>
 
 using std::string;
@@ -7,34 +6,36 @@ using std::endl;
 
 int main()
 {
-	string str =  "HI THIS IS BRAIN";
-	string *stringPTR =  &str;
-	string &stringREF = str; 
-	//ref is an alias (alternate name) of the original var, basically allow u to modify the original value, like dereferancing in c (*x)++;
+	string str = "HI THIS IS BRAIN";
+	string *stringPTR = &str;
+	string &stringREF = str;
 
-	cout << "String: " << str << endl;
-	cout << "Pointer to string: " << stringPTR << endl;
-	cout << "Reference to string: " << stringREF << endl;
+	cout << "============details==========" << endl;
+	cout << "String:" << str << endl;
+	cout << "Pointer to string :" << stringPTR << endl;
+	cout << "Reference to string : " << stringREF << endl;
+
+	cout << "===========address===========" << endl;
 	cout << "Address of string: " << &str << endl;
-	cout << "Address of pointer: " << &stringPTR << endl;
-	cout << "Address of reference: " << &stringREF << endl;
+	cout << "Address of stringPTR: " << &stringPTR << endl;
+	cout << "Address of stringREF: " << &stringREF << endl;
 
-	//ref and original have the same address
+	// no we change the value of str
 	
-	cout << "==================================================" << endl;
+	str = "YOUR MOM HAS NO BRAIN (pls excuse me im doin this at 3am)";
+	cout << "NEW STRING : " << endl;
 
-	stringREF = "HI THIS IS NOT NOT BRAIN"; //change the ref
+	cout << "============details==========" << endl;
+	cout << "String:" << str << endl;
+	cout << "Pointer to string :" << stringPTR << endl;
+	cout << "Reference to string : " << stringREF << endl;
 
-	cout << "String: " << str << endl;
-	cout << "Pointer to string: " << stringPTR << endl;
-	cout << "Reference to string: " << stringREF << endl;
-
-	// as shown, the original str also change
-
+	cout << "===========address===========" << endl;
 	cout << "Address of string: " << &str << endl;
-	cout << "Address of pointer: " << &stringPTR << endl;
-	cout << "Address of reference: " << &stringREF << endl;
-
-	// address remain the same
-	return 0;
+	cout << "Address of stringPTR: " << &stringPTR << endl;
+	cout << "Address of stringREF: " << &stringREF << endl;
 }
+
+//as we can see, reference is just an alternate name for something
+//it has the same address and value
+//if u change the value for the str, the value for reference also change accordinly

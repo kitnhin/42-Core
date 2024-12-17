@@ -2,7 +2,7 @@
 
 int main()
 {
-	int n = 1;
+	int n = 5;
 	if(n < 1)
 	{
 		std::cout << "bruh wth" << std::endl;

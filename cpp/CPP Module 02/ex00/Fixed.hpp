@@ -17,8 +17,7 @@ class Fixed
 	public:
 	Fixed();
 	Fixed(const Fixed &obj);
-	Fixed::Fixed(const int n);
-	Fixed::Fixed(const float n);
+	Fixed(const int n);
 	Fixed& operator=(const Fixed &obj);
 	~Fixed();
 	int getRawBits(void) const;

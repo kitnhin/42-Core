@@ -75,5 +75,6 @@ std::ostream &operator<<(std::ostream &os, const Fixed &fixed)
 	return os;
 }
 
-//in this case need the overload for the operator << cuz in the main they want << to print the fixed data
-//type, but << doesnt know how to print that so need to tell it how lol.
+//in this case need the overload for the operator << 
+//cuz in the main they want << to print the FIXED class
+//but << doesnt know how to print that so need to tell it how lol.
