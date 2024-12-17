@@ -33,7 +33,11 @@ void		MateriaSource::learnMateria(AMateria* type)
 	if(i < 4)
 		memory[i] = type;
 	else
+	{
 		cout << "no slots left to learn Materia" << endl;
+		if (type != NULL)
+			free(type);
+	}
 }
 
 AMateria*	MateriaSource::createMateria(std::string const &type)
