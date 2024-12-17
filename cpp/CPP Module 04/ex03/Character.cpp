@@ -16,6 +16,8 @@ std::string const &Character::getName() const
 
 void	Character::equip(AMateria* m)
 {
+	if(!m)
+		cout << "NULL material lol" << endl;
 	int i = 0;
 	while(i < 4 && this->inventory[i])
 		i++;
@@ -67,6 +69,14 @@ Character::Character(const Character &obj)
 
 Character::~Character()
 {
+	// for(int i = 0; i < 4; i++)
+	// 	if(inventory[i])
+	// 		delete inventory[i];
+	// for(int i = 0; i < 100; i++)
+	// 	if(unequipped[i])
+	// 		delete unequipped[i];
+
+	//^^^ dunno why dont need to free wth
 }
 
 Character &Character::operator=(const Character &obj)
