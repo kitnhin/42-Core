@@ -55,7 +55,7 @@ string	Form::getName() const
 	return(this->name);
 }
 
-bool	Form::getSign()
+bool	Form::getSign() const
 {
 	return(this->sign);
 }
@@ -78,4 +78,16 @@ char const *Form::GradeTooLowException::what() const throw()
 char const *Form::GradeTooHighException::what() const throw()
 {
 	return ("[Form] Grade too high");
+}
+
+std::ostream &operator<<(std::ostream &os, Form const &obj)
+{
+	os << obj.getName();
+	if(obj.getSign() == true)
+		os << " has been signed. ";
+	else
+		os << " has not been signed. ";
+	os << "Minimum grade to sign: " << obj.get_sign_grade_req();
+	os << " Minimum grade to exec: " << obj.get_exec_grade_req();
+	return os;
 }

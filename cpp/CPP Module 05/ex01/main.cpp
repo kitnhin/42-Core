@@ -54,4 +54,10 @@ int main()
 	{
 		std::cerr << e.what() << endl;
 	}
+	Form Elaina("Elaina", 1, 50);
+	Bureaucrat Miku("Miku", 10);
+	Miku.signForm(Elaina);
+	cout << Elaina << endl;
+	Form Firefly("Firefly",1,1);
+	cout << Firefly << endl;
 }
