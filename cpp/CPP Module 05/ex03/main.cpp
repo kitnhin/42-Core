@@ -58,20 +58,19 @@ int main()
 	}
 	
 	//failure test
+	Intern *miyabi = new Intern();
+	Bureaucrat *belle = new Bureaucrat("belle", 1);
 	try
 	{
-		Intern *miyabi = new Intern();
-		Bureaucrat *belle = new Bureaucrat("belle", 1);
 		AForm *ellen = miyabi->makeForm("no such name", "mom");
 		belle->signForm(*ellen);
 		ellen->execute(*belle);
 		cout << endl;
-		delete miyabi;
-		delete belle;
-		delete ellen;
 	}
 	catch(const std::exception& e) // exception caught yayyyy
 	{
 		std::cerr << e.what() << endl;
 	}
+	delete miyabi;
+	delete belle; // knn have to put this outside somemore if not will have mem leaks 
 }
