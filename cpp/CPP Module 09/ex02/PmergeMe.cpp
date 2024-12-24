@@ -1,5 +1,34 @@
 #include "PmergeMe.hpp"
 
+PmergeMe::PmergeMe() {}
+
+PmergeMe::PmergeMe(const PmergeMe &obj)
+{
+	*this = obj;
+}
+
+PmergeMe::~PmergeMe() {}
+
+PmergeMe &PmergeMe::operator=(const PmergeMe &obj)
+{
+	if(this == &obj)
+		return(*this);
+	this->sorted_vec = obj.sorted_vec;
+	this->sorted_deque = obj.sorted_deque;
+	return(*this);
+}
+
+std::ostream& operator<<(std::ostream& os, const std::pair<int, int>& p)
+{
+    os << "(" << p.first << ", " << p.second << ")";
+    return os;
+}
+
+const char *PmergeMe::InputErrorException::what() const throw()
+{
+	return("Invalid input detected");
+}
+
 void	print_and_filter_unsorted_list(int argc, char **argv)
 {
 	string outputstr = "Unsorted array:";
@@ -137,7 +166,7 @@ void PmergeMe::sort_vec(int argc, char **argv)
 	for(vector<int>::iterator it = sorted_vec.begin(); it != sorted_vec.end(); it++)
 		cout << " " << *it;
 	cout << endl; 
-	cout << "Time to process a range of " << argc - 1 << "elements with std::vector: " << duration_vec.count() << "us" << endl;
+	cout << "Time to process a range of " << argc - 1 << " elements with std::vector: " << duration_vec.count() << "us" << endl;
 }
 
 
@@ -258,7 +287,7 @@ void PmergeMe::sort_deque(int argc, char **argv)
 
 	std::chrono::time_point<std::chrono::system_clock> endtime_deque = std::chrono::system_clock::now();
 	std::chrono::microseconds duration_deque = std::chrono::duration_cast<std::chrono::microseconds>(endtime_deque - starttime_deque);
-	cout << "Time to process a range of " << argc - 1 << "elements with std::deque: " << duration_deque.count() << "us" << endl; // .count extracts the value out
+	cout << "Time to process a range of " << argc - 1 << " elements with std::deque: " << duration_deque.count() << "us" << endl; // .count extracts the value out
 }
 
 

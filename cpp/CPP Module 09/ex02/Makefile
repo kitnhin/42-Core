@@ -1,5 +1,5 @@
 SRCS = \
-main.cpp PmergeMe.cpp PmergeMe2.cpp
+main.cpp PmergeMe.cpp
 
 OBJS = $(SRCS:.c=.o)
 
