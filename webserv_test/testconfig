@@ -1,3 +1,18 @@
 server {
 	listen localhost:8080;
+
+	server_name www.example.com example.com;
+
+	client_max_body_size 5G;
+
+	error_pages 404 405 501 /custom_404.html;
 }
+
+server {
+	listen 127.0.0.1:8081;
+}
+
+server {
+	listen 123.0.0.1:80;
+}
+

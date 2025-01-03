@@ -7,6 +7,8 @@
 using std::string;
 using std::cout;
 using std::endl;
+using std::vector;
+using std::pair;
 
 class Server;
 
@@ -24,6 +26,10 @@ class Config
 		void	main_parse_function(std::vector<Server> &server_list);
 
 		void	parse_listen_part(size_t &pos, Server &server);
+		void	parse_server_name_part(size_t &pos, Server &server);
+		void	parse_client_body_size(size_t &pos, Server &server);
+		void	parse_error_pages(size_t &pos, Server &server);
+		void	parse_socket_addr(Server &server);
 };	
 
 #endif

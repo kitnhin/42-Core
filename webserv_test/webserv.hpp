@@ -8,6 +8,7 @@
 #include <exception>
 #include <map>
 #include <vector>
+#include <netdb.h> //for socket structs and functions
 
 //class headers
 #include "CustomException.hpp"

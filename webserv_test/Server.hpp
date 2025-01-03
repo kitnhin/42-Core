@@ -4,6 +4,7 @@
 #include "webserv.hpp"
 
 using std::string;
+using std::vector;
 
 class Server
 {
@@ -21,7 +22,7 @@ class Server
 		string get_host();
 		string get_port();
 		string get_server_name();
-		std::map<string, string> get_error_pages();
+		std::map<string, string> &get_error_pages(); //need to put reference if not i cant assign values to it
 		string get_client_max_body_size();
 		std::vector<string> get_location();
 
@@ -31,7 +32,10 @@ class Server
 		void	set_error_pages(std::map<string, string> error_pages);
 		void	set_client_max_body_size(string client_body_size);
 		void	set_get_location(std::vector<string> location);
+
+		static vector<std::pair<string, string> > socket_addr; //to keep track of all the sockets we need to monitor
 };
 
+void	print_server(Server &server);
 
 #endif

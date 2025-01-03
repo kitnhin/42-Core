@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	{
 		if(argc < 2)
 			throw CustomException("Error: wrong number of args");
-		config.main_parse_function(http.get_servers());
+		http._run_webserv(argv);
 	}
 	catch(const std::exception& e)
 	{

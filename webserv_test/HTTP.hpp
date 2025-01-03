@@ -14,6 +14,8 @@ class HTTP
 	HTTP();
 	~HTTP();
 	std::vector<Server> &get_servers();
+
+	void	_run_webserv(char **argv);
 };
 
 

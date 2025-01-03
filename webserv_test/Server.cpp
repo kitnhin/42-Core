@@ -19,7 +19,7 @@ string Server::get_server_name()
 	return this->server_name;
 }
 
-std::map<string, string> Server::get_error_pages()
+std::map<string, string> &Server::get_error_pages()
 {
 	return this->error_pages;
 }
@@ -62,4 +62,23 @@ void Server::set_client_max_body_size(string client_body_size)
 void Server::set_get_location(std::vector<string> location)
 {
     this->location = location;
+}
+
+std::vector<std::pair<std::string, std::string> > Server::socket_addr; // need this for definition cannot just put inside header it wont compile rip
+
+void	print_server(Server &server)
+{
+    cout << "=======================================" << std::endl;
+    cout << "Server Details:" << std::endl;
+    cout << "Host: " << server.get_host() << std::endl;
+    cout << "Port: " << server.get_port() << std::endl;
+    cout << "Server Name: " << server.get_server_name() << std::endl;
+    cout << "Client Body Size: " << server.get_client_max_body_size() << std::endl;
+
+    cout << "Error Pages:" << std::endl;
+	std::map<string,string> error_pages= server.get_error_pages();
+    for (std::map<string,string>::iterator it = error_pages.begin(); it != error_pages.end(); it++)
+        cout << "Error Code: " << it->first << " -> Page: " << it->second << std::endl;
+
+    cout << "=======================================" << std::endl;
 }
