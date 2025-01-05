@@ -9,7 +9,7 @@ std::vector<Socket> Socket::io_connections;
 std::vector<struct pollfd> Socket::poll_socket_fds;
 std::vector<int> Socket::listen_socket_fds;
 
-Request Socket::get_req()
+Request &Socket::get_req()
 {
 	return this->request;
 }
@@ -93,6 +93,15 @@ int	Socket::get_io_connection(int fd)
 	throw CustomException("Error: cannot find io connection");
 	return -1;
 }
+
+void	Socket::update_fd_event(int fd, int ev)
+{
+	for(size_t i = 0; i < poll_socket_fds.size(); i++)
+	{
+		if(poll_socket_fds[i].fd == fd)
+			poll_socket_fds[i].events = ev;
+	}
+}
 // New function to generate HTTP response
 std::string Socket::generate_http_response(const std::string &file_path)
 {
@@ -135,7 +144,7 @@ std::string Socket::generate_http_response(const std::string &file_path)
     return response;
 }
 
-void	Socket::receive_data(Socket socket)
+void	Socket::receive_data(Socket &socket)
 {
 	char buffer[10000] = {0}; //HARDCODE AH
 	size_t bytes_received = recv(socket.sock_fd, buffer, sizeof(buffer) - 1, 0);
@@ -148,13 +157,8 @@ void	Socket::receive_data(Socket socket)
 	else if(bytes_received < 0)
 		throw CustomException("Error: recv failed");
 	socket.get_req().set_data(socket.get_req().get_data().append(buffer, bytes_received));
-	//cout << socket.get_req().get_data() << endl;
-	
-	//-----------------
-	//test writing back
-	//-----------------
-	std::string response = generate_http_response("testwebpage.html");
-	write(socket.sock_fd, response.c_str(), response.length());
+	socket.get_req().parse_request_data_main();
+	print_request(socket.get_req());
 }
 
 void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo)
@@ -188,14 +192,27 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo)
 				io_connections.push_back(connection_socket);
 
 				//add accept socket to poll
-				add_new_socket_to_poll(accept_socket_fd, POLLIN | POLLOUT);
-				std::cout << "New connection accepted: FD " << accept_socket_fd << std::endl;
+				add_new_socket_to_poll(accept_socket_fd, POLLIN);
 			}
 			else
 			{
 				int connect_index = get_io_connection(poll_socket_fds[i].fd);
 				receive_data(io_connections[connect_index]);
+				update_fd_event(poll_socket_fds[i].fd, POLLIN | POLLOUT); // need to update here instead of when accept() returns the socket if not will have error
 			}
+		}
+		else if (poll_socket_fds[i].revents & POLLOUT)
+		{
+			int connect_index = get_io_connection(poll_socket_fds[i].fd);
+			Socket socket = io_connections[connect_index];
+			//-----------------
+			//test writing back
+			//-----------------
+			std::string response = generate_http_response("testwebpage.html");
+			send(socket.sock_fd, response.c_str(), response.size(), 0);
+			
+			//close fd
+			close(poll_socket_fds[i].fd);
 		}
 	}
 }

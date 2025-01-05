@@ -23,6 +23,7 @@
 #include "Server.hpp"
 #include "HTTP.hpp"
 #include "Socket.hpp"
+#include "Location.hpp"
 
 using std::string;
 using std::cout;

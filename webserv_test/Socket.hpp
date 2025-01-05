@@ -5,6 +5,8 @@
 
 using std::string;
 
+class Request;
+
 class Socket
 {
 	private:
@@ -21,8 +23,9 @@ class Socket
 	static vector<Socket> io_connections;
 	void	add_new_socket_to_poll(int fd, int ev);
 	void	process_req(vector<std::pair<int, struct addrinfo> > &sockets_addrinfo);
-	Request	get_req();
-	void	receive_data(Socket socket);
+	Request	&get_req();
+	void	receive_data(Socket &socket);
+	void	update_fd_event(int fd, int ev);
 	
 	void	set_sock_fd(int sockfd);
 	int		get_io_connection(int fd);

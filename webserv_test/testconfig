@@ -6,4 +6,17 @@ server {
 	client_max_body_size 5G;
 
 	error_pages 404 405 501 /custom_404.html;
+
+	location /images {
+		allowed_methods GET POST;
+		root /var/www/images;
+		index index.html index.htm home.html;
+		cgi_pass /usr/bin/php-cgi;
+		return 301 https://example.com/newpath;
+		autoindex on;
+	}
+}
+
+server {
+	listen 127.0.0.1:8085;
 }

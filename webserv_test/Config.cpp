@@ -130,7 +130,7 @@ void Config::parse_client_body_size(size_t &pos, Server &newServer)
 
 void Config::parse_error_pages(size_t &pos, Server &newServer)
 {
-	//skip "error_pages in the file data"
+	//skip "error_pages" in the file data
 	pos += 11;
 
 	//check space
@@ -199,6 +199,12 @@ void Config::parse_server_block(size_t &pos, std::vector<Server> &server_list)
 			parse_client_body_size(pos, newServer);
 		else if (this->file_data.substr(pos, 11) == "error_pages")
 			parse_error_pages(pos, newServer);
+		else if (this->file_data.substr(pos, 8) == "location")
+		{
+			Location newLocation;
+			newLocation.parse_location_main(pos, this->file_data);
+			newServer.get_location().push_back(newLocation);
+		}
 		else if(this->file_data[pos] == '}') //need this incase we encounter '}' after skip_whitespace
 			break;
 		else
@@ -212,5 +218,5 @@ void Config::parse_server_block(size_t &pos, std::vector<Server> &server_list)
 
 	//push back the newserver into the list
 	server_list.push_back(newServer);
-	//print_server(newServer);
+	print_server(newServer);
 }
