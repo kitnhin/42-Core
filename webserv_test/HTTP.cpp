@@ -27,6 +27,10 @@ void	HTTP::_run_webserv(char **argv)
 		sock.add_new_socket_to_poll(sockfd, POLLIN);
 		sockets.push_back(std::make_pair(sockfd, reso));
 	}
+
+	//PRINTTTTT
+	for(size_t i = 0; i < sock.poll_socket_fds.size(); i++)
+		cout << "Poll sockets: " << sock.poll_socket_fds[i].fd <<endl;
 	
 	//main loop that waits for connections and process it
 	int poll_status;
@@ -38,6 +42,6 @@ void	HTTP::_run_webserv(char **argv)
 		else if (poll_status < 0)
 			throw CustomException("Error: poll error");
 		else
-			sock.process_req(sockets);
+			sock.process_req(sockets, Servers);
 	}
 }

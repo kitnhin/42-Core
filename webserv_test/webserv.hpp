@@ -24,6 +24,7 @@
 #include "HTTP.hpp"
 #include "Socket.hpp"
 #include "Location.hpp"
+#include "Response.hpp"
 
 using std::string;
 using std::cout;

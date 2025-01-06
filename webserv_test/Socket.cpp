@@ -83,6 +83,19 @@ void	Socket::add_new_socket_to_poll(int fd, int ev)
 	poll_socket_fds.push_back(newfd);
 }
 
+//need to specially close not just the fd but everything abt it especially the ioconnection part;
+//cuz the io connection part has information abt the request previously
+//so if we only close the fd without closing this, when we open again the previous request will be used,
+//hence causing the next fd u open will have the same request
+//lets say we accepted fd 5, send the response, and close ONLY THE FD
+//the ioconnection isnt removed, so the next time we accept again wif fd 5, we will end up using the old socket object in ioconnections
+void Socket::close_fd(int fd, int fd_index)
+{
+	io_connections.erase(get_io_connection(fd) + io_connections.begin());
+	poll_socket_fds.erase(poll_socket_fds.begin() + fd_index);
+	close(fd);
+}
+
 int	Socket::get_io_connection(int fd)
 {
 	for(size_t i = 0; i < io_connections.size(); i++)
@@ -152,7 +165,7 @@ void	Socket::receive_data(Socket &socket)
 	if(bytes_received > 0) //reminds me of gnl exam haih so gay
 	{
 		buffer[bytes_received] = '\0';
-		cout << "Received from client (FD " << socket.sock_fd << " ) : " << buffer << endl;
+		//cout << "Received from client (FD " << socket.sock_fd << " ) : " << buffer << endl;
 	}
 	else if(bytes_received < 0)
 		throw CustomException("Error: recv failed");
@@ -161,7 +174,8 @@ void	Socket::receive_data(Socket &socket)
 	print_request(socket.get_req());
 }
 
-void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo)
+//important note, never use "this" here
+void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo, vector<Server>Servers)
 {
 	//find the port that has a req
 	for(size_t i = 0; i < poll_socket_fds.size(); i++)
@@ -205,14 +219,11 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo)
 		{
 			int connect_index = get_io_connection(poll_socket_fds[i].fd);
 			Socket socket = io_connections[connect_index];
-			//-----------------
-			//test writing back
-			//-----------------
-			std::string response = generate_http_response("testwebpage.html");
-			send(socket.sock_fd, response.c_str(), response.size(), 0);
-			
-			//close fd
-			close(poll_socket_fds[i].fd);
+			if(socket.get_req().get_req_data().length() <= 0)
+				throw CustomException("Error: no request found");
+			this->response.main_response_function(socket.get_req(), Servers);
+			send(socket.sock_fd, this->response.get_response_data().c_str(), this->response.get_response_data().size(), 0);
+			close_fd(poll_socket_fds[i].fd, i); //see explanation in function
 		}
 	}
 }
