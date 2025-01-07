@@ -29,6 +29,7 @@ class Location
 	
 		//get
 		vector<string> &get_allowed_methods();
+		string		get_return();
 
 		//parse
 		void	parse_location_main(size_t &pos, string file_data);

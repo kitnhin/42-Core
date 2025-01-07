@@ -6,6 +6,7 @@
 using std::string;
 
 class Request;
+class Location;
 
 class Response //include this here first cuz somehow incomplete type
 {
@@ -23,11 +24,14 @@ class Response //include this here first cuz somehow incomplete type
 		string	get_start_line(Request request, string code, Server &server);
 		string	get_code_string(string error_code);
 		string	get_error_page(string error_code, Server &server);
+		Location *get_location(Request request, Server &server);
+		int		check_allowed_methods(string method, Location &location);
 		string	get_headers(string content);
 		void	handle_get(Request request, Server &server);
 		void	handle_post(Request request, Server &server);
 		void	handle_delete(Request request, Server &server);
 		void	handle_error(Request request, string error_code, Server &server);
+		void	handle_return(Request request, Server &server, Location &location);
 		Server	&find_server(Request request, vector<Server> &Servers);
 };
 

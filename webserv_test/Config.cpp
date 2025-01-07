@@ -218,5 +218,5 @@ void Config::parse_server_block(size_t &pos, std::vector<Server> &server_list)
 
 	//push back the newserver into the list
 	server_list.push_back(newServer);
-	print_server(newServer);
+	//print_server(newServer);
 }

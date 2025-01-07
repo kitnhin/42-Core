@@ -28,9 +28,9 @@ void	HTTP::_run_webserv(char **argv)
 		sockets.push_back(std::make_pair(sockfd, reso));
 	}
 
-	//PRINTTTTT
-	for(size_t i = 0; i < sock.poll_socket_fds.size(); i++)
-		cout << "Poll sockets: " << sock.poll_socket_fds[i].fd <<endl;
+	// //PRINTTTTT
+	// for(size_t i = 0; i < sock.poll_socket_fds.size(); i++)
+	// 	cout << "Poll sockets: " << sock.poll_socket_fds[i].fd <<endl;
 	
 	//main loop that waits for connections and process it
 	int poll_status;

@@ -5,18 +5,23 @@ server {
 
 	client_max_body_size 5G;
 
-	error_pages 404 405 501 /custom_404.html;
+	error_pages 404 403 501 /custom_404.html;
 
-	location /images {
+	location / {
 		allowed_methods GET POST;
 		root /var/www/images;
 		index index.html index.htm home.html;
 		cgi_pass /usr/bin/php-cgi;
-		return 301 https://example.com/newpath;
+		return https://github.com/ruisheng95;
 		autoindex on;
 	}
 }
 
 server {
 	listen 127.0.0.1:8085;
+	error_pages 201 /testwebpage.html;
+
+	location / {
+		allowed_methods GET POST;
+	}
 }

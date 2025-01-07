@@ -25,6 +25,12 @@ string	Response::get_code_string(string code)
 {
 	if(code == "200")
 		return ("OK");
+	if(code == "301")
+		return("Moved Permenantly");
+	if(code == "302")
+		return ("Found");
+	if(code == "307")
+		return ("Temporary Redirect");
 	if(code == "403")
 		return("Forbidden");
 	if(code == "404")
@@ -35,6 +41,8 @@ string	Response::get_code_string(string code)
 	return("Unknown Error");
 }
 
+
+
 Server	&Response::find_server(Request request, vector<Server>& Servers)
 {
 	for(size_t i = 0; i < Servers.size(); i++)
@@ -43,6 +51,27 @@ Server	&Response::find_server(Request request, vector<Server>& Servers)
 			return Servers[i];
 	}
 	throw CustomException("Error: cannot find respective server");
+}
+
+Location *Response::get_location(Request request, Server &server)
+{
+	int relative_match_index = 0;
+	int relative_match_flag = 0;
+	int current_index = 0;
+	for(vector<Location>::iterator it = server.get_location().begin(); it != server.get_location().end(); it++)
+	{
+		if(it->get_path() == request.get_target())
+			return(&(*it));
+		if(it->get_path() == request.get_target().substr(0, it->get_path().length()) && relative_match_flag == 0)
+		{
+			relative_match_index = current_index;
+			relative_match_flag = 1;
+		}
+		current_index++;
+	}
+	if(relative_match_flag == 1)
+		return (&(server.get_location()[relative_match_index]));
+	return NULL;
 }
 
 string	Response::get_error_page(string error_code, Server &server)
@@ -70,6 +99,43 @@ string	Response::get_headers(string content)
 	return res;
 }
 
+int		Response::check_allowed_methods(string method, Location &location)
+{
+	for(vector<string>::iterator it = location.get_allowed_methods().begin(); it != location.get_allowed_methods().end(); it++)
+	{
+		if(*it == method)
+			return 1;
+	}
+	return 0;
+}
+
+void	Response::handle_return(Request request, Server &server, Location &location)
+{
+	string return_ = location.get_return();
+	size_t pos = 0;
+	string status_code;
+	size_t temp;
+	while(return_[pos] == ' ' || return_[pos] == '\t')
+		pos++;
+	if(std::isdigit(return_[pos]))
+	{
+		temp = return_.find_first_of(" \t");
+		if(temp == std::string::npos)
+			throw CustomException("Error: invalid return part");
+		status_code = return_.substr(pos, temp - pos);
+		pos = temp + 1;
+	}
+	else
+		status_code = "302";
+	while(return_[pos] == ' ' || return_[pos] == '\t')
+		pos++;
+	string path = return_.substr(pos, return_.size() - pos);
+
+	this->response_data += get_start_line(request, status_code, server);
+	this->response_data += "Location: " + path + "\r\n" + get_headers("");
+	//surprisingly this one dn code the website can just change the location to the path then it will move u there liao wth
+}
+
 void	Response::handle_error(Request request, string error_code, Server &server)
 {
 	string start_line = get_start_line(request, error_code, server);
@@ -93,7 +159,15 @@ void	Response::handle_error(Request request, string error_code, Server &server)
 
 void	Response::handle_get(Request request, Server &server)
 {
-	handle_error(request, "404", server); //try throwing error regardless
+	Location *location = get_location(request, server);
+	if(!location)
+		handle_error(request, "404", server);
+	else if(check_allowed_methods("GET", *location) == 0)
+		handle_error(request, "405", server);
+	else if(location->get_return() != "")
+		handle_return(request, server, *location);
+	else
+		handle_error(request, "201", server); //use this to print webpage first i havent code the others yet
 }
 
 void	Response::handle_post(Request request, Server &server)

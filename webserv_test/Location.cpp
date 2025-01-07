@@ -9,6 +9,11 @@ string Location::get_path()
 	return this->path;
 }
 
+string Location::get_return()
+{
+	return this->return_;
+}
+
 vector<string> &Location::get_allowed_methods()
 {
 	return this->allowed_methods;

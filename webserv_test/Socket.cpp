@@ -171,7 +171,7 @@ void	Socket::receive_data(Socket &socket)
 		throw CustomException("Error: recv failed");
 	socket.get_req().set_data(socket.get_req().get_data().append(buffer, bytes_received));
 	socket.get_req().parse_request_data_main();
-	print_request(socket.get_req());
+	//print_request(socket.get_req());
 }
 
 //important note, never use "this" here
