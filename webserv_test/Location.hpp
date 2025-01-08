@@ -23,13 +23,18 @@ class Location
 		Location();
 		~Location();
 
-		string get_path();
 		void	skip_whitespaces(size_t &pos, string file_data);
 		void	print_location();
 	
 		//get
 		vector<string> &get_allowed_methods();
 		string		get_return();
+		string		get_root();
+		string		get_path();
+		vector<string>	&get_index();
+		bool		get_autoindex();
+		string		get_cgi_pass();
+
 
 		//parse
 		void	parse_location_main(size_t &pos, string file_data);

@@ -212,7 +212,7 @@ void Config::parse_server_block(size_t &pos, std::vector<Server> &server_list)
     }
 	if(this->file_data[pos] != '}')
 		throw CustomException("Error: server block need close brackets");
-
+		
 	//skip the closing bracket '}'
 	pos++;
 

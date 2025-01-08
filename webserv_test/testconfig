@@ -5,14 +5,10 @@ server {
 
 	client_max_body_size 5G;
 
-	error_pages 404 403 501 /custom_404.html;
-
 	location / {
 		allowed_methods GET POST;
-		root /var/www/images;
-		index index.html index.htm home.html;
+		root /testfolder;
 		cgi_pass /usr/bin/php-cgi;
-		return https://github.com/ruisheng95;
 		autoindex on;
 	}
 }

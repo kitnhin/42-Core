@@ -21,17 +21,24 @@ class Response //include this here first cuz somehow incomplete type
 
 		void	main_response_function(Request request, vector<Server> &Servers);
 
+		void	generate_autoindex_page(Request request, Server &server, Location &location);
+		string	get_file_type(string path);
+		string	parse_resources(string path);
+		string	get_file_size(size_t filesize);
 		string	get_start_line(Request request, string code, Server &server);
+		string	get_full_resource_path(Request request, Location &location);
+		string	urlDecode(string &str);
 		string	get_code_string(string error_code);
 		string	get_error_page(string error_code, Server &server);
 		Location *get_location(Request request, Server &server);
 		int		check_allowed_methods(string method, Location &location);
-		string	get_headers(string content);
+		string	get_headers(string content, string content_type);
 		void	handle_get(Request request, Server &server);
 		void	handle_post(Request request, Server &server);
 		void	handle_delete(Request request, Server &server);
 		void	handle_error(Request request, string error_code, Server &server);
 		void	handle_return(Request request, Server &server, Location &location);
+		void	handle_autoindex(Request request, Server &server, Location &location, string req_path);
 		Server	&find_server(Request request, vector<Server> &Servers);
 };
 

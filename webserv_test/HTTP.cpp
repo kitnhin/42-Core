@@ -23,9 +23,9 @@ void	HTTP::_run_webserv(char **argv)
 	{
 		int sockfd;
 		struct addrinfo reso;
-		sockfd = sock.setup_socket(it->first, it->second, &reso);
-		sock.add_new_socket_to_poll(sockfd, POLLIN);
-		sockets.push_back(std::make_pair(sockfd, reso));
+		sockfd = sock.setup_socket(it->first, it->second, &reso); //binding and other socket programs
+		sock.add_new_socket_to_poll(sockfd, POLLIN); //add new socket to poll monitor pool
+		sockets.push_back(std::make_pair(sockfd, reso)); //add new socket as well as all its information to the list
 	}
 
 	// //PRINTTTTT

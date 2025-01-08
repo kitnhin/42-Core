@@ -14,9 +14,29 @@ string Location::get_return()
 	return this->return_;
 }
 
+string Location::get_root()
+{
+	return this->root;
+}
+
 vector<string> &Location::get_allowed_methods()
 {
 	return this->allowed_methods;
+}
+
+vector<string>	&Location::get_index()
+{
+	return this->index;
+}
+
+string		Location::get_cgi_pass()
+{
+	return this->cgi_pass;
+}
+
+bool		Location::get_autoindex()
+{
+	return this->autoindex;
 }
 
 void Location::skip_whitespaces(size_t &pos, string file_data) 

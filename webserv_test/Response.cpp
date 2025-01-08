@@ -41,7 +41,26 @@ string	Response::get_code_string(string code)
 	return("Unknown Error");
 }
 
+string Response::urlDecode(string &str)
+{
+	string res;
 
+	for(size_t i = 0; i < str.size(); i++)
+	{
+		if(str[i] == '%' && i < str.size() - 2)
+		{
+			string temp_hex_str = str.substr(i + 1, 2);
+			int hex_value = stoi(temp_hex_str, nullptr, 16); //stoi i love u sm idh to manually putnbr base
+			res += static_cast<char>(hex_value);
+			i += 2;
+		}
+		else if(str[i] == '+')
+			res += ' ';
+		else
+			res += str[i];
+	}
+	return res;
+}
 
 Server	&Response::find_server(Request request, vector<Server>& Servers)
 {
@@ -74,6 +93,19 @@ Location *Response::get_location(Request request, Server &server)
 	return NULL;
 }
 
+string Response::get_full_resource_path(Request request, Location &location)
+{
+	string encoded_input = request.get_target();
+	string decoded_input = urlDecode(encoded_input);
+	string res;
+
+	res += "."; // need this if not its gonna be considered absolute path bruh
+	if(location.get_root() != "")
+		res += location.get_root();
+	res += decoded_input;
+	return res;
+}
+
 string	Response::get_error_page(string error_code, Server &server)
 {
 	string error_page_contents;
@@ -93,9 +125,9 @@ string	Response::get_error_page(string error_code, Server &server)
 	return error_page_contents;
 }
 
-string	Response::get_headers(string content)
+string	Response::get_headers(string content, string content_type)
 {
-	string res = "Content-Type: text/html\r\nContent-Length: " + std::to_string(content.size()) + "\r\nConnection: keep-alive\r\n\r\n";
+	string res = "Content-Type: " + content_type + "\r\nContent-Length: " + std::to_string(content.size()) + "\r\nConnection: keep-alive\r\n\r\n";
 	return res;
 }
 
@@ -132,7 +164,7 @@ void	Response::handle_return(Request request, Server &server, Location &location
 	string path = return_.substr(pos, return_.size() - pos);
 
 	this->response_data += get_start_line(request, status_code, server);
-	this->response_data += "Location: " + path + "\r\n" + get_headers("");
+	this->response_data += "Location: " + path + "\r\n" + get_headers("", "text/html");
 	//surprisingly this one dn code the website can just change the location to the path then it will move u there liao wth
 }
 
@@ -153,21 +185,213 @@ void	Response::handle_error(Request request, string error_code, Server &server)
 		error_page_contents += "</body>";
 		error_page_contents += "</html>";
 	}
-	string headers = get_headers(error_page_contents);
+	string headers = get_headers(error_page_contents, "text/html");
 	this->response_data = start_line + headers + error_page_contents;
 }
+
+string	Response::get_file_size(size_t filesize)
+{
+	string	res;
+	size_t	num;
+	string	unit;
+	if(filesize > 1e9)
+	{
+		num = filesize / 1e9;
+		unit = "GB";
+	}
+	else if (filesize > 1e6)
+	{
+		num = filesize / 1e6;
+		unit = "MB";
+	}
+	else if(filesize > 1e3)
+	{
+		num = filesize / 1e3;
+		unit = "KB";
+	}
+	else
+	{
+		num = filesize;
+		unit = "B";
+	}
+	res = std::to_string(num) + unit;
+	return res;
+}
+
+
+void	Response::handle_autoindex(Request request, Server &server, Location &location, string path)
+{
+	if(location.get_autoindex() == true)
+	{
+		DIR *dir = opendir(path.c_str());
+		if(!dir)
+		{
+			cout  << path << " TESTTINGNGNGNGNG" << endl;
+			handle_error(request, "403", server);
+		}
+		else
+		{
+			string response_body;
+			string dir_name = path.substr(1, path.length() - 1); // to remove the slash
+			response_body += "<!DOCTYPE html>";
+			response_body += "<html>";
+			response_body += "<head>";
+			response_body += "<title> Index of " + dir_name + "</title>";
+			response_body += "<style>"; // shall use chatgpt styling for now fk i havent done css in so long, can change later
+			response_body += "body {font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }";
+			response_body += "h1 {text-align: center; color: #333; }";
+			response_body += ".dls {margin-top: 20px; padding: 10px; background-color: white; border-radius: 5px; border: 1px solid #ccc; }";
+			response_body += ".row {display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }";
+			response_body += ".fn {font-weight: bold; }";
+			response_body += ".lm  { color: #777; }";
+			response_body += ".size { color: #777; }";
+			response_body += "</style>";
+			response_body += "</head>";
+			response_body += "<body>";
+			response_body += "<h1>Index of " + dir_name + "</h1>";
+			response_body += "<div class = 'dls'>";
+			response_body += "<div class = 'row'>";
+			response_body += "<div class = 'fn'> Filename </div>";
+			response_body += "<div class = 'lm'> Last Modified </div>";
+			response_body += "<div class = 'size'> File size </div>";
+			response_body += "</div><hr />"; //hr / inserts a horizontal line
+
+			//start reading and writing the stuff
+			struct dirent *entry;
+			while((entry = readdir(dir)) != NULL)
+			{
+				string filename = entry->d_name;
+				if(filename != "." && filename != "..")
+				{
+					string path_and_name = path + filename; //for example: ./test/example.html   <- ./test/ is the path, example.html is the file (ms substringed out the '.' i had no idea how it worked for him mine failed bad)
+					DIR *checkdir = opendir(path_and_name.c_str()); //checks if the thing we just read is a dir ornot
+					response_body += "<div class = 'row'>";
+					
+					//put file
+					response_body += "<div class = 'fn'>";
+					if(checkdir)
+						response_body += "<a href = '" + filename + "/'>" + filename + "/</a>"; // do not put full path + name (chatgpt scammed), cuz a
+					else
+						response_body += "<a href = '" + filename + "'>" + filename + "</a>";
+					response_body += "</div>";
+
+					//put last modified data (rip just realised ppl use tm aiya i used lm ealier dy i lazy change la)
+					struct stat	file_info;
+					struct tm	*tm_info;
+					char		buffer[100];
+					memset(buffer, 0, sizeof(buffer));
+					if(stat(path_and_name.c_str(), &file_info) != 0) //gets file stats
+						throw CustomException("Error : (autoindex) cant get file stat");
+					tm_info = localtime(&file_info.st_mtime); // converts the time stat to a time struct (the original value is time in seconds, need to conver that into struct wif like year-month-day or smth)
+					strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", tm_info); //converts the time struct into a string
+					response_body += "<div class = 'lm'>";
+					response_body += buffer;
+					response_body += "</div>";
+
+					//put the size
+					response_body += "<div class = 'size'>";
+					if(checkdir)
+						response_body += "-"; //ignore dir size since its not actual size (acc to chatgpt its the "space in metadata", gonna research more if i have time)
+					else
+						response_body += get_file_size(file_info.st_size);
+					response_body += "</div>";
+					
+					//finally, cleanup and close everything
+					if(checkdir)
+						closedir(checkdir);
+					response_body += "</div>"; // close row div
+				}
+			}
+			response_body += "</div>";
+			response_body += "</body>";
+			response_body += "</html>";
+
+			this->response_data = get_start_line(request, "200", server) + get_headers(response_body, "text/html") + response_body;
+		}
+	}
+	else
+		handle_error(request, "404", server);
+}
+
+string	Response::parse_resources(string path)
+{
+	string res;
+	string buffer;
+	std::ifstream infile(path);
+	if(!infile.is_open())
+		return "";
+	while(getline(infile, buffer))
+		res += buffer;
+	return res;
+}
+
+string	Response::get_file_type(string path)
+{
+	size_t dotpos = path.find_first_of(".", 1);
+	if(dotpos == std::string::npos)
+		return("plain/text");
+	string type = path.substr(dotpos + 1, path.length() - dotpos - 1);
+
+	if(type == "html")
+		return "text/html"; //cannot reverse the order if not will have some weird behaviour
+	else if (type == "css")
+		return "text/css";
+	else if (type == "js")
+        return "text/javascript";
+    else if (type == "jpeg" || type == "jpg")
+        return "image/jpeg";
+    else if (type == "png")
+        return "image/png";
+    else if (type == "gif")
+        return "image/gif";
+    else if (type == "txt")
+        return "text/plain";
+	else
+		return "text/plain";
+}
+
 
 void	Response::handle_get(Request request, Server &server)
 {
 	Location *location = get_location(request, server);
 	if(!location)
-		handle_error(request, "404", server);
+		handle_error(request, "403", server);
 	else if(check_allowed_methods("GET", *location) == 0)
 		handle_error(request, "405", server);
 	else if(location->get_return() != "")
 		handle_return(request, server, *location);
 	else
-		handle_error(request, "201", server); //use this to print webpage first i havent code the others yet
+	{
+		string resource_path = get_full_resource_path(request, *location);
+		if(resource_path[resource_path.length() - 1] == '/')// checks to see if our request doesnt specify a file, supposed to send in an index file
+		{
+			string file_contents;
+			vector<string>::iterator it = location->get_index().begin();
+			vector<string>::iterator ite = location->get_index().end();
+			while(it != ite)
+			{
+				if(file_contents == "")
+					file_contents = parse_resources(resource_path + *it);
+				if(file_contents == "")
+					it++;
+				else
+					break;
+			}
+			if(file_contents != "")
+				this->response_data = get_start_line(request, "200", server) + get_headers(file_contents, get_file_type(resource_path + *it)) + file_contents;
+			else if(location->get_autoindex() == true)
+				handle_autoindex(request, server, *location, resource_path);
+			else
+				handle_error(request, "404", server);
+		}
+		else
+		{
+			string file_contents = parse_resources(resource_path);
+			if(file_contents == "")
+				handle_error(request, "404", server);
+			this->response_data = get_start_line(request, "200", server) + get_headers(file_contents, get_file_type(resource_path)) + file_contents;
+		}
+	}
 }
 
 void	Response::handle_post(Request request, Server &server)

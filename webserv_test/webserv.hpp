@@ -10,6 +10,8 @@
 #include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
+#include <dirent.h>
+#include <sys/stat.h> // for last modified file date in autoindex
 
 //for socket structs and functions
 #include <netdb.h> 
