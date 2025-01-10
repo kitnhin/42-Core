@@ -41,7 +41,7 @@ string	Request::get_content_length()
 	return this->content_length;
 }
 
-std::map<string, string> Request::get_header_fields()
+std::map<string, string>	&Request::get_header_fields()
 {
 	return this->header_fields;
 }
@@ -109,21 +109,46 @@ void Request::parse_header_fields(size_t &pos)
 	}
 }
 
-void Request::parse_body(size_t &pos)
+void Request::parse_body(size_t &pos, int socket_fd)
 {
+	string entire_body;
 	if(content_length.length() == 0)
 		return ;
-	pos += 2;
-	unsigned long long temp = std::stoll(content_length);
-	this->body = req_data.substr(pos, temp - pos);
+	unsigned long long contentlen = std::stoll(content_length);
+	cout << "\n\n__________________________________" << endl;
+	cout << "CONTENTLENGTH: " << contentlen << endl;
+
+	//first read
+	char buffer1[contentlen + 1];
+	int bytesread1 = recv(socket_fd, buffer1, contentlen, 0);
+	buffer1[bytesread1] = '\0';
+	cout << "bytesread1: " << bytesread1 << endl;
+	entire_body += buffer1;
+
+	//second read
+	char buffer2[contentlen - bytesread1 + 1];
+	int bytesread2 = recv(socket_fd, buffer2, contentlen, 0);
+	buffer2[bytesread2] = '\0';
+	cout << "bytesread2: " << bytesread2 << endl;
+	entire_body += buffer2;
+
+	//third read
+	char buffer3[contentlen - bytesread2 - bytesread1 + 1];
+	int bytesread3 = recv(socket_fd, buffer3, contentlen, 0);
+	buffer3[bytesread3] = '\0';
+	cout << "bytesread3: " << bytesread3 << endl;
+	entire_body += buffer3;
+	this->body = entire_body;
+	cout << "BODY: " << endl;
+	cout << this->body << endl;
 }
 
-void Request::parse_request_data_main()
+void Request::parse_request_data_main(int socket_fd)
 {
 	size_t pos = 0;
 	parse_request_line(pos);
 	parse_header_fields(pos);
-	parse_body(pos);
+	parse_body(pos, socket_fd);
 }
 
 void	print_request(Request request)

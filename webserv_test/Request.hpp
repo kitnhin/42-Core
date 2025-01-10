@@ -11,6 +11,11 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+//for socket structs and functions
+#include <netdb.h> 
+#include <sys/socket.h>
+#include <poll.h>
+
 //somehow cant include even a single hpp file here if not will have error 
 
 using std::string;
@@ -45,15 +50,15 @@ class Request
 		string	get_host();
 		string	get_port();
 		string	get_content_length();
-		std::map<string, string> get_header_fields();
+		std::map<string, string> &get_header_fields();
 		string	get_body();
 
 
 		//parsing
-		void	parse_request_data_main();
+		void	parse_request_data_main(int socket_fd);
 		void	parse_request_line(size_t &pos);
 		void	parse_header_fields(size_t &pos);
-		void	parse_body(size_t &pos);
+		void	parse_body(size_t &pos, int socket_fd);
 		void	parse_host_port(string str);
 };
 

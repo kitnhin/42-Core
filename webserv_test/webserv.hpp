@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <sys/stat.h> // for last modified file date in autoindex
+#include <cctype>
 
 //for socket structs and functions
 #include <netdb.h> 
@@ -27,6 +28,7 @@
 #include "Socket.hpp"
 #include "Location.hpp"
 #include "Response.hpp"
+#include "Cgi.hpp"
 
 using std::string;
 using std::cout;

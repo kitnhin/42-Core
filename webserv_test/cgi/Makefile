@@ -1,10 +1,9 @@
 SRCS = \
-Config.cpp CustomException.cpp main.cpp HTTP.cpp Server.cpp Socket.cpp \
-Request.cpp Location.cpp Response.cpp Cgi.cpp
+cgi.cpp
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = webserv
+NAME = upload.cgi
 
 CC = c++
 

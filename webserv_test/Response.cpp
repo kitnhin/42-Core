@@ -37,6 +37,10 @@ string	Response::get_code_string(string code)
 		return("Not found");
 	if(code == "405")
 		return("Method not allowed");
+	if(code == "413")
+		return("Payload too large");
+	if(code == "500")
+		return("Internal Server Error");
 
 	return("Unknown Error");
 }
@@ -180,7 +184,7 @@ void	Response::handle_error(Request request, string error_code, Server &server)
 		error_page_contents += "</head>";
 		error_page_contents += "<body>";
 		error_page_contents += "<center>";
-		error_page_contents += "<h1>" + error_code + " " + get_code_string(error_code) + "</h1>";
+		error_page_contents += "<h1> Error: " + error_code + " " + get_code_string(error_code) + "</h1>";
 		error_page_contents += "</center>";
 		error_page_contents += "</body>";
 		error_page_contents += "</html>";
@@ -225,10 +229,7 @@ void	Response::handle_autoindex(Request request, Server &server, Location &locat
 	{
 		DIR *dir = opendir(path.c_str());
 		if(!dir)
-		{
-			cout  << path << " TESTTINGNGNGNGNG" << endl;
 			handle_error(request, "403", server);
-		}
 		else
 		{
 			string response_body;
@@ -238,13 +239,13 @@ void	Response::handle_autoindex(Request request, Server &server, Location &locat
 			response_body += "<head>";
 			response_body += "<title> Index of " + dir_name + "</title>";
 			response_body += "<style>"; // shall use chatgpt styling for now fk i havent done css in so long, can change later
-			response_body += "body {font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }";
-			response_body += "h1 {text-align: center; color: #333; }";
+			response_body += "body {font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }";
+			response_body += "h1 {text-align: center;}";
 			response_body += ".dls {margin-top: 20px; padding: 10px; background-color: white; border-radius: 5px; border: 1px solid #ccc; }";
-			response_body += ".row {display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }";
-			response_body += ".fn {font-weight: bold; }";
-			response_body += ".lm  { color: #777; }";
-			response_body += ".size { color: #777; }";
+			response_body += ".row {display: flex; justify-content: space-between; padding: 8px;}"; //display flex is the box-ish layout
+			response_body += ".fn {font-weight: bold;}";
+			response_body += ".lm  {color: #777;}";
+			response_body += ".size {color: #777;}";
 			response_body += "</style>";
 			response_body += "</head>";
 			response_body += "<body>";
@@ -384,24 +385,52 @@ void	Response::handle_get(Request request, Server &server)
 			else
 				handle_error(request, "404", server);
 		}
+		else if(location->get_cgi_pass() != "")
+		{
+			Cgi cgi;
+			cgi.Cgi_main(request, *this, *location, server);
+		}
 		else
 		{
 			string file_contents = parse_resources(resource_path);
 			if(file_contents == "")
 				handle_error(request, "404", server);
-			this->response_data = get_start_line(request, "200", server) + get_headers(file_contents, get_file_type(resource_path)) + file_contents;
+			else
+				this->response_data = get_start_line(request, "200", server) + get_headers(file_contents, get_file_type(resource_path)) + file_contents;
 		}
 	}
 }
 
 void	Response::handle_post(Request request, Server &server)
 {
-	handle_error(request, "404", server); //try throwing error regardless
+	Location *location = get_location(request, server);
+	if(!location)
+		handle_error(request, "403", server);
+	else if(check_allowed_methods("POST", *location) == 0) //check allowed methods
+		handle_error(request, "405", server);
+	else if(location->get_return() != "")
+		handle_return(request, server, *location); //check return
+	else if(location->get_cgi_pass() == "")
+		handle_error(request, "404", server);
+	else if(request.get_content_length() != "" && server.get_client_max_body_size() != ""
+			&& std::stoull(request.get_content_length()) > std::stoull(server.get_client_max_body_size()))
+		handle_error(request, "413", server);
+	else
+	{
+		Cgi cgi;
+		cgi.Cgi_main(request, *this, *location, server);
+	}
 }
 
 void	Response::handle_delete(Request request, Server &server)
 {
-	handle_error(request, "404", server); //try throwing error regardless
+	Location *location = get_location(request, server);
+	if(!location)
+		handle_error(request, "403", server);
+	else if(check_allowed_methods("DELETE", *location) == 0)
+		handle_error(request, "405", server);
+	else if(location->get_return() != "")
+		handle_return(request, server, *location);
 }
 
 void	Response::main_response_function(Request request, vector<Server> &Servers)

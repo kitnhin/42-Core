@@ -53,7 +53,7 @@ int	Socket::setup_socket(string host, string port, struct addrinfo *reso)
 	}
 
 	//mark socket as listening socket
-	if(listen(sockfd, LISTEN_BACKLOG) < 0)
+	if(listen(sockfd, LISTEN_BACKLOG) < 0) //listen backlog is the total maximum total amm of incoming connections we can have
 	{
 		close(sockfd);
 		throw CustomException("Error: Listen socket failed");
@@ -115,53 +115,53 @@ void	Socket::update_fd_event(int fd, int ev)
 			poll_socket_fds[i].events = ev;
 	}
 }
-// New function to generate HTTP response
-std::string Socket::generate_http_response(const std::string &file_path)
-{
-    // Open the HTML file with the read-only flag
-    int file_fd = open(file_path.c_str(), O_RDONLY);  // Path to your HTML file
-    if (file_fd == -1) {
-        std::cerr << "Error: Unable to open HTML file." << std::endl;
-        throw CustomException("Unable to open HTML file");
-    }
+// // New function to generate HTTP response
+// std::string Socket::generate_http_response(const std::string &file_path)
+// {
+//     // Open the HTML file with the read-only flag
+//     int file_fd = open(file_path.c_str(), O_RDONLY);  // Path to your HTML file
+//     if (file_fd == -1) {
+//         std::cerr << "Error: Unable to open HTML file." << std::endl;
+//         throw CustomException("Unable to open HTML file");
+//     }
 
-    // Create a buffer to store the content (using a fixed size for simplicity)
-    char htmlbuffer[4096];  // You can adjust the size of this buffer
-    std::string html_content;
-    ssize_t bytes_read;
+//     // Create a buffer to store the content (using a fixed size for simplicity)
+//     char htmlbuffer[4096];  // You can adjust the size of this buffer
+//     std::string html_content;
+//     ssize_t bytes_read;
 
-    // Read the content in chunks and append it to the string
-    while ((bytes_read = read(file_fd, htmlbuffer, sizeof(htmlbuffer))) > 0) {
-        html_content.append(htmlbuffer, bytes_read);
-    }
+//     // Read the content in chunks and append it to the string
+//     while ((bytes_read = read(file_fd, htmlbuffer, sizeof(htmlbuffer))) > 0) {
+//         html_content.append(htmlbuffer, bytes_read);
+//     }
 
-    // Error check for read
-    if (bytes_read == -1) {
-        std::cerr << "Error: Unable to read the file." << std::endl;
-        close(file_fd);
-        throw CustomException("Unable to read the HTML file");
-    }
+//     // Error check for read
+//     if (bytes_read == -1) {
+//         std::cerr << "Error: Unable to read the file." << std::endl;
+//         close(file_fd);
+//         throw CustomException("Unable to read the HTML file");
+//     }
 
-    // Clean up: Close the file
-    close(file_fd);
+//     // Clean up: Close the file
+//     close(file_fd);
 
-    // HTTP Response headers
-    std::string response = "HTTP/1.1 200 OK\r\n";
-    response += "Content-Type: text/html\r\n";
-    response += "Content-Length: " + std::to_string(html_content.length()) + "\r\n";
-    response += "\r\n";  // End of headers
+//     // HTTP Response headers
+//     std::string response = "HTTP/1.1 200 OK\r\n";
+//     response += "Content-Type: text/html\r\n";
+//     response += "Content-Length: " + std::to_string(html_content.length()) + "\r\n";
+//     response += "\r\n";  // End of headers
 
-    // Append the HTML content
-    response += html_content;
+//     // Append the HTML content
+//     response += html_content;
 
-    return response;
-}
+//     return response;
+// }
 
 void	Socket::receive_data(Socket &socket)
 {
-	char buffer[10000] = {0}; //HARDCODE AH
+	char buffer[900000] = {0}; //HARDCODE AH
 	size_t bytes_received = recv(socket.sock_fd, buffer, sizeof(buffer) - 1, 0);
-	//cout << "bytes received: " << bytes_received << endl;
+	cout << "bytes received: " << bytes_received << endl;
 	if(bytes_received > 0) //reminds me of gnl exam haih so gay
 	{
 		buffer[bytes_received] = '\0';
@@ -169,8 +169,9 @@ void	Socket::receive_data(Socket &socket)
 	}
 	else if(bytes_received < 0)
 		throw CustomException("Error: recv failed");
+	cout << buffer << endl;
 	socket.get_req().set_data(socket.get_req().get_data().append(buffer, bytes_received));
-	socket.get_req().parse_request_data_main();
+	socket.get_req().parse_request_data_main(socket.sock_fd);
 	//print_request(socket.get_req());
 }
 
@@ -180,7 +181,7 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo, 
 	//find the port that has a req
 	for(size_t i = 0; i < poll_socket_fds.size(); i++)
 	{
-		if(poll_socket_fds[i].revents & POLLIN)
+		if(poll_socket_fds[i].revents == POLLIN)
 		{
 			if(std::find(listen_socket_fds.begin(), listen_socket_fds.end(), poll_socket_fds[i].fd) != listen_socket_fds.end())
 			{
@@ -215,7 +216,7 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo, 
 				update_fd_event(poll_socket_fds[i].fd, POLLIN | POLLOUT); // need to update here instead of when accept() returns the socket if not will have error
 			}
 		}
-		else if (poll_socket_fds[i].revents & POLLOUT)
+		else if (poll_socket_fds[i].revents == POLLOUT)
 		{
 			int connect_index = get_io_connection(poll_socket_fds[i].fd);
 			Socket socket = io_connections[connect_index];
