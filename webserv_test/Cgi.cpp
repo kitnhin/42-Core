@@ -45,7 +45,13 @@ void	Cgi::Cgi_main(Request &request, Response &response, Location &location, Ser
 	int pipefd_input[2];
 	int pipefd_output[2];
 	int exit_status;
-	char *argv[] = {(char *)cgi_path.c_str(), NULL};
+	//for normal scripts
+	//char *argv[] = {(char *)cgi_path.c_str(), NULL}; <- undo this if wanna do normal script
+
+	//for python scripts only
+	string pythoninterprator = "/usr/bin/python3";
+	char *argv[] = {(char *)pythoninterprator.c_str(), (char*)cgi_path.c_str(), NULL};
+
 	//cout << "REQUEST BODY: " << request.get_body() << "\n----------------------------------" << endl;
 	if(pipe(pipefd_input) == -1 || pipe(pipefd_output) == -1)
 		response.handle_error(request, "500", server);
@@ -73,7 +79,15 @@ void	Cgi::Cgi_main(Request &request, Response &response, Location &location, Ser
 			close(pipefd_output[0]);
 			close(pipefd_output[1]);
 			char **env = this->config_env(request);
-			if(execve(cgi_path.c_str(), argv, env) == -1)
+			// for normal scripts
+			// if(execve(cgi_path.c_str(), argv, env) == -1)
+			// {
+			// 	perror("execve");
+			// 	exit(-1);
+			// }
+
+			//for python scripts
+			if(execve(pythoninterprator.c_str(), argv, env))
 			{
 				perror("execve");
 				exit(-1);

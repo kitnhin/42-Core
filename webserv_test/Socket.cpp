@@ -221,6 +221,7 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo, 
 			if(socket.get_req().get_req_data().length() <= 0)
 				throw CustomException("Error: no request found");
 			this->response.main_response_function(socket.get_req(), Servers);
+			//cout << "+++++++++++++++++++++\n" << this->response.get_response_data() << "\n++++++++++++++++++++++++++++++" << endl;
 			send(socket.sock_fd, this->response.get_response_data().c_str(), this->response.get_response_data().size(), 0);
 			close_fd(poll_socket_fds[i].fd, i); //see explanation in function
 		}

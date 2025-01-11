@@ -38,7 +38,7 @@ server {
 
 	location /cgi {
 		allowed_methods GET POST;
-		cgi_pass /cgi/upload.cgi;
+		cgi_pass /cgi/upload.py;
 		index index.htm index.html;
 	}
 
