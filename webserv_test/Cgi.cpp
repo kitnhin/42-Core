@@ -46,6 +46,7 @@ void	Cgi::Cgi_main(Request &request, Response &response, Location &location, Ser
 	int pipefd_output[2];
 	int exit_status;
 	char *argv[] = {(char *)cgi_path.c_str(), NULL};
+	//cout << "REQUEST BODY: " << request.get_body() << "\n----------------------------------" << endl;
 	if(pipe(pipefd_input) == -1 || pipe(pipefd_output) == -1)
 		response.handle_error(request, "500", server);
 	else

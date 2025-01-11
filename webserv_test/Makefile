@@ -2,7 +2,7 @@ SRCS = \
 Config.cpp CustomException.cpp main.cpp HTTP.cpp Server.cpp Socket.cpp \
 Request.cpp Location.cpp Response.cpp Cgi.cpp
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 
 NAME = webserv
 
@@ -13,14 +13,17 @@ CFLAGS = -std=c++98
 ${NAME}: ${SRCS}
 	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
 
-all : ${NAME}
+all: ${NAME} run_cgi_makefile
 
-clean :
+run_cgi_makefile:
+	cd cgi && $(MAKE) -C cgi
+
+clean:
 	rm -rf ${NAME}
 
-fclean : clean
+fclean: clean
 	rm -rf $(NAME)
 
-re : fclean $(NAME)
+re: fclean $(NAME)
 
-.PHONY : all clean flcean re bonus
+.PHONY: all clean fclean re run_cgi_makefile

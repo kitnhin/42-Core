@@ -161,7 +161,6 @@ void	Socket::receive_data(Socket &socket)
 {
 	char buffer[900000] = {0}; //HARDCODE AH
 	size_t bytes_received = recv(socket.sock_fd, buffer, sizeof(buffer) - 1, 0);
-	cout << "bytes received: " << bytes_received << endl;
 	if(bytes_received > 0) //reminds me of gnl exam haih so gay
 	{
 		buffer[bytes_received] = '\0';
@@ -169,7 +168,6 @@ void	Socket::receive_data(Socket &socket)
 	}
 	else if(bytes_received < 0)
 		throw CustomException("Error: recv failed");
-	cout << buffer << endl;
 	socket.get_req().set_data(socket.get_req().get_data().append(buffer, bytes_received));
 	socket.get_req().parse_request_data_main(socket.sock_fd);
 	//print_request(socket.get_req());
