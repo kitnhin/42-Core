@@ -111,12 +111,23 @@ void Request::parse_header_fields(size_t &pos)
 
 void Request::parse_body(size_t &pos, int socket_fd)
 {
+	//for rng laptop (idk if it will work lol i cant test): 
+	// pos += 2; // skip /r/n
+
+	// if(this->content_length.length() != 0)
+	// 	this->body = req_data.substr(pos, req_data.length() - pos); //get the rest of the data ig
+
+
+	//for ck laptop:
 	string entire_body;
 	if(content_length.length() == 0)
 		return ;
 	unsigned long long contentlen = std::stoll(content_length);
 	//cout << "\n\n__________________________________" << endl;
 	//cout << "CONTENTLENGTH: " << contentlen << endl;
+
+    if (fcntl(socket_fd, F_GETFL, 0) < 0)
+        throw CustomException("Error: failed to set non-blocking mode");
 
 	//first read
 	char buffer1[contentlen + 1];
@@ -139,6 +150,7 @@ void Request::parse_body(size_t &pos, int socket_fd)
 	//cout << "bytesread3: " << bytesread3 << endl;
 	entire_body += buffer3;
 	this->body = entire_body;
+	this->req_data.append(entire_body);
 	//cout << "BODY: " << endl;
 	//cout << this->body << endl;
 }

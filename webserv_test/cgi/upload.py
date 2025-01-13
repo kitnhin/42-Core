@@ -43,9 +43,6 @@ if request_method == "POST":
 
 		with open(file_path_and_name, "wb") as newfile:
 			newfile.write(file_data)
-		
-		with open(file_path_and_name, "rb") as checkfile:
-			checkfile_data = checkfile.read()
 
 		#status msg
 		msg = "Succesfully uploaded file!"

@@ -39,6 +39,8 @@ string	Response::get_code_string(string code)
 		return("Method not allowed");
 	if(code == "413")
 		return("Payload too large");
+	if(code == "422")
+		return("Unprocessable Entity");
 	if(code == "500")
 		return("Internal Server Error");
 
@@ -326,6 +328,22 @@ string	Response::parse_resources(string path)
 	return res;
 }
 
+int	check_request_body_valid(Request &request)
+{
+	if(request.get_content_length().length() == 0)
+		return 1;
+	string req = request.get_data();
+	size_t first_boundary_start = req.find("\r\n\r\n") + 4;
+	if(first_boundary_start >= req.length())
+		return 0;
+	size_t boundary_delim = req.find_first_of("\n", first_boundary_start);
+	string boundary = req.substr(first_boundary_start, boundary_delim - first_boundary_start);
+	size_t find_second_boundary = req.find(boundary);
+	if(find_second_boundary == string::npos)
+		return 0;
+	return 1;
+}
+
 string	Response::get_file_type(string path)
 {
 	size_t dotpos = path.find_first_of(".", 1);
@@ -415,6 +433,8 @@ void	Response::handle_post(Request request, Server &server)
 	else if(request.get_content_length() != "" && server.get_client_max_body_size() != ""
 			&& std::stoull(request.get_content_length()) > std::stoull(server.get_client_max_body_size()))
 		handle_error(request, "413", server);
+	else if(check_request_body_valid(request) == 0)
+		handle_error(request, "422", server);
 	else
 	{
 		Cgi cgi;
