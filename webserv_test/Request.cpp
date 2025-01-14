@@ -120,6 +120,7 @@ void Request::parse_body(size_t &pos, int socket_fd)
 
 	//for ck laptop:
 	string entire_body;
+	(void)pos;
 	if(content_length.length() == 0)
 		return ;
 	unsigned long long contentlen = std::stoll(content_length);

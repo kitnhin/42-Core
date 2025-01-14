@@ -191,7 +191,7 @@ void	Socket::process_req(vector<pair<int, struct addrinfo> > &sockets_addrinfo, 
 				{
 					if(sockets_addrinfo[i].first == poll_socket_fds[i].fd)
 					{
-						res = &(sockets_addrinfo[i].second);
+						res = &(sockets_addrinfo[i].second); 
 						break;
 					}
 				}

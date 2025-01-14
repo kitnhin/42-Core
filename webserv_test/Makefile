@@ -8,7 +8,7 @@ NAME = webserv
 
 CC = c++
 
-CFLAGS = -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 ${NAME}: ${SRCS}
 	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
