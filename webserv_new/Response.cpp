@@ -35,6 +35,22 @@ string	Response::get_response_data()
 {
 	return this->response_data;
 }
+////////////////////
+////////main////////
+////////////////////
+
+void	Response::main_response_function(Request request, vector<Server> &Servers)
+{
+	Server &respective_server = find_server(request, Servers);
+	if(request.get_method() == "GET")
+		handle_get(request, respective_server);
+	else if(request.get_method() == "POST")
+		handle_post(request, respective_server);
+	else if(request.get_method() == "DELETE")
+		handle_delete(request, respective_server);
+	else
+		handle_error(request, "405", respective_server);
+}
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////response making helpers/////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
@@ -258,18 +274,6 @@ void	Response::handle_delete(Request request, Server &server)
 	//not done yet
 }
 
-void	Response::main_response_function(Request request, vector<Server> &Servers)
-{
-	Server &respective_server = find_server(request, Servers);
-	if(request.get_method() == "GET")
-		handle_get(request, respective_server);
-	else if(request.get_method() == "POST")
-		handle_post(request, respective_server);
-	else if(request.get_method() == "DELETE")
-		handle_delete(request, respective_server);
-	else
-		handle_error(request, "405", respective_server);
-}
 /////////////////////////////////////////////
 /////////////////other utils/////////////////
 /////////////////////////////////////////////

@@ -62,24 +62,24 @@ class Response //include this here first cuz somehow incomplete type
 
 		void	do_indexing(Request request, Server &server, Location *location, string resource_path);
 		void	get_file_contents(Request request, Server &server, string resource_path);
-		
-		string	get_file_type(string path);
-		string	parse_resources(string path);
-		string	get_file_size(size_t filesize);
-		string	get_start_line(Request request, string code, Server &server);
-		string	get_full_resource_path(Request request, Location &location);
-		string	urlDecode(string &str);
-		string	get_code_string(string error_code);
-		string	get_error_page(string error_code, Server &server);
-		Location *get_location(Request request, Server &server);
-		int		check_allowed_methods(string method, Location &location);
-		string	get_headers(string content, string content_type);
+
 		void	handle_get(Request request, Server &server);
 		void	handle_post(Request request, Server &server);
 		void	handle_delete(Request request, Server &server);
 		void	handle_error(Request request, string error_code, Server &server);
 		void	handle_return(Request request, Server &server, Location &location);
 		void	handle_autoindex(Request request, Server &server, Location &location, string req_path);
+
+		string	get_error_page(string error_code, Server &server);
+		string	get_start_line(Request request, string code, Server &server);
+		string	get_file_type(string path);
+		string	parse_resources(string path);
+		string	get_full_resource_path(Request request, Location &location);
+		string	urlDecode(string &str);
+		string	get_code_string(string error_code);
+		Location *get_location(Request request, Server &server);
+		int		check_allowed_methods(string method, Location &location);
+		string	get_headers(string content, string content_type);
 		Server	&find_server(Request request, vector<Server> &Servers);
 		int		check_request_body_valid(Request &request);
 };
