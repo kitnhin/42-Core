@@ -1,0 +1,142 @@
+% Read data
+dataTable = readtable("Project_Data.csv");
+
+% Filter data for sitecode (depending on which one we want)
+dataTable = dataTable(strcmp(dataTable.site_code, 'NRSYON'), :); % string compare function same as the one in C
+
+% Convert date type
+dataTable.TIME = datetime(dataTable.TIME, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss''Z');
+
+% Sort table
+dataTable = sortrows(dataTable, 'TIME');
+
+% Extract data
+sitecode = dataTable{:, 1}; 
+mes_id = dataTable{:, 2};
+time = dataTable{:, 3}; 
+temp = dataTable{:, 4};   
+pres = dataTable{:, 5};    
+co2_conc_air = dataTable{:, 6}; 
+
+% Conversion
+T = temp + 273.15;        % from Celsius to Kelvin
+pressure = pres * 101325; % from atm to Pascal
+
+% Extract every 100th value (because computer can't handle solving over 170,000 values)
+% Originally was every 1000th value to process faster
+
+length = 1;
+sitecode_1000 = sitecode(1:length:end);
+mes_id_1000 = mes_id(1:length:end);
+time_1000 = time(1:length:end);
+temp_1000 = temp(1:length:end);
+T_1000 = T(1:length:end);
+pressure_1000 = pressure(1:length:end);
+co2_conc_air_1000 = co2_conc_air(1:length:end);
+
+% Define constants
+R = 8.314; % gas constant [J/(mol*K)]
+Tc_H2O = 647.096; % critical temperature for water [K]
+Pc_H2O = 22.064e6; % critical pressure of water [Pa]
+Tc_CO2 = 304.18; % critical temperature of CO2 [K]
+Pc_CO2 = 7.38e6; % critical pressure of CO2 [Pa]
+w_H2O = 0.348; % factor for water
+w_CO2 = 0.225; % factor for CO2
+
+% Coefficients for equation 3 (vapor pressure)
+alpha1 = -7.85951783;
+alpha2 = 1.84408259;
+alpha3 = -11.7866497;
+alpha4 = 22.6807411;
+alpha5 = -15.9618719;
+alpha6 = 1.80122502;
+
+% Coefficients for equation 4 (Henry's constant)
+h1 = -6.8346;
+h2 = 1.2817e4;
+h3 = -3.7668e6;
+h4 = 2.9970e8;
+
+% Initialize array for storing x2 values
+x2_values = zeros(size(T_1000, 1), 1);
+
+% For loop
+for i = 1:size(T_1000, 1)
+    temp_i = T_1000(i);
+    pressure_i = pressure_1000(i);
+    Tr_H2O = temp_i / Tc_H2O;
+    Tr_CO2 = temp_i / Tc_CO2;
+
+    % Vapor pressure calculation (Eq. 3)
+    x = 1 - Tr_H2O;
+    Pv1 = Pc_H2O * exp((alpha1 * x + alpha2 * x^1.5 + alpha3 * x^3 + alpha4 * x^3.5 + alpha5 * x^4 + alpha6 * x^7.5) / Tr_H2O);
+
+    % Henry's constant calculation (Eq. 4)
+    H21 = exp(h1 + h2 / temp_i + h3 / temp_i^2 + h4 / temp_i^3) * 1e6; % converted to Pa
+
+    % Alpha calculation for CO2 and H2O (Eq. A.4)
+    alpha_CO2 = (1 + (0.37464 + 1.54226 * w_CO2 - 0.2699 * w_CO2^2) * (1 - sqrt(Tr_CO2)))^2;
+    alpha_H2O = (1 + (0.37464 + 1.54226 * w_H2O - 0.2699 * w_H2O^2) * (1 - sqrt(Tr_H2O)))^2;
+
+    % a* calculation for CO2 and H2O
+    a_CO2 = 0.45724 * (R * Tc_CO2)^2 / Pc_CO2;
+    a_H2O = 0.45724 * (R * Tc_H2O)^2 / Pc_H2O;
+    a_star_CO2 = a_CO2 * alpha_CO2;
+    a_star_H2O = a_H2O * alpha_H2O;
+
+    % Calculate Z for CO2 (Eq. A.3)
+    A_CO2 = a_star_CO2 * pressure_i / (R * temp_i)^2;
+    b_CO2 = 0.0778 * R * Tc_CO2 / Pc_CO2;
+    B_CO2 = b_CO2 * pressure_i / (R * temp_i);
+    coeffs_CO2 = [1, -(1 - B_CO2), A_CO2 - 3 * B_CO2^2 - 2 * B_CO2, -(A_CO2 * B_CO2 - B_CO2^2 - B_CO2^3)];
+
+    % Validate coefficients for CO2
+    if any(isnan(coeffs_CO2)) || any(isinf(coeffs_CO2))
+        warning(['Invalid coefficients for CO2 at iteration ', num2str(i), '. Skipping.']);
+        continue;
+    end
+
+    Z_roots_CO2 = roots(coeffs_CO2);
+    Z_roots_CO2 = Z_roots_CO2(imag(Z_roots_CO2) == 0); % Keep only real roots
+    Z_l_CO2 = min(Z_roots_CO2); % Smallest root
+    Z_v_CO2 = max(Z_roots_CO2); % Biggest root
+
+    % Fugacity coefficient for CO2 (Eq. A.1 and A.2)
+    phi_v_CO2 = exp(Z_v_CO2 - 1 - log(Z_v_CO2 - B_CO2) - (A_CO2 / (2 * sqrt(2) * B_CO2)) * log((Z_v_CO2 + (1 + sqrt(2)) * B_CO2) / (Z_v_CO2 + (1 - sqrt(2)) * B_CO2)));
+    phi_l_CO2 = exp(Z_l_CO2 - 1 - log(Z_l_CO2 - B_CO2) - (A_CO2 / (2 * sqrt(2) * B_CO2)) * log((Z_l_CO2 + (1 + sqrt(2)) * B_CO2) / (Z_l_CO2 + (1 - sqrt(2)) * B_CO2)));
+
+    % Calculate Z for H2O (Eq. A.3)
+    A_H2O = a_star_H2O * pressure_i / (R * temp_i)^2;
+    b_H2O = 0.0778 * R * Tc_H2O / Pc_H2O;
+    B_H2O = b_H2O * pressure_i / (R * temp_i);
+    coeffs_H2O = [1, -(1 - B_H2O), A_H2O - 3 * B_H2O^2 - 2 * B_H2O, -(A_H2O * B_H2O - B_H2O^2 - B_H2O^3)];
+    
+    if any(isnan(coeffs_H2O)) || any(isinf(coeffs_H2O))
+        warning(['Invalid coefficients for H2O at iteration ', num2str(i), '. Skipping.']);
+        continue;
+    end
+
+    Z_roots_H2O = roots(coeffs_H2O);
+    Z_roots_H2O = Z_roots_H2O(imag(Z_roots_H2O) == 0); % Keep only real roots
+    Z_l_H2O = min(Z_roots_H2O); % Smallest root
+    Z_v_H2O = max(Z_roots_H2O); % Biggest root
+
+    % Fugacity coefficient for H2O (Eq. A.1 and A.2)
+    phi_v_H2O = exp(Z_v_H2O - 1 - log(Z_v_H2O - B_H2O) - (A_H2O / (2 * sqrt(2) * B_H2O)) * log((Z_v_H2O + (1 + sqrt(2)) * B_H2O) / (Z_v_H2O + (1 - sqrt(2)) * B_H2O)));
+    phi_l_H2O = exp(Z_l_H2O - 1 - log(Z_l_H2O - B_H2O) - (A_H2O / (2 * sqrt(2) * B_H2O)) * log((Z_l_H2O + (1 + sqrt(2)) * B_H2O) / (Z_l_H2O + (1 - sqrt(2)) * B_H2O)));
+
+    % Fugacity ratios
+    phi1 = phi_v_H2O / phi_l_H2O; % H2O fugacity ratio
+    phi2 = phi_v_CO2;             % CO2 fugacity ratio
+
+    % Solve simultaneous equation
+    x2_values(i) = (1 - Pv1 / (phi1 * pressure_i)) / (-Pv1 / (phi1 * pressure_i) + H21 / (pressure_i * phi2));
+end
+
+% Plot
+plot(time_1000, x2_values, 'LineWidth', 1);
+xlabel('Time');
+ylabel('CO2 concentration in water, x2');
+title('x2 vs Time (NRSYON)');
+legend("x2");
+grid on;
