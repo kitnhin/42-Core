@@ -18,11 +18,11 @@ Cat::Cat()
 	brain = new Brain;
 }
 
-Cat::Cat(const Cat &obj)
+Cat::Cat(const Cat &obj) : Animal(obj)
 {
 	cout << "Cat copy constructor called" << endl;
-	*this = obj;
-	brain = new Brain;
+	this->brain = new Brain;
+	*brain = *obj.brain;
 }
 
 Cat &Cat::operator=(const Cat &obj)

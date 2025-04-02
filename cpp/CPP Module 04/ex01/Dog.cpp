@@ -18,18 +18,17 @@ Dog::Dog()
 	brain = new Brain;
 }
 
-Dog::Dog(const Dog &obj)
+Dog::Dog(const Dog &obj) : Animal(obj)
 {
 	cout << "Dog copy constructor called" << endl;
-	*this = obj;
-	brain = new Brain;
+	this->brain = new Brain;
+	*brain = *obj.brain;
 }
 
 Dog &Dog::operator=(const Dog &obj)
 {
 	cout << "Dog copy assign operator called" << endl;
 	this->type = obj.getType();
-	this->brain = new Brain;
 	*brain = *obj.brain;
 	return (*this);
 }

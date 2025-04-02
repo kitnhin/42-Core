@@ -40,7 +40,9 @@ int main()
 	cout << "------------------------------------" << endl;
 	Dog dog_copy;
 	dog_copy = dog;
-	cout << "dog_copy is thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
-
+	cout << "dog_copy is currently thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
+	dog_copy.getbrain()->setidea("CARLOTTAAAA", 0);
+	cout << "dog_copy is now thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
+	cout << "original dog is thinking of: " << dog.getbrain()->getidea(0) << endl;
 	return 0;
 }
