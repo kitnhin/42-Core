@@ -19,6 +19,7 @@ int main()
 	//const Animal *jus = new Animal; <- uncomment to show that Animal is now abstract
 	const Animal *josh = new Dog;
 	const Animal *yk = new Cat;
+	//Animal A; <- can uncomment this to show it doesnt work
 
 	//cout << "animal type: " << jus->getType() << endl;
 	cout << "dog type: " << josh->getType() << endl;
@@ -44,12 +45,6 @@ int main()
 	Dog dog;
 	dog.getbrain()->setidea("FURINAAAAAAA", 0);
 	cout << "dog is thinking of: " << dog.getbrain()->getidea(0) << endl;
-
-	cout << "------------------------------------" << endl;
-	cout << "------------------------------------" << endl;
-	Dog dog_copy;
-	dog_copy = dog;
-	cout << "dog_copy is thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
 
 	return 0;
 }
