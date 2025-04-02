@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 		cout << "[ Probably complaining about insignificant problems ]" << endl;
 		return 0;
 	}
-	for(int j = 0; j < 10; j++)
+	for(int j = 0; j < 5; j++)
 	{
 		int i = rand() % 4;
 		if(i >= k)

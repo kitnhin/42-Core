@@ -8,7 +8,7 @@ int main()
 
 	string strings[] = {"debug", "info", "warning", "error"};
 	srand((unsigned int)(time(0)));
-	for(int j = 0; j < 10; j++)
+	for(int j = 0; j < 5; j++)
 	{
 		int i = rand() % 4;
 		harl.complain(strings[i]);
