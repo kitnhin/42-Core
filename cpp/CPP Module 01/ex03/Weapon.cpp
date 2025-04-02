@@ -8,7 +8,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
-string Weapon::getType()
+const string &Weapon::getType()
 {
 	return type;
 }

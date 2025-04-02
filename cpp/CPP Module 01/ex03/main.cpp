@@ -25,5 +25,9 @@ int main()
 		club.setType("some other type of club");
 		jim.attack();
 	}
+
+	////////own test
+	HumanB jus("Justyn");
+	jus.attack();
 	return 0;
 }
