@@ -2,12 +2,12 @@
 
 Zombie::~Zombie()
 {
-	cout << "rip zombie has been destroyed" << endl;
+	cout << "rip: " << name << " has been destroyed" << endl;
 }
 
 void	Zombie::announce()
 {
-	cout << " BraiiiiiiinnnzzzZ..." << endl;
+	cout << name << ": BraiiiiiiinnnzzzZ..." << endl;
 }
 
 void	Zombie::setname(string name)

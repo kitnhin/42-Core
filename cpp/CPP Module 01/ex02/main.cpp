@@ -22,8 +22,8 @@ int main()
 
 	// no we change the value of str
 	
-	str = "YOUR MOM HAS NO BRAIN (pls excuse me im doin this at 3am)";
-	cout << "NEW STRING : " << endl;
+	str = "YOUR MOM (pls excuse me im doin this at 3am)";
+	cout << "NEW STRING : " << str << endl;
 
 	cout << "============details==========" << endl;
 	cout << "String:" << str << endl;
