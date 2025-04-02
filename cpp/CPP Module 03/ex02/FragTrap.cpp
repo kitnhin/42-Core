@@ -18,13 +18,9 @@ FragTrap::FragTrap(string name)
 	atk_dmg = 30;
 }
 
-FragTrap::FragTrap(const FragTrap &obj)
+FragTrap::FragTrap(const FragTrap &obj) : ClapTrap(obj)
 {
-	cout << "(FragTrap) Copy constructor called" << endl;
-	this->name = obj.name;
-	this->hit_points = obj.hit_points;
-	this->energy_points = obj.energy_points;
-	this->atk_dmg = obj.atk_dmg;
+	cout << "(FragTrap) Copy constructor called" << endl;	
 }
 
 FragTrap &FragTrap::operator=(const FragTrap &obj)

@@ -18,13 +18,10 @@ ScavTrap::ScavTrap(string name)
 	atk_dmg = 20;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &obj)
+ScavTrap::ScavTrap(const ScavTrap &obj) : ClapTrap(obj)
 {
 	cout << "(ScavTrap) Copy constructor called" << endl;
-	this->name = obj.name;
-	this->hit_points = obj.hit_points;
-	this->energy_points = obj.energy_points;
-	this->atk_dmg = obj.atk_dmg;
+	this->guardmode = obj.guardmode;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &obj)
