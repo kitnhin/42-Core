@@ -50,6 +50,12 @@ int main(int argc, char **argv)
 	}
 	while (infile >> std::noskipws >>temp)
 		buffer += temp;
+	if(buffer == "")
+	{
+		infile.close();
+		cout << "File is empty" << endl;
+		return 0;
+	}
 	infile.close();
 	if (replacewords(buffer, argv))
 		return 1; 

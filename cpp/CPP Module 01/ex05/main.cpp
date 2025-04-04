@@ -14,6 +14,12 @@ int main()
 		harl.complain(strings[i]);
 		cout << endl;
 	}
+
+	cout << "\nexplaination for the gacha in gacha systems:\n\n" << endl;
+	cout << "first number:" << rand() << endl;
+	cout << "second number:" << rand() << endl;
+	cout << "third number:" << rand() << endl;
+
 }
 
 //notes for rand()
