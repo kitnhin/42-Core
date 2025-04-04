@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <climits>
 
 using std::cout;
 using std::endl;

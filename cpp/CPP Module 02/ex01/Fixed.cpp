@@ -37,7 +37,13 @@ void Fixed::setRawBits(int const raw)
 Fixed::Fixed(int num)
 {
 	cout << "Int constructor called" << endl;
-	value = num * 256;
+	if(num < INT_MAX /256 && num > 0)
+		this->value = num * 256;
+	else
+	{
+		this->value = 0;
+	 	cout << "entered value out of the accepted range" << endl;	
+	}	
 }
 
 // so basically, the 8 bits is like the "fractional part" of the number, so since int cannot store decimal, need
@@ -51,7 +57,13 @@ Fixed::Fixed(int num)
 Fixed::Fixed(float num)
 {
 	cout << "Float constructor called" << endl;
-	value = roundf(num * 256);
+	if(num < INT_MAX /256 && num > 0)
+		this->value = roundf(num * 256); //rounds floating num to int
+	else
+	{
+		this->value = 0;
+	 	cout << "entered value out of the accepted range" << endl;	
+	}	
 }
 
 int Fixed::toInt(void) const

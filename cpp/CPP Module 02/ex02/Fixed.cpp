@@ -7,7 +7,7 @@ Fixed::Fixed()
 
 Fixed::Fixed(const Fixed &obj)
 {
-	value = obj.getRawBits();
+	*this = obj;
 }
 
 Fixed::~Fixed()
@@ -32,12 +32,25 @@ void Fixed::setRawBits(int const raw)
 
 Fixed::Fixed(int num)
 {
-	value = num * 256;
+	if(num < INT_MAX /256 && num > 0)
+		this->value = num * 256;
+	else
+	{
+		this->value = 0;
+	 	cout << "entered value out of the accepted range" << endl;	
+	}	
 }
+
 
 Fixed::Fixed(float num)
 {
-	value = roundf(num * 256);
+	if(num < INT_MAX /256 && num > 0)
+		this->value = roundf(num * 256); //rounds floating num to int
+	else
+	{
+		this->value = 0;
+	 	cout << "entered value out of the accepted range" << endl;	
+	}	
 }
 
 int Fixed::toInt(void) const
@@ -138,11 +151,11 @@ Fixed Fixed::operator / (const Fixed& obj) const
 
 //-------------------------------------------------------------------------
 
-Fixed Fixed::operator ++ (int)
+Fixed Fixed::operator ++ (int) //POST
 {
-	Fixed res(*this);
-	this->value++;
-	return res;
+	Fixed res(*this); //create another object with the pre incremented value
+	this->value++; //increment the original value
+	return res; //return the object with the pre incremented value to use
 }
 
 //so for POST increment / decrement, u have to create another Fixed obj copy which value has yet to be incremented

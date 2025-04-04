@@ -2,18 +2,52 @@
 
 int main( void )
 {
-	Fixed 		a;
-	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+	{
+		Fixed 		a;
+		Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
 
-	std::cout << a << std::endl;
-	std::cout << ++a << std::endl;
-	std::cout << a << std::endl;
-	std::cout << a++ << std::endl;
-	std::cout << a << std::endl;
+		std::cout << a << std::endl;
+		std::cout << ++a << std::endl;
+		//plus 0.0039 to the actual value cuz we increment the "fixed point value"
+		// variable by 1, but later we decrease it by /256 to convert back
+		// so technically the actual value only increase by 1/256 = 0.0039...
+		std::cout << a << std::endl;
+		std::cout << a++ << std::endl;
+		std::cout << a << std::endl;
 
-	std::cout << b << std::endl;
+		std::cout << b << std::endl;
 
-	std::cout << Fixed::max( a, b ) << std::endl;
+		std::cout << Fixed::max( a, b ) << std::endl;
+	}
+
+	{
+		Fixed beru(10);
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << "test other stuffs: " << endl;
+
+		cout << "\ntest increments: " << endl;
+		cout << "before pre increment: " << beru++ << endl;
+		cout << "after pre increment: " << beru << endl;
+		beru = 10;
+		cout << "post increment: " << ++beru << endl;
+		cout << "test other stuffs: " << endl;
+
+		beru = 10;
+		cout << "\ntest decrements: " << endl;
+		cout << "before pre increment: " << beru-- << endl;
+		cout << "after pre increment: " << beru << endl;
+		beru = 10;
+		cout << "post increment: " << --beru << endl;
+
+		cout << "\ntest min/max: " << endl;
+		Fixed iron(11);
+		Fixed igris(15);
+		Fixed min = Fixed::min(iron, igris);
+		Fixed max = Fixed::max(iron, igris);
+		cout << "min value: " << min << endl;
+		cout << "max value: " << max << endl;
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	}
 	
 	return 0;
 }
