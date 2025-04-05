@@ -15,7 +15,7 @@ Cure::Cure()
     this->type = "cure";
 }
 
-Cure::Cure(const Cure &obj)
+Cure::Cure(const Cure &obj) : AMateria(obj)
 {
     this->type = "cure";
     *this = obj;

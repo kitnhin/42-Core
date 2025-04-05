@@ -36,7 +36,7 @@ void		MateriaSource::learnMateria(AMateria* type)
 	{
 		cout << "no slots left to learn Materia" << endl;
 		if (type != NULL)
-			free(type);
+			delete type;
 	}
 }
 
