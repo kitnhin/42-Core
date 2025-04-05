@@ -21,7 +21,6 @@ ScavTrap::ScavTrap(string name)
 ScavTrap::ScavTrap(const ScavTrap &obj) : ClapTrap(obj)
 {
 	cout << "(ScavTrap) Copy constructor called" << endl;
-	this->guardmode = obj.guardmode;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &obj)
@@ -62,11 +61,5 @@ void ScavTrap::guardGate()
 		cout << "ScavTrap " << name << " has already died, cant guard" << endl;
 		return ;
 	}
-	else if (guardmode == true)
-	{
-		cout << "Guardmode already activated" << endl;
-		return ;
-	}
-	cout << "ScavTrap " << name << "has activated guard mode" << endl;
-	guardmode = true;
+	cout << "ScavTrap " << name << " has activated guard mode" << endl;
 }

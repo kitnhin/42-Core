@@ -9,7 +9,7 @@ using std::cout;
 using std::string;
 using std::endl;
 
-class ScavTrap : public ClapTrap
+class ScavTrap : virtual public ClapTrap
 {
 	public:
 	ScavTrap();

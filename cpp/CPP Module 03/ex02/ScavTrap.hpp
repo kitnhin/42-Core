@@ -11,9 +11,6 @@ using std::endl;
 
 class ScavTrap : public ClapTrap
 {
-	private:
-	bool	guardmode;
-
 	public:
 	ScavTrap();
 	ScavTrap(string name);

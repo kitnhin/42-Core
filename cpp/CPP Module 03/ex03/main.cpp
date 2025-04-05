@@ -1,26 +1,25 @@
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
+
 int main()
 {
 	cout << "--------------" << endl;
 	cout << "--basic test--" << endl;
 	cout << "--------------" << endl;
-	FragTrap chixia("chixia");
-	FragTrap yangyang("yangyang");
-
-	FragTrap encore;
-	encore = chixia;
+	DiamondTrap chixia("chixia");
+	DiamondTrap yangyang("yangyang");
 
 	cout << "--------------" << endl;
 	cout << "---attk test--" << endl;
 	cout << "--------------" << endl;
-	chixia.attack("yangyang");
+	chixia.attack("yangyang"); //inherited ScavTrap attk
 
 	cout << "------------------" << endl;
-	cout << "--high five test--" << endl;
+	cout << "--functions test--" << endl;
 	cout << "------------------" << endl;
 	chixia.highFivesGuys();
-	chixia.takeDamage(1000);
-	chixia.highFivesGuys();
+	chixia.guardGate();
+	chixia.whoAmI();
 }
 //this CPP module is so ass

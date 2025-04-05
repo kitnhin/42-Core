@@ -15,6 +15,7 @@ FragTrap::FragTrap(string name)
 	this->name = name;
 	hit_points = 100;
 	energy_points = 100;
+	//atk_dmg = FragTrap::atk_dmg; <- this doesnt work cuz when ScavTrap is initialised it will overwrite the ClapTrap obj shared between Scav and Frag, rewriting the atkdmg to 20
 	atk_dmg = 30;
 }
 
@@ -56,10 +57,5 @@ void FragTrap::attack(const std::string& target)
 
 void FragTrap::highFivesGuys(void)
 {
-	if(hit_points <= 0)
-	{
-		cout << "FragTrap " << name << " has already died, cant high five" << endl;
-		return ;
-	}
 	cout << name << " is giving a high five!" << endl;
 }
