@@ -38,7 +38,7 @@ void	Character::unequip(int idx)
 		inventory[idx] = NULL;
 	}
 	else
-		cout << "nth at this slot" << endl;
+		cout << "nth to unequip at this slot" << endl;
 }
 
 void Character::use(int idx, ICharacter& target)
@@ -82,11 +82,9 @@ Character::~Character()
 Character &Character::operator=(const Character &obj)
 {
 	this->name = obj.name;
-
 	for(int i = 0; i < 4; i++)
 		this->inventory[i] = obj.inventory[i];
 	for(int i = 0; i < 100; i++)
 		this->unequipped[i] = obj.inventory[i];
-
 	return (*this);
 }

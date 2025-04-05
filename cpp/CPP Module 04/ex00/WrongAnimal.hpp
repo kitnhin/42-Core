@@ -14,7 +14,7 @@ protected:
 
 public:
     string getType() const;
-    virtual void makeSound() const; // virtual means can be overwritten by derived class (justyn teach one)
+    void makeSound() const;
 
     WrongAnimal();
     WrongAnimal(const WrongAnimal &obj);

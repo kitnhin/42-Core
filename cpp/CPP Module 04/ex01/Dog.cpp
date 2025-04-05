@@ -33,6 +33,15 @@ Dog &Dog::operator=(const Dog &obj)
 	return (*this);
 }
 
+// Dog &Dog::operator=(const Dog &obj)
+// {
+// 	cout << "Dog SHALLOW copy assign operator called" << endl;
+// 	this->type = obj.getType();
+// 	brain = obj.brain;
+// 	return (*this);
+// }
+
+
 Brain *Dog::getbrain(void)
 {
 	return brain;

@@ -29,7 +29,6 @@ Cat &Cat::operator=(const Cat &obj)
 {
 	cout << "Cat copy assign operator called" << endl;
 	this->type = obj.getType();
-	this->brain = new Brain;
 	*brain = *obj.brain;
 	return (*this);
 }

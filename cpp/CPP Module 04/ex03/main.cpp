@@ -28,27 +28,32 @@
 int main()
 {
 	ICharacter* me = new Character("me");
+	ICharacter* you = new Character("you");
+
 	//MateriaSource tests
 	cout << endl << "==== MateriaSource ====" << endl << endl;
 	IMateriaSource* src = new MateriaSource();
+
 	//memory full
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 	src->learnMateria(new Ice()); 
+
 	//invalid material creation
 	AMateria *temp = src->createMateria("non existing material"); 
 
+	//character tests
 	cout << endl << "==== Character ====" << endl << endl;
     AMateria* temp2;
 	AMateria *temp3;
 	AMateria *temp4;
 	AMateria *temp5;
 	AMateria *temp6;
-	//equip null material
-	me->equip(temp);
-	//full inventory
+
+	//equip materia
+	me->equip(temp); // NULL materia
     temp2 = src->createMateria("ice");
     me->equip(temp2);
     temp3 = src->createMateria("cure");
@@ -58,17 +63,37 @@ int main()
 	temp5 = src->createMateria("cure");
 	me->equip(temp5);
 	temp6 = src->createMateria("cure");
-	me->equip(temp6);
+	me->equip(temp6); //full inventory
+	cout << endl;
+
+	//using powers
+	me->use(0, *you);
+	me->use(1, *you);
+	me->use(6, *you); //invalid slot
+	cout << endl;
+
 	//invalid unequip idx
-	me->unequip(3);
-	me->unequip(3);
+	me->unequip(0);
+	me->unequip(1);
 	me->unequip(1000);
-	//invalid use
-	ICharacter* bob = new Character("bob");
-	me->unequip(3);
-	me->use(3, *bob);
-	
-	delete bob;
+	cout << endl;
+
+	//test copy assign
+	Character lux("lux");
+	Character ahri("ahri");
+	AMateria *newmat = src->createMateria("ice");
+	lux.equip(newmat);
+	lux.use(0, ahri);
+	ahri = lux;
+	ahri.use(0,lux);
+
+	//test deepcopy
+	lux.unequip(0);
+	lux.use(0, ahri); //lux unequipped dy so cant use
+	ahri.use(0, lux); //ahri still can use, showing deep copy
+
+
+	delete you;
 	delete me;
 	delete src;
 	return 0;
