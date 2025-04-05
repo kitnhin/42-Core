@@ -13,7 +13,7 @@ class Point
     Point();
     Point(const Point &obj);
     ~Point();
-    Point operator=(const Point &obj);
+    Point &operator=(const Point &obj);
 
     Point(float x, float y);
     const Fixed getX() const;

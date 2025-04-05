@@ -32,7 +32,7 @@ void Fixed::setRawBits(int const raw)
 
 Fixed::Fixed(int num)
 {
-	if(num < INT_MAX /256 && num >= 0)
+	if(num < INT_MAX /256 && num >= 0) //have to prevent neg numbers cuz the signed bit would be gone
 		this->value = num * 256;
 	else
 	{
