@@ -20,12 +20,12 @@ int main()
     cout << "expected results: " << expected << endl;
     if(result == expected)
         cout << "results calculated match expected" << endl;
-    else
-        cout << "results dont match :(" << endl;
+    else {
+        cout << "results dont match :(" << endl; } 
 
 	
 	cout <<"\nTest2 (outside triangle):" << endl;
-		cout << "-------------" << endl;
+	cout << "-------------" << endl;
     Point p2(100.0f, 100.0f);
     result = bsp(a,b,c,p2);
     expected = false;
@@ -36,11 +36,11 @@ int main()
     cout << "expected results: " << expected << endl;
     if(result == expected)
         cout << "results calculated match expected" << endl;
-    else
-        cout << "results dont match :(" << endl;
+    else {
+        cout << "results dont match :(" << endl; } 
 
 	cout <<"\nTest3 (on the vertices triangle):" << endl;
-		cout << "-------------" << endl;
+	cout << "-------------" << endl;
     Point p3(0.0f, 0.0f);
     result = bsp(a,b,c,p3);
     expected = false;
@@ -51,8 +51,8 @@ int main()
     cout << "expected results: " << expected << endl;
     if(result == expected)
         cout << "results calculated match expected" << endl;
-    else
-        cout << "results dont match :(" << endl;
+    else {
+        cout << "results dont match :(" << endl; } 
 
 	cout <<"\nTest4 (on the edge triangle):" << endl;
 	cout << "-------------" << endl;
@@ -66,8 +66,9 @@ int main()
     cout << "expected results: " << expected << endl;
     if(result == expected)
         cout << "results calculated match expected" << endl;
-    else
-        cout << "results dont match :(" << endl;
+    else {
+        cout << "results dont match :(" << endl; } 
 
-		//take note negative points wouldnt work cuz my fixed class doesnt allow that
+    return 0;
+	//take note negative points wouldnt work cuz my fixed class doesnt allow that
 }
