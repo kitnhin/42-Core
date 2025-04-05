@@ -30,7 +30,6 @@ int main( void )
 		cout << "after pre increment: " << beru << endl;
 		beru = 10;
 		cout << "post increment: " << ++beru << endl;
-		cout << "test other stuffs: " << endl;
 
 		beru = 10;
 		cout << "\ntest decrements: " << endl;
@@ -46,6 +45,22 @@ int main( void )
 		Fixed max = Fixed::max(iron, igris);
 		cout << "min value: " << min << endl;
 		cout << "max value: " << max << endl;
+
+		cout << "\ntest comparison ops (!= , == ....): " << endl;
+		cout << "operator:!= result:" << (iron != igris) << "(supposed to return true)" << endl;
+		cout << "operator:== result:" << (iron == igris) << "(supposed to return false)" << endl;
+		cout << "operator:>= result:" << (iron >= igris) << "(supposed to return false)" << endl;
+		cout << "operator:<= result:" << (iron <= igris) << "(supposed to return true)" << endl;
+		cout << "operator:>  result:" << (iron > igris) << "(supposed to return false)" << endl;
+		cout << "operator:<  result:" << (iron < igris) << "(supposed to return true)" << endl;
+
+		cout << "\ntest math ops: " << endl;
+		Fixed yes(12);
+		Fixed no(4);
+		cout << "operator:+ result:" << yes+no << endl;
+		cout << "operator:- result:" << yes-no << endl;
+		cout << "operator:* result:" << yes*no << endl;
+		cout << "operator:/ result:" << yes/no << endl;
 		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 	}
 	

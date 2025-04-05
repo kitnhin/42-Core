@@ -32,7 +32,7 @@ void Fixed::setRawBits(int const raw)
 
 Fixed::Fixed(int num)
 {
-	if(num < INT_MAX /256 && num > 0)
+	if(num < INT_MAX /256 && num >= 0)
 		this->value = num * 256;
 	else
 	{
@@ -44,7 +44,7 @@ Fixed::Fixed(int num)
 
 Fixed::Fixed(float num)
 {
-	if(num < INT_MAX /256 && num > 0)
+	if(num < INT_MAX /256 && num >= 0)
 		this->value = roundf(num * 256); //rounds floating num to int
 	else
 	{
