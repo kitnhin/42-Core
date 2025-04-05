@@ -14,13 +14,17 @@ int main()
 	//test small stuff
 	cout << "\n=======test small stuff=======\n" << endl;
  	const Animal *jus = new Animal;
+	cout << endl;
 	const Animal *josh = new Dog;
+	cout << endl;
 	const Animal *yk = new Cat;
+	cout << endl;
+	cout << endl;
 
 	cout << "animal type: " << jus->getType() << endl;
 	cout << "dog type: " << josh->getType() << endl;
 	cout << "cat type: " << yk->getType() << endl;
-
+	cout << endl;
 	delete jus;
 	delete josh;
 	delete yk;
@@ -32,9 +36,9 @@ int main()
 	int n = 4;
 	Animal *arr[n]; // an array of pointers
 	for(int i = 0; i < (n / 2); i++)
-		arr[i] = new Dog;
+		arr[i] = new Dog, cout << endl;
 	for(int i = n/2; i < n; i++)
-		arr[i] = new Cat;
+		arr[i] = new Cat, cout << endl;;
 	for(int i = 0; i < n; i++)
 		delete arr[i];
 
@@ -57,13 +61,13 @@ int main()
 	cout << "\n====== eval sheet test=========\n" << endl;
 	Dog basic;
 	{
-		cout << "\ntmp stuff\n" << endl;
 		Dog tmp = basic;
-		cout << "\nend of temp stuff\n" << endl;
 	}
 	cout << "---------------------" << endl;
 	basic.getbrain()->setidea("COOKIE AND CREAM", 0);
+	cout << endl;
 	cout << "basic dog is thinking of: " << basic.getbrain()->getidea(0) << endl;
+	cout << endl;
 	//as we can see, the basic dog can still use its brain, meaning deep copy cuz the brain deleted in tmp is diff from basic
 	return 0;
 }
