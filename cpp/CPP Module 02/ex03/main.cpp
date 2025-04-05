@@ -72,3 +72,7 @@ int main()
     return 0;
 	//take note negative points wouldnt work cuz my fixed class doesnt allow that
 }
+
+//main logic:
+//total area of triangle = total of total area of triangles made up by 2 vertices and the point
+//if any of the areas of the triangles of 2 vertices and the point is 0, means the point on the lines or vertices, so false
