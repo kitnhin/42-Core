@@ -30,5 +30,7 @@ void Brain::setidea(string idea, int n)
 
 string Brain::getidea(int n)
 {
+	if(this->ideas[n] == "")
+		cout << "no idea at this brain slot" << endl;
 	return(this->ideas[n]);
 }

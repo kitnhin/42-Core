@@ -76,6 +76,7 @@ int main()
 	me->unequip(0);
 	me->unequip(1);
 	me->unequip(1000);
+	me->unequip(0);
 	cout << endl;
 
 	//test copy assign

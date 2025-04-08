@@ -28,10 +28,20 @@ Dog::Dog(const Dog &obj) : Animal(obj)
 Dog &Dog::operator=(const Dog &obj)
 {
 	cout << "Dog copy assign operator called" << endl;
-	this->type = obj.getType();
-	*brain = *obj.brain;
+	if(this->brain)
+		delete this->brain;
+	this->brain = new Brain(*obj.brain);
 	return (*this);
 }
+
+// Dog &Dog::operator=(const Dog &obj)
+// {
+// 	cout << "Dog SHALLOW copy assign operator called" << endl;
+// 	this->type = obj.getType();
+// 	brain = obj.brain;
+// 	return (*this);
+// }
+
 
 Brain *Dog::getbrain(void)
 {

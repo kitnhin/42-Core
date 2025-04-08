@@ -14,10 +14,7 @@ class Animal
 
 	public:
 	string getType(void) const;
-	virtual void makeSound(void) const = 0; 
-	// function is an abstract class now cuz got one pure virtual function
-	// (= 0)
-
+	virtual void makeSound(void) const = 0; // pure virtual class cuz of -0, so cant be instantiated
 	Animal();
 	Animal(const Animal &obj);
 	virtual ~Animal();
