@@ -38,7 +38,7 @@ void	Character::equip(AMateria* m)
 
 void	Character::unequip(int idx)
 {
-	if (inventory[idx])
+	if (idx >= 0 && idx < 4 && inventory[idx])
 	{
 		unequipped_handler(inventory[idx]);
 		print_unequipped();

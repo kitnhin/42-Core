@@ -38,7 +38,9 @@ int main()
 	for(int i = 0; i < (n / 2); i++)
 		arr[i] = new Dog, cout << endl;
 	for(int i = n/2; i < n; i++)
-		arr[i] = new Cat, cout << endl;;
+		arr[i] = new Cat, cout << endl;
+	for(int i = 0; i < n; i++)
+		arr[i]->makeSound(), cout << endl;
 	for(int i = 0; i < n; i++)
 		delete arr[i], cout << endl;
 

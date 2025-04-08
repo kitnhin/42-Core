@@ -25,6 +25,44 @@
 // 	return 0;
 // }
 
+
+// int main(void)
+// {
+//     IMateriaSource *src = new MateriaSource;
+//     src->learnMateria(new Ice());
+//     src->learnMateria(new Cure());
+
+//     ICharacter* Yabi = new Character("Yabi");
+//     AMateria *tmp;
+
+//     // add Materia to Character (Yabi)
+//     {
+//         tmp = src->createMateria("ice");
+//         Yabi->equip(tmp);
+//         tmp = src->createMateria("cure");
+//         Yabi->equip(tmp);
+//     }
+	
+// 	Character copy("copy");
+// 	Character deep;
+
+// 	tmp = src->createMateria("ice");
+
+// 	copy.equip(tmp);
+// 	deep = copy;
+
+// 	deep.use(0, copy);
+
+// 	deep.unequip(0);
+
+// 	copy.use(0, deep);
+
+//     delete Yabi;
+//     delete src;
+
+//     return (0);
+// }
+
 int main()
 {
 	ICharacter* me = new Character("me");

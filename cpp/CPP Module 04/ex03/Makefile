@@ -7,7 +7,7 @@ NAME = Materia
 
 CC = c++
 
-CFLAGS = -Wall -Werror -Wextra -std=c++98
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -g3 -fsanitize=address
 
 ${NAME}: ${SRCS}
 	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
@@ -23,3 +23,6 @@ fclean : clean
 re : fclean $(NAME)
 
 .PHONY : all clean flcean re bonus
+
+r: $(NAME)
+	./Materia

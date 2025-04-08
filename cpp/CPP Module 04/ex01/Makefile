@@ -7,7 +7,7 @@ NAME = Animal
 
 CC = c++
 
-CFLAGS = -Wall -Werror -Wextra -std=c++98
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -g3 -fsanitize=address
 
 ${NAME}: ${SRCS}
 	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
