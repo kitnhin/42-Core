@@ -9,7 +9,8 @@ class Character: public ICharacter
 	private:
 	string		name;
 	AMateria	*inventory[4];
-	AMateria	*unequipped [100];
+	AMateria	**unequipped;
+	int			unequipped_size;
 
 	public:
 	Character(string name);
@@ -17,6 +18,8 @@ class Character: public ICharacter
 	void equip(AMateria* m);
 	void unequip(int idx);
 	void use(int idx, ICharacter& target);
+	void unequipped_handler(AMateria *dropped_mat);
+	void print_unequipped();
 
 	~Character();
 	Character();

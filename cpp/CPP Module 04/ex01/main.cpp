@@ -40,23 +40,23 @@ int main()
 	for(int i = n/2; i < n; i++)
 		arr[i] = new Cat, cout << endl;;
 	for(int i = 0; i < n; i++)
-		delete arr[i];
+		delete arr[i], cout << endl;
 
 	//deep copy
 	cout << "------------------------------------" << endl;
 	cout << "------------------------------------" << endl;
 	Dog dog;
-	dog.getbrain()->setidea("FURINAAAAAAA", 0);
-	cout << "dog is thinking of: " << dog.getbrain()->getidea(0) << endl;
+	dog.getbrain()->setidea("FURINAAAAAAA", 1);
+	cout << "dog is thinking of: " << dog.getbrain()->getidea(1) << endl;
 
 	cout << "------------------------------------" << endl;
 	cout << "------------------------------------" << endl;
 	Dog dog_copy;
 	dog_copy = dog;
-	cout << "dog_copy is currently thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
-	dog_copy.getbrain()->setidea("CARLOTTAAAA", 0);
-	cout << "dog_copy is now thinking of: " << dog_copy.getbrain()->getidea(0) << endl;
-	cout << "original dog is thinking of: " << dog.getbrain()->getidea(0) << endl;
+	cout << "dog_copy is currently thinking of: " << dog_copy.getbrain()->getidea(1) << endl;
+	dog_copy.getbrain()->setidea("CARLOTTAAAA", 1);
+	cout << "dog_copy is now thinking of: " << dog_copy.getbrain()->getidea(1) << endl;
+	cout << "original dog is thinking of: " << dog.getbrain()->getidea(1) << endl;
 
 	cout << "\n====== eval sheet test=========\n" << endl;
 	Dog basic;

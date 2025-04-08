@@ -46,7 +46,7 @@ int main()
 
 	//character tests
 	cout << endl << "==== Character ====" << endl << endl;
-    AMateria* temp2;
+    AMateria *temp2;
 	AMateria *temp3;
 	AMateria *temp4;
 	AMateria *temp5;
@@ -91,7 +91,6 @@ int main()
 	lux.unequip(0);
 	lux.use(0, ahri); //lux unequipped dy so cant use
 	ahri.use(0, lux); //ahri still can use, showing deep copy
-
 
 	delete you;
 	delete me;
