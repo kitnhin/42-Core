@@ -73,5 +73,6 @@ void	Bureaucrat::incrementGrade()
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat const &obj)
 {
-	return(os << obj.getName() << " has a grade " << obj.getGrade() << endl);
+	os << obj.getName() << " has a grade " << obj.getGrade() << endl;
+	return os;
 }

@@ -6,6 +6,8 @@ int main()
 	{
 		Bureaucrat Yuki("Yuki", 1);
 		Bureaucrat Alya("Alya", 150);
+		cout << Alya;
+		cout << Yuki;
 	}
 	catch(const std::exception& e) //no exception caught
 	{
