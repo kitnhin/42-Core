@@ -73,8 +73,7 @@ void	printNums(string input)
 			cout <<"impossible" << endl;
 
 		cout << "float: ";
-
-		if(_double <= FLT_MAX && _double >= FLT_MIN)
+		if(_double <= FLT_MAX && _double >= -FLT_MAX) //NOT float min cuz that gives the smallest positive number
 		{
 			if(!std::fmod(_double, 1.0)) // fmod compares the decimal places of 1 num to another and returns the diff.
 				cout << _float << ".0f" << endl;
@@ -92,7 +91,7 @@ void	printNums(string input)
 	}
 	catch (const std::out_of_range& e)
 	{
-        std::cerr << "out of range bro wtf u doin" << endl;
+        std::cerr << "out of range bro wth u doin" << endl;
 	}
 	catch(const std::exception& e)
 	{
