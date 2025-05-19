@@ -18,7 +18,7 @@ class ShrubberyCreationForm : public AForm
 
 	ShrubberyCreationForm(string target);
 	void	exec() const;
-	string	getTarget() const;
+	string	getTarget();
 };
 
 std::ostream &operator<<(std::ostream &os, ShrubberyCreationForm const &obj);

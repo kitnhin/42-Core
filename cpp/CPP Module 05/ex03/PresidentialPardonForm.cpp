@@ -2,7 +2,7 @@
 
 PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5), target("none") {};
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &obj)
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &obj) : AForm(obj)
 {
 	*this = obj;
 }
@@ -18,7 +18,7 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPard
 
 PresidentialPardonForm::PresidentialPardonForm(string target) : AForm("PresidentialPardonForm", 25, 5), target(target) {}
 
-string PresidentialPardonForm::getTarget() const
+string PresidentialPardonForm::getTarget()
 {
 	return(this->target);
 }
@@ -37,6 +37,5 @@ std::ostream &operator<<(std::ostream &os, PresidentialPardonForm const &obj)
 		os << " has not been signed. ";
 	os << "Minimum grade to sign: " << obj.get_sign_grade_req();
 	os << " Minimum grade to exec: " << obj.get_exec_grade_req();
-	os << " Target: " << obj.getTarget();
 	return os;
 }

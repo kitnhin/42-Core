@@ -2,7 +2,7 @@
 
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm", 145, 137), target("none"){};
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj)
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj) : AForm(obj)
 {
 	*this = obj;
 }
@@ -26,7 +26,7 @@ string ShrubberyCreationForm::getTarget()
 void	ShrubberyCreationForm::exec() const
 {
 	string outfile = this->target + "_shrubbery";
-	ofstream out(outfile);
+	ofstream out(outfile.c_str());
 	for(int i = 0; i < 2; i++)
 	{
 		out << "     /\\     " << endl;

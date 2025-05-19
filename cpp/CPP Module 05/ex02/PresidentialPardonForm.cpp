@@ -2,7 +2,7 @@
 
 PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5), target("none") {};
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &obj)
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &obj) : AForm(obj)
 {
 	*this = obj;
 }

@@ -4,11 +4,9 @@
 #include <iostream>
 #include <exception>
 #include <fstream>
-//me being dumb trying out usleep in cpp lol
 #include <ctime>
 #include <cstdlib>
-#include <thread>
-#include <chrono>
+#include <unistd.h>
 #include "AForm.hpp"
 
 using std::string;
