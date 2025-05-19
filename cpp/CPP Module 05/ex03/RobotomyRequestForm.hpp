@@ -18,7 +18,7 @@ class RobotomyRequestForm : public AForm
 
 	RobotomyRequestForm(string target);
 	void	exec() const;
-	string	getTarget() const;
+	string	getTarget();
 };
 
 std::ostream &operator<<(std::ostream &os, RobotomyRequestForm const &obj);

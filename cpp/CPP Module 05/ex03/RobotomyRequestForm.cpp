@@ -2,7 +2,7 @@
 
 RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45), target("none") {};
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &obj)
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &obj) : AForm(obj)
 {
 	*this = obj;
 }
@@ -18,20 +18,22 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 
 RobotomyRequestForm::RobotomyRequestForm(string target) : AForm("RobotomyRequestForm", 72, 45), target(target) {}
 
-string RobotomyRequestForm::getTarget() const
+string RobotomyRequestForm::getTarget()
 {
 	return(this->target);
 }
 
 void	RobotomyRequestForm::exec() const
 {
-	int wait = 1;
+	int wait = 700000;
 	cout << "*drilling noises*" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait)); // usleep for a thread(in this case the main thread)
+	usleep(wait);
 	cout << "BUzz" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
+	usleep(wait);
 	cout << "bUzz" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
+	usleep(wait);
+
+	//randomness
 	std::srand(std::time(0));
 	if(std::rand() % 2)
 		cout << "robotomized successful yay" << endl;
@@ -48,6 +50,5 @@ std::ostream &operator<<(std::ostream &os, RobotomyRequestForm const &obj)
 		os << " has not been signed. ";
 	os << "Minimum grade to sign: " << obj.get_sign_grade_req();
 	os << " Minimum grade to exec: " << obj.get_exec_grade_req();
-	os << " Target: " << obj.getTarget();
 	return os;
 }

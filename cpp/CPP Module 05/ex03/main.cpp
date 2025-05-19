@@ -12,7 +12,7 @@ int main()
 	{
 		Intern *miyabi = new Intern();
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
-		AForm *ellen = miyabi->makeForm("shrubbery creation", "mom");
+		AForm *ellen = miyabi->makeForm("shrubbery creation", "castorice");
 		belle->signForm(*ellen);
 		belle->executeForm(*ellen);
 		cout << endl;
@@ -28,7 +28,7 @@ int main()
 	{
 		Intern *miyabi = new Intern();
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
-		AForm *ellen = miyabi->makeForm("robotomy request", "mom");
+		AForm *ellen = miyabi->makeForm("robotomy request", "castorice");
 		belle->signForm(*ellen);
 		belle->executeForm(*ellen);
 		cout << endl;
@@ -44,7 +44,7 @@ int main()
 	{
 		Intern *miyabi = new Intern();
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
-		AForm *ellen = miyabi->makeForm("presidential pardon", "mom");
+		AForm *ellen = miyabi->makeForm("presidential pardon", "castorice");
 		belle->signForm(*ellen);
 		belle->executeForm(*ellen);
 		cout << endl;
@@ -62,7 +62,7 @@ int main()
 	Bureaucrat *belle = new Bureaucrat("belle", 1);
 	try
 	{
-		AForm *ellen = miyabi->makeForm("no such name", "mom");
+		AForm *ellen = miyabi->makeForm("no such name", "castorice");
 		belle->signForm(*ellen);
 		belle->executeForm(*ellen);
 		cout << endl;

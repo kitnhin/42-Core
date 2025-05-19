@@ -2,7 +2,7 @@
 
 RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45), target("none") {};
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &obj)
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &obj) : AForm(obj)
 {
 	*this = obj;
 }
@@ -25,13 +25,13 @@ string RobotomyRequestForm::getTarget()
 
 void	RobotomyRequestForm::exec() const
 {
-	int wait = 300;
+	int wait = 700000;
 	cout << "*drilling noises*" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait)); // usleep for a thread(in this case the main thread)
+	usleep(wait);
 	cout << "BUzz" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
+	usleep(wait);
 	cout << "bUzz" << endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
+	usleep(wait);
 
 	//randomness
 	std::srand(std::time(0));

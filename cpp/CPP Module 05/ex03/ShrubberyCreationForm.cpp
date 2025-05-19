@@ -2,7 +2,7 @@
 
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm", 145, 137), target("none"){};
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj)
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj) : AForm(obj)
 {
 	*this = obj;
 }
@@ -18,7 +18,7 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationF
 
 ShrubberyCreationForm::ShrubberyCreationForm(string target) : AForm("ShrubberyCreationForm", 145, 137), target(target) {}
 
-string ShrubberyCreationForm::getTarget() const
+string ShrubberyCreationForm::getTarget()
 {
 	return(this->target);
 }
@@ -26,7 +26,7 @@ string ShrubberyCreationForm::getTarget() const
 void	ShrubberyCreationForm::exec() const
 {
 	string outfile = this->target + "_shrubbery";
-	ofstream out(outfile);
+	ofstream out(outfile.c_str());
 	for(int i = 0; i < 2; i++)
 	{
 		out << "     /\\     " << endl;
@@ -51,6 +51,5 @@ std::ostream &operator<<(std::ostream &os, ShrubberyCreationForm const &obj)
 		os << " has not been signed. ";
 	os << "Minimum grade to sign: " << obj.get_sign_grade_req();
 	os << " Minimum grade to exec: " << obj.get_exec_grade_req();
-	os << " Target: " << obj.getTarget();
 	return os;
 }

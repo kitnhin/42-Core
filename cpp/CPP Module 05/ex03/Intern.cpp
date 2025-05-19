@@ -46,7 +46,10 @@ AForm *Intern::makeForm(string name, string target)
 	for(int i = 0; i < 4; i++)
 	{
 		if(name.compare(names[i]) == 0)
+		{
+			cout << "Intern created a " << name << " form" << endl; 
 			return((*functions[i])(target));
+		}
 	}
 	throw Intern::InvalidNameException();
 }
