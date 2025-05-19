@@ -4,10 +4,12 @@ int main()
 {
 	try
 	{
+		cout << endl;
 		Bureaucrat Yuki("Yuki", 1);
 		Bureaucrat Alya("Alya", 150);
 		cout << Alya;
 		cout << Yuki;
+		cout << "Expected: none\n" << endl;
 	}
 	catch(const std::exception& e) //no exception caught
 	{
@@ -15,6 +17,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 0" << endl;
+		cout << "Expected: too high" << endl;
 		Bureaucrat Alya("Alya", 0);
 	}
 	catch(const std::exception& e) // grade too high exception caught
@@ -23,6 +27,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 151" << endl;
+		cout << "Expected: too low" << endl;
 		Bureaucrat Yuki("Yuki", 151);
 	}
 	catch(const std::exception& e) // grade too low exception caught
@@ -31,6 +37,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 151 and 0" << endl;
+		cout << "Expected: too low" << endl;
 		Bureaucrat Yuki("Yuki", 151);
 		Bureaucrat Alya("Alya", 0);
 	}
@@ -40,6 +48,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 0" << endl;
+		cout << "Expected: too high" << endl;
 		Bureaucrat Yuki("Yuki", 0);
 		cout << "test" << endl;
 		cout << "test" << endl;
@@ -50,6 +60,14 @@ int main()
 	}
 	try
 	{
+		cout << "|Test decrement grade:|\n" << endl;
+		cout << "Normal test: " << endl;
+		Bureaucrat Alya("Alya", 5);
+		cout << "Before: " << Alya;
+		Alya.decrementGrade();
+		cout << "After: " << Alya << endl;
+
+		cout << "Test invalid decrement: " << endl;
 		Bureaucrat Yuki("Yuki", 150);
 		Yuki.decrementGrade();
 	}
@@ -59,6 +77,14 @@ int main()
 	}
 	try
 	{
+		cout << "|Test increment grade:|\n" << endl;
+		cout << "Normal test: " << endl;
+		Bureaucrat Alya("Alya", 5);
+		cout << "Before: " << Alya;
+		Alya.incrementGrade();
+		cout << "After: " << Alya << endl;
+
+		cout << "Test invalid increment:" << endl;
 		Bureaucrat Yuki("Yuki", 1);
 		Yuki.incrementGrade();
 	}
@@ -66,6 +92,4 @@ int main()
 	{
 		std::cerr << e.what() << endl;
 	}
-	Bureaucrat Yuki("Yuki", 10);
-	cout << Yuki << endl;
 }

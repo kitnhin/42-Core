@@ -12,7 +12,7 @@ int main()
         AForm *shrubby = new ShrubberyCreationForm("home");
         Bureaucrat *bobby = new Bureaucrat("bobby", 5);
         bobby->signForm(*shrubby);
-        shrubby->execute(*bobby);
+        bobby->executeForm(*shrubby);
         delete shrubby;
         delete bobby;
         cout << endl;
@@ -23,12 +23,12 @@ int main()
     }
     try
     {
-        AForm *boobie = new RobotomyRequestForm("boobeee");
-        Bureaucrat *obi = new Bureaucrat("obi", 5);
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
-        delete obi;
-        delete boobie;
+        AForm *phoebe = new RobotomyRequestForm("phoebeee");
+        Bureaucrat *zani = new Bureaucrat("zani", 5);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
+        delete zani;
+        delete phoebe;
         cout << endl;
     }
     catch(const std::exception& e)
@@ -37,12 +37,12 @@ int main()
     }
     try
     {
-        AForm *boobie = new PresidentialPardonForm("boobeee");
-        Bureaucrat *obi = new Bureaucrat("obi", 5);
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
-        delete obi;
-        delete boobie;
+        AForm *phoebe = new PresidentialPardonForm("phoebeee");
+        Bureaucrat *zani = new Bureaucrat("zani", 5);
+        zani->signForm(*phoebe);
+		zani->executeForm(*phoebe);
+        delete zani;
+        delete phoebe;
         cout << endl;
     }
     catch(const std::exception& e)
@@ -53,96 +53,96 @@ int main()
     //failure sign tests
     cout << "fail sign tests:" << '\n' << endl;
 
-	AForm *boobie = new ShrubberyCreationForm("boobeee");
-    Bureaucrat *obi = new Bureaucrat("obi", 150);
+    AForm *phoebe = new ShrubberyCreationForm("phoebeee");
+    Bureaucrat *zani = new Bureaucrat("zani", 150);
     try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low and form unsigned exception caught
     {
         std::cerr << e.what() << endl;
     }
-    delete obi;
-    delete boobie;
+    delete zani;
+    delete phoebe;
 
-	boobie = new RobotomyRequestForm("boobeee");
-	obi = new Bureaucrat("obi", 70);
+    phoebe = new RobotomyRequestForm("phoebeee");
+    zani = new Bureaucrat("zani", 73);
     try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low and form unsigned exception caught
     {
         std::cerr << e.what() << endl;
     }
-    delete obi;
-    delete boobie;
+    delete zani;
+    delete phoebe;
 
-	boobie = new PresidentialPardonForm("boobeee");
-	obi = new Bureaucrat("obi", 150);
-	try
+    phoebe = new PresidentialPardonForm("phoebeee");
+    zani = new Bureaucrat("zani", 150);
+    try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low and form unsigned exception caught
     {
         std::cerr << e.what() << endl;
     }
-    delete obi;
-    delete boobie;
-	
+    delete zani;
+    delete phoebe;
+    
     //fail exec tests
     cout << '\n' << "fail exec tests:" << '\n' << endl;
 
-	boobie = new ShrubberyCreationForm("boobeee");
-	obi = new Bureaucrat("obi", 140);
+    phoebe = new ShrubberyCreationForm("phoebeee");
+    zani = new Bureaucrat("zani", 140);
     try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low exception caught
     {
         std::cerr << e.what() << endl;
     }
-	delete obi;
-    delete boobie;
+    delete zani;
+    delete phoebe;
 
-	boobie = new RobotomyRequestForm("boobeee");
-	obi = new Bureaucrat("obi", 70);
+    phoebe = new RobotomyRequestForm("phoebeee");
+    zani = new Bureaucrat("zani", 50);
     try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low exception caught
     {
         std::cerr << e.what() << endl;
     }
-    delete obi;
-    delete boobie;
+    delete zani;
+    delete phoebe;
 
-	boobie = new PresidentialPardonForm("boobeee");
-	obi = new Bureaucrat("obi", 20);
+    phoebe = new PresidentialPardonForm("phoebeee");
+    zani = new Bureaucrat("zani", 20);
     try
     {
-        obi->signForm(*boobie);
-        boobie->execute(*obi);
+        zani->signForm(*phoebe);
+        zani->executeForm(*phoebe);
         cout << endl;
     }
     catch(const std::exception& e) // too low exception caught
     {
         std::cerr << e.what() << endl;
     }
-    delete obi;
-    delete boobie;
+    delete zani;
+    delete phoebe;
 }

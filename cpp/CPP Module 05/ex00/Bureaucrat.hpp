@@ -37,6 +37,9 @@ class Bureaucrat
 		public:
 			const char *what(void) const throw();
 	};
+	//inherits the class std::exception
+	//the what() function here overrides the virtual wat() function in the exception class
+	//throw() means this function doesnt throw any exceptions
 };
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat const &obj);

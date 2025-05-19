@@ -29,6 +29,7 @@ class AForm
 	int		get_sign_grade_req() const;
 	int		get_exec_grade_req() const;
 	virtual void	exec() const = 0;
+	//need virtual =0 for abstract class (Not instantiable, cant create objects directly from it)
 
 	class GradeTooHighException : public std::exception
 	{

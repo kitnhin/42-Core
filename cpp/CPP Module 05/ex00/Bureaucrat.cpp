@@ -34,12 +34,12 @@ int	Bureaucrat::getGrade() const
 
 char const *Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return ("Grade too high");
+	return ("Grade too high\n");
 }
 
 char const *Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return ("Grade too low");
+	return ("Grade too low\n");
 }
 
 Bureaucrat::Bureaucrat(string name, int grade)

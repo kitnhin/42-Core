@@ -14,7 +14,7 @@ int main()
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
 		AForm *ellen = miyabi->makeForm("shrubbery creation", "mom");
 		belle->signForm(*ellen);
-		ellen->execute(*belle);
+		belle->executeForm(*ellen);
 		cout << endl;
 		delete miyabi;
 		delete belle;
@@ -30,7 +30,7 @@ int main()
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
 		AForm *ellen = miyabi->makeForm("robotomy request", "mom");
 		belle->signForm(*ellen);
-		ellen->execute(*belle);
+		belle->executeForm(*ellen);
 		cout << endl;
 		delete miyabi;
 		delete belle;
@@ -46,7 +46,7 @@ int main()
 		Bureaucrat *belle = new Bureaucrat("belle", 1);
 		AForm *ellen = miyabi->makeForm("presidential pardon", "mom");
 		belle->signForm(*ellen);
-		ellen->execute(*belle);
+		belle->executeForm(*ellen);
 		cout << endl;
 		delete miyabi;
 		delete belle;
@@ -64,7 +64,7 @@ int main()
 	{
 		AForm *ellen = miyabi->makeForm("no such name", "mom");
 		belle->signForm(*ellen);
-		ellen->execute(*belle);
+		belle->executeForm(*ellen);
 		cout << endl;
 	}
 	catch(const std::exception& e) // exception caught yayyyy

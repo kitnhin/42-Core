@@ -25,13 +25,15 @@ string RobotomyRequestForm::getTarget()
 
 void	RobotomyRequestForm::exec() const
 {
-	int wait = 1;
+	int wait = 300;
 	cout << "*drilling noises*" << endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(wait)); // usleep for a thread(in this case the main thread)
 	cout << "BUzz" << endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
 	cout << "bUzz" << endl;
 	std::this_thread::sleep_for(std::chrono::milliseconds(wait));
+
+	//randomness
 	std::srand(std::time(0));
 	if(std::rand() % 2)
 		cout << "robotomized successful yay" << endl;

@@ -36,7 +36,7 @@ AForm *make_presidential_form(string target)
 
 char const *Intern::InvalidNameException::what() const throw()
 {
-	return ("[Intern] invalid name");
+	return ("Invalid form rip");
 }
 
 AForm *Intern::makeForm(string name, string target)

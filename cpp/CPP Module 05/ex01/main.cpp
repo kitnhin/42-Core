@@ -4,6 +4,8 @@ int main()
 {
 	try
 	{
+		cout << endl;
+		cout << "Expected: none\n" << endl;
 		Form Elaina("Elaina", 50,50);
 	}
 	catch(const std::exception& e)
@@ -12,6 +14,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: -1" << endl;
+		cout << "Expected: too high" << endl; 
 		Form Elaina("Elaina", -1, 50);
 	}
 	catch(const std::exception& e) // too high exception caught
@@ -20,6 +24,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 1000" << endl;
+		cout << "Expected: too low" << endl; 
 		Form Elaina("Elaina", 1000, 50);
 	}
 	catch(const std::exception& e) // too low exception caught
@@ -28,6 +34,8 @@ int main()
 	}
 	try
 	{
+		cout << "Level: 1000" << endl;
+		cout << "Expected: too low" << endl; 
 		Form Elaina("Elaina", 10, 1000);
 	}
 	catch(const std::exception& e) // too low exception caught
@@ -36,6 +44,7 @@ int main()
 	}
 	try
 	{
+		cout << "Expected: sign success" << endl;
 		Form Elaina("Elaina", 10, 50);
 		Bureaucrat Miku("Miku", 10);
 		Miku.signForm(Elaina);
@@ -46,6 +55,7 @@ int main()
 	}
 	try
 	{
+		cout << "Expected: sign fail cuz grade too low" << endl;
 		Form Elaina("Elaina", 1, 50);
 		Bureaucrat Miku("Miku", 10);
 		Miku.signForm(Elaina);
@@ -54,10 +64,8 @@ int main()
 	{
 		std::cerr << e.what() << endl;
 	}
-	Form Elaina("Elaina", 1, 50);
-	Bureaucrat Miku("Miku", 10);
-	Miku.signForm(Elaina);
-	cout << Elaina << endl;
+
+//test output operator
 	Form Firefly("Firefly",1,1);
 	cout << Firefly << endl;
 }
