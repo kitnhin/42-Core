@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <exception>
+#include <stdexcept>
 
 using std::string;
 using std::cout;

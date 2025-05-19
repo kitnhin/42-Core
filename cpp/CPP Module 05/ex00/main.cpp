@@ -1,5 +1,26 @@
 #include "Bureaucrat.hpp"
 
+// void testft()
+// {
+// 	char *test = NULL;
+// 	// if(test == NULL)
+// 	// 	throw std::invalid_argument("test exception");
+// 	char c = test[1];
+// }
+
+// int main()
+// {
+// 	try
+// 	{
+// 		testft();
+// 	}
+// 	catch(std::exception &e)
+// 	{
+// 		cout << e.what() << endl;
+// 	}
+// 	return 0;
+// }	
+
 int main()
 {
 	try
