@@ -28,7 +28,7 @@ void	printChar(string input)
 {
 	cout << "char: " << input << endl;
 	cout << "int: " << static_cast<int>(input[0]) << endl;
-	cout << "flaot: " << static_cast<int>(input[0]) << ".0f" <<endl;
+	cout << "float: " << static_cast<int>(input[0]) << ".0f" <<endl;
 	cout << "double: " << static_cast<int>(input[0]) << ".0" << endl;
 }
 
@@ -44,7 +44,7 @@ void	printPseudoLateral(string input, int n)
 	else if(n == 2)
 	{
 		cout << "float: " << input << endl;
-		input.pop_back(); // popback removes the last f
+		input.erase(input.size() - 1); // popback removes the last f
 		cout << "double: " << input << endl; 
 	}
 }
@@ -53,7 +53,7 @@ void	printNums(string input)
 {
 	try
 	{
-		double	_double = std::stod(input);
+		double	_double = std::strtod(input.c_str(), 0);
 		int		_int = static_cast<int>(_double);
 		float	_float = static_cast<float>(_double);
 		char	_char = static_cast<char>(_double);
@@ -112,4 +112,5 @@ void	ScaleConverter::convert(string input)
 		printPseudoLateral(input, n);
 	else
 		printNums(input);
+	cout << abs(-2) << endl;
 }

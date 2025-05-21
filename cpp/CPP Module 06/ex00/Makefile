@@ -3,7 +3,7 @@ ScaleConverter.cpp CheckType.cpp main.cpp
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = ScaleConverter
+NAME = convert
 
 CC = c++
 

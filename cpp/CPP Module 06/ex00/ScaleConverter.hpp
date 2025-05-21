@@ -4,6 +4,9 @@
 #include <iostream>
 #include "CheckType.hpp"
 #include <float.h>
+#include <cstdlib>
+#include <limits.h>
+#include <math.h>
 
 using std::cout;
 using std::string;
