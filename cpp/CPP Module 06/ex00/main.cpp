@@ -1,6 +1,16 @@
 #include "ScaleConverter.hpp"
 #include "CheckType.hpp"
 
+
+// int main()
+// {
+// 	const char *p = "hello";
+// 	const int *q = (int*)p; // doesnt warn u and compiles, could lead to undefined behaviour (cuz int 4bytes but char 1byte)
+// 	const int *r = static_cast<const int*>(p); //warns u that this is invalid
+// 	return 0;
+// }
+
+
 int main(int argc, char **argv)
 {
 	if(argc != 2)
@@ -25,3 +35,6 @@ int main(int argc, char **argv)
 // 1 character inputs are being considered a char
 // then anything thats typed gets converted to double first, then type casted to the rest
 // i just let stod handle the conversion lmao and see when it wants to throw an error
+
+//implicit cast: int a = 1; float b = a; (dh (int) or static_cast<int>())
+//promotion: lower precision to higher (float -> double or int -> float)

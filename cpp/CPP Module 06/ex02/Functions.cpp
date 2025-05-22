@@ -46,7 +46,7 @@ void identify(Base& p)
 	try
 	{
 		A &a_ref = dynamic_cast<A&>(p);
-		cout << "result of identify (&p): object A";
+		cout << "result of identify (&p): object A" << endl;
 		(void)a_ref; // the funny unused variable again (guess where i got this from AHAHAHHA)
 	}
 	catch(const std::exception& e)
@@ -54,7 +54,7 @@ void identify(Base& p)
 		try
 		{
 			B &b_ref = dynamic_cast<B&>(p);
-			cout << "result of identify (&p): object B";
+			cout << "result of identify (&p): object B" << endl;
 			(void)b_ref;
 		}
 		catch(const std::exception& e)
@@ -62,7 +62,7 @@ void identify(Base& p)
 			try
 			{
 				C &c_ref = dynamic_cast<C&>(p);
-				cout << "result of identify (&p): object C";
+				cout << "result of identify (&p): object C" << endl;
 				(void)c_ref;
 			}
 			catch(const std::exception& e)

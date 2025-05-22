@@ -2,6 +2,7 @@
 #define SERIALIZER_HPP
 
 #include <iostream>
+#include <cstdint>
 
 using std::string;
 using std::cout;

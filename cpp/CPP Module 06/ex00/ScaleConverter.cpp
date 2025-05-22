@@ -59,10 +59,10 @@ void	printNums(string input)
 		char	_char = static_cast<char>(_double);
 
 		cout << "char: ";
-		if(_int <= 126 && _int >= 33)
+		if(_int <= 126 && _int >= 33) // displayable ascii chars
 			cout << _char << endl;
-		else if(_int <= 127 && _int >= 0)
-			cout << "non displayable" << endl;
+		else if(_int <= 127 && _int >= 0) // valid ascii range
+			cout << "Non displayable" << endl;
 		else
 			cout << "impossible" << endl;
 
@@ -84,7 +84,9 @@ void	printNums(string input)
 			cout << "impossible" << endl;
 
 		cout << "double: ";
-		if(!std::fmod(_double, 1.0))
+		if(_double == INFINITY)
+			cout << "impossible" << endl;
+		else if(!std::fmod(_double, 1.0))
 			cout << _double << ".0" << endl;
 		else
 			cout << _double << endl;
@@ -99,10 +101,6 @@ void	printNums(string input)
 	}
 }
 
-//subject din specify exactly when is conversion impossible, so i just let stod decide when it wanna throw exception for invalid input lol
-//cuz stuff like e sometimes r used in nums as well so i v lazy write all the if else so mafan
-//stod converts everything before a char (except nums ofc)
-
 void	ScaleConverter::convert(string input)
 {
 	int n;
@@ -112,5 +110,4 @@ void	ScaleConverter::convert(string input)
 		printPseudoLateral(input, n);
 	else
 		printNums(input);
-	cout << abs(-2) << endl;
 }
