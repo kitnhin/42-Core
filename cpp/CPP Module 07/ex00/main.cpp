@@ -1,4 +1,4 @@
-#include "Functions.hpp"
+#include "whatever.hpp"
 
 //how nice of them to provide the main for testing
 
@@ -52,61 +52,21 @@ int main( void )
     // std::cout << min(a, b) << std::endl;
 	// return 0;
 
-
+	//honestly i rly dk wat else to test for this
 }
 
-
-
-// #include <iostream>
-// #include <Array.hpp>
-
-// #define MAX_VAL 750
-// int main(int, char**)
+// namespace test{
+//     void yes(){ std::cout << "YES from namespace" << std::endl;}
+// }
+// void    yes()
 // {
-//     Array<int> numbers(MAX_VAL);
-//     int* mirror = new int[MAX_VAL];
-//     srand(time(NULL));
-//     for (int i = 0; i < MAX_VAL; i++)
-//     {
-//         const int value = rand();
-//         numbers[i] = value;
-//         mirror[i] = value;
-//     }
-//     //SCOPE
-//     {
-//         Array<int> tmp = numbers;
-//         Array<int> test(tmp);
-//     }
+//     std::cout << "YES" << std::endl;
+// }
 
-//     for (int i = 0; i < MAX_VAL; i++)
-//     {
-//         if (mirror[i] != numbers[i])
-//         {
-//             std::cerr << "didn't save the same value!!" << std::endl;
-//             return 1;
-//         }
-//     }
-//     try
-//     {
-//         numbers[-2] = 0;
-//     }
-//     catch(const std::exception& e)
-//     {
-//         std::cerr << e.what() << '\n';
-//     }
-//     try
-//     {
-//         numbers[MAX_VAL] = 0;
-//     }
-//     catch(const std::exception& e)
-//     {
-//         std::cerr << e.what() << '\n';
-//     }
-
-//     for (int i = 0; i < MAX_VAL; i++)
-//     {
-//         numbers[i] = rand();
-//     }
-//     delete [] mirror;//
+// int main()
+// {
+//     int yes = 1;
+//     ::yes(); // to call the FUNCTION in GLOBAL SCOPE, so can avoid namespace definitions or variables
+//     test::yes();
 //     return 0;
 // }

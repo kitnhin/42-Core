@@ -1,7 +1,8 @@
 #include "iter.hpp"
 #include <iostream>
-#include <thread>
-#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h>
 
 
 void	increment_by_one(char &c)
@@ -20,7 +21,7 @@ void	increment_by_one_int(int &i)
 }
 
 void	gacha(string &str) //inspired by justyns gacha during eval lol
-{
+{	
 	srand(time(0));
 	if(rand() % 30 == 1) // increased the chances cuz wtf is my luck
 		str.append("woahhhhh 5* char wooooooo!!!! (cant say the same in actual gacha tho)");
@@ -32,7 +33,7 @@ void	gacha(string &str) //inspired by justyns gacha during eval lol
 		str.append("unlucky 3* weap rip");
 	else
 		str.append("unlucky 3* char rip");
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000)); //so time is diff so gacha diff
+	usleep(700000);
 	cout << str << endl;
 }
 //wtf ive been playing this for almost half an hour and still no 5* huhhhhhhh
@@ -49,12 +50,6 @@ int main()
 	iter(arr2, 3, appendstr);
 	for(int i = 0; i < 3; i++)
 		cout << arr2[i];
-	cout << endl;
-
-	int arr3[] = {0,1,2,3,4,5};
-	iter(arr3, 6, increment_by_one_int);
-	for(int i = 0; i < 6; i++)
-		cout << arr[i];
 	cout << endl;
 
 	cout << '\n' << "generating gacha pull..." << endl; // 10 pulls cuz no gems :/

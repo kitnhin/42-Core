@@ -15,21 +15,9 @@ class Array
 	unsigned int	size;
 
 	public:
-	Array() : size(0)
-	{
-		this->arr = new T[0];
-	}
-
-	Array(const Array &obj)
-	{
-		*this = obj;
-	}
-
-	~Array()
-	{
-		delete [] this->arr;
-	}
-
+	Array() : size(0) { this->arr = new T[0]; }
+	Array(const Array &obj): arr(new T[0]) { *this = obj; } //need the new T[0] if wanna use the copy ass op if not the delete will seg fault
+	~Array() { delete [] this->arr; }
 	Array &operator=(const Array &obj)
 	{
 		if(this != &obj)
@@ -41,31 +29,28 @@ class Array
 		return *this;
 	}
 
-	Array(unsigned long size)
+	Array(unsigned int n)
 	{
-		this->arr = new T[size];
-		this->size = size;
+		this->arr = new T[n];
+		this->size = n;
 	}
 
 	T &operator[](unsigned int index)
 	{
 		if(index >= this->size || this->arr == NULL)
-			throw FormNotSignedException();
+			throw OutOfBoundsException();
 		else
 			return(this->arr[index]);
 	} //this one helps return the value in the array at which index so u can run Array [i]
 
-	unsigned int getSize()
-	{
-		return (this->size);
-	}
+	unsigned int getSize() { return (this->size); }
 
 	void	increment_value(unsigned int i) // for testing
 	{
 		arr[i]++;
 	}
 
-	class FormNotSignedException : public std::exception
+	class OutOfBoundsException : public std::exception
 	{
 		public:
 			const char *what(void) const throw()
