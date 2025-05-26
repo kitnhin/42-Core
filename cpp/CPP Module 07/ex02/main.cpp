@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstdlib>
+#include <string.h>
+#include <cstring>
 #include "Array.hpp"
 
 int main(int, char**)
@@ -100,8 +102,35 @@ int main(int, char**)
 		cout << temp4[i] << " ";
 	cout << endl;
 	cout << "temp4 size: " << temp3.getSize() << endl; // temp3 doesnt change
-}
 
+	//string test
+	cout << "\n ===== Test for std::string: ====\n" << endl;
+
+    Array<string> str_arr(2);
+	str_arr[0] = "IDW TO LOSE 5050 PLS IM BROKE";
+	str_arr[1] = "CARTETHYIA PLS COME HOMEEEE";
+
+	Array<string> str_arr_mirror = str_arr;
+
+	cout << "\nBefore changes: " << endl;
+	cout << "Original array: " << endl;
+	cout << "string1: " << str_arr[0] << endl;
+	cout << "string2: " << str_arr[1] << endl;
+	cout << "Mirror array: " << endl;
+	cout << "string1: " << str_arr_mirror[0] << endl;
+	cout << "string2: " << str_arr_mirror[1] << endl;
+
+	str_arr[0] = "100 pulls and a dream :sob:";
+	cout << "\nAfter changes: " << endl;
+	cout << "Original array: " << endl;
+	cout << "string1: " << str_arr[0] << endl;
+	cout << "string2: " << str_arr[1] << endl;
+	cout << "Mirror array: " << endl;
+	cout << "string1: " << str_arr_mirror[0] << endl;
+	cout << "string2: " << str_arr_mirror[1] << endl;
+
+    return 0;
+}
 
 
 // #include <iostream>
