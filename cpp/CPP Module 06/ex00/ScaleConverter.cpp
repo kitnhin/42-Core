@@ -1,4 +1,5 @@
 #include "ScaleConverter.hpp"
+#include <cmath>
 
 //aiya i hate doing this la so mafan
 
@@ -54,6 +55,8 @@ void	printNums(string input)
 	try
 	{
 		double	_double = std::strtod(input.c_str(), 0);
+		if(_double == 0 && input != "0")
+			_double = INFINITY;
 		int		_int = static_cast<int>(_double);
 		float	_float = static_cast<float>(_double);
 		char	_char = static_cast<char>(_double);

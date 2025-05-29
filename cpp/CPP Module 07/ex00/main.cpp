@@ -55,6 +55,8 @@ int main( void )
 	//honestly i rly dk wat else to test for this
 }
 
+//TEST FOR GLOBAL FUNCTION CALLING (::FT)
+
 // namespace test{
 //     void yes(){ std::cout << "YES from namespace" << std::endl;}
 // }

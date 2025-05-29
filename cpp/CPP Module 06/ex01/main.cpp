@@ -3,7 +3,7 @@
 int main()
 {
 	Data *rappa = new Data;
-	rappa->str = "walaoeh hen gay ah";
+	rappa->str = "walaoeh";
 
 	cout << "Address of data: " << rappa << endl;
 	cout << "String inside struct: " << rappa->str << endl;

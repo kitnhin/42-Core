@@ -27,6 +27,7 @@ int main(int, char**)
 	delete [] mirror;
 
 	//try funny exceptions
+	cout << "Test []: " << endl;
 	try
 	{
 		Array<int> temp1(5);
