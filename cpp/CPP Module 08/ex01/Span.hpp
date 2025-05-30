@@ -30,6 +30,7 @@ class Span
 	void			add_multiple_nums(int start, int end, int count);
 	unsigned int	shortestSpan();
 	unsigned int	longestSpan();
+	void			iterator_add_multiple_nums(vector<int>::iterator start, vector<int>::iterator last);
 
 	unsigned int	getSize();
 	vector<int>		&getContainer();

@@ -1,6 +1,6 @@
 #include "Span.hpp"
 
-Span::Span()
+Span::Span() : size(0)
 {
 }
 
@@ -45,30 +45,38 @@ void	Span::addNumber(int n)
 void	Span::add_multiple_nums(int start, int end, int count)
 {
 	int curr = 0;
-	if(end <= start)
+	if(end <= start || count <= 0)
 	{
-		cout << "enter a valid range bruh" << endl;
+		cout << "invalid args bruh" << endl;
 		return ;
 	}
-	try
+	while(curr < count)
 	{
-		while(curr < count)
+		srand(clock()); //need clock instead of time(0) for more randomness cuz time(0) updates slow, resulting in same number
+		long n = start + (rand() % (end - start + 1));
+		if(n > INT_MAX || n < INT_MIN)
+			n = start; // very lazy to handle this bruh since its random generation ig any number is fine as long as no crash
+		if(n <= end && n >= start)
 		{
-			srand(clock()); //need clock instead of time(0) for more randomness cuz time(0) updates slow, resulting in same number
-			long n = start + (rand() % (end - start + 1));
-			if(n > INT_MAX || n < INT_MIN)
-				n = start; // very lazy to handle this bruh since its random generation ig any number is fine as long as no crash
-			if(n <= end && n >= start)
-			{
-				addNumber(static_cast<int>(n));
-				curr++;
-			}
+			addNumber(static_cast<int>(n)); //exceptions are caught in the main
+			curr++;
 		}
 	}
-	catch(const std::exception& e)
+}
+
+void Span::iterator_add_multiple_nums(vector<int>::iterator start, vector<int>::iterator last)
+{
+	if(start > last)
 	{
-		std::cerr << e.what() << '\n';
+		cout << "(iterator) invalid input bruh" << endl;
+		return;
 	}
+	if(std::distance(start, last) + this->container.size() > this->size)
+	{
+		cout << "throwing size exception cuz cannot add that many nums (nums not added)" << endl;
+		throw LimitReachedException();
+	}
+	this->container.insert(container.end(), start, last);
 }
 
 vector<int>	&Span::getContainer()
