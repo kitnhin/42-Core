@@ -42,5 +42,25 @@ int main()
 	{
 		std::cerr << e.what() << endl;
 	}
+	try
+	{
+		cout << "\ntest alot nums:" << endl;
+		int size = 100;
+		int count = 3;
+		Span test3(size);
+
+		test3.add_multiple_nums(1, 5, count);
+		cout << "numbers: ";
+		for(int i = 0; i < count; i++)
+			cout << test3.getContainer()[i] << " ";
+		cout << endl;
+		cout << "longest span: " << test3.longestSpan() << endl;
+		cout << "shortest span: " << test3.shortestSpan() << endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
 	return 0;
 }

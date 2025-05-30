@@ -1,6 +1,8 @@
 #include "Span.hpp"
 
-Span::Span() {}
+Span::Span()
+{
+}
 
 Span::~Span() {}
 
@@ -38,6 +40,45 @@ void	Span::addNumber(int n)
 	if(container.size() >= this->size)
 		throw LimitReachedException();
 	this->container.push_back(n);
+}
+
+void	Span::add_multiple_nums(int start, int end, int count)
+{
+	int curr = 0;
+	if(end <= start)
+	{
+		cout << "enter a valid range bruh" << endl;
+		return ;
+	}
+	try
+	{
+		while(curr < count)
+		{
+			srand(clock()); //need clock instead of time(0) for more randomness cuz time(0) updates slow, resulting in same number
+			long n = start + (rand() % (end - start + 1));
+			if(n > INT_MAX || n < INT_MIN)
+				n = start; // very lazy to handle this bruh since its random generation ig any number is fine as long as no crash
+			if(n <= end && n >= start)
+			{
+				addNumber(static_cast<int>(n));
+				curr++;
+			}
+		}
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+}
+
+vector<int>	&Span::getContainer()
+{
+	return this->container;
+}
+
+unsigned int Span::getSize()
+{
+	return this->size;
 }
 
 unsigned int 	Span::longestSpan()

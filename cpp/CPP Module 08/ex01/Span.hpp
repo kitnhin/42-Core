@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <limits.h>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 using std::endl;
 using std::cout;
@@ -24,8 +27,12 @@ class Span
 
 	Span(unsigned int N);
 	void			addNumber(int n);
+	void			add_multiple_nums(int start, int end, int count);
 	unsigned int	shortestSpan();
 	unsigned int	longestSpan();
+
+	unsigned int	getSize();
+	vector<int>		&getContainer();
 
 	class NoSpanException : public std::exception
 	{
