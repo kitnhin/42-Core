@@ -10,6 +10,7 @@
 #include <iterator>
 #include <limits>
 #include <list>
+#include <limits.h>
 
 using std::endl;
 using std::cout;

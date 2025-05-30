@@ -65,6 +65,26 @@ int main()
     }
 
     std::list<int> s2(mlist);
+	cout << "\n============ test stack for INT bounds =============\n" << endl;
+	MutantStack<int> elaina;
+	elaina.push(INT_MAX);
+	elaina.push(INT_MIN);
+	elaina.push(0);
+	MutantStack<int>::const_iterator it4 = elaina.begin();
+	MutantStack<int>::const_iterator it4e = elaina.end();
+	for(; it4 != it4e; it4++)
+		cout << *it4 << endl;
+	
+	cout << "\n============ test for string stack =============\n" << endl;
+	MutantStack<string> miku;
+	miku.push("first string");
+	miku.push("");
+	miku.push("third string (second string pushed is empty)");
+	MutantStack<string>::const_iterator it5 = miku.begin();
+	MutantStack<string>::const_iterator it5e = miku.end();
+	for(; it5 != it5e; it5++)
+		cout << *it5 << endl;
+
 
 	cout << "\n============ test for const stack =============\n" << endl;
 
