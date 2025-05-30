@@ -65,6 +65,26 @@ int main()
     }
 
     std::list<int> s2(mlist);
+
+	cout << "\n============ test for const stack =============\n" << endl;
+
+	MutantStack<int> cartethyia;
+	cartethyia.push(1);
+	cartethyia.push(5);
+	const MutantStack<int> ciacona = cartethyia;
+
+	MutantStack<int>::const_iterator it3 = ciacona.begin();
+	MutantStack<int>::const_iterator it3e = ciacona.end();
+	for(; it3 != it3e; ++it3)
+		cout << *it3 << endl;
+	
+	//what if we use a normal iterator to iterate a const stack? 
+	// MutantStack<int>::iterator it4 = ciacona.begin();
+	// MutantStack<int>::iterator it4e = ciacona.end(); <- does not compile
+	// this is because only const functions work for const objects
+	// hence since theres no begin() and end() thats const AND returns a normal iterator, it doesnt compile
     
     return 0;
 }	//yayyyyy same output i can finally sleep
+
+//btw very nice but begin() gives the bottom of the stack (oldest element)

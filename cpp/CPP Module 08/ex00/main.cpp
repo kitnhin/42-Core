@@ -7,14 +7,14 @@ int main()
 	{
 		std::vector<int> vec;
 		cout << "vector values: ";
-		for(int i = 0; i < 6; i++)
+		for(int i = -1; i < 6; i++)
 		{
 			cout << i << " " ;
 			vec.push_back(i);
 		}
 		cout << endl;
 		cout << "Found value: " << *easyfind(vec, 3) << endl;
-        cout << "Found value: " << *easyfind(vec, 5) << endl;
+        cout << "Found value: " << *easyfind(vec, -1) << endl;
 		cout << "Found value: " << *easyfind(vec, 7) << endl;
 	}
 	catch(const std::exception& e)
@@ -28,14 +28,14 @@ int main()
 	{
 		std::deque<int> vec;
 		cout << "deque values: ";
-		for(int i = 0; i < 6; i++)
+		for(int i = -1; i < 6; i++)
 		{
 			cout << i << " " ;
 			vec.push_back(i);
 		}
 		cout << endl;
 		cout << "Found value: " << *easyfind(vec, 3) << endl;
-        cout << "Found value: " << *easyfind(vec, 5) << endl;
+        cout << "Found value: " << *easyfind(vec, -1) << endl;
 		cout << "Found value: " << *easyfind(vec, 7) << endl;
 	}
 	catch(const std::exception& e)
@@ -49,14 +49,14 @@ int main()
 	{
 		std::list<int> vec;
 		cout << "list values: ";
-		for(int i = 0; i < 6; i++)
+		for(int i = -1; i < 6; i++)
 		{
 			cout << i << " " ;
 			vec.push_back(i);
 		}
 		cout << endl;
 		cout << "Found value: " << *easyfind(vec, 3) << endl;
-        cout << "Found value: " << *easyfind(vec, 5) << endl;
+        cout << "Found value: " << *easyfind(vec, -1) << endl;
 		cout << "Found value: " << *easyfind(vec, 7) << endl;
 	}
 	catch(const std::exception& e)
@@ -65,3 +65,5 @@ int main()
 	}
 	cout << endl;
 }
+
+//associative containers are containers that store in order such as set and map
