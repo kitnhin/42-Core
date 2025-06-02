@@ -32,7 +32,7 @@ int main(int, char**)
 	{
 		Array<int> temp1(5);
 		int yes = temp1[6];
-		(void)yes;
+		cout << "index in range " << endl;
 	}
 	catch(const std::exception& e) // exception caught if index too high
 	{
@@ -130,6 +130,34 @@ int main(int, char**)
 	cout << "string1: " << str_arr_mirror[0] << endl;
 	cout << "string2: " << str_arr_mirror[1] << endl;
 
+	//struct test
+	cout << "\n ===== Test for struct: ====\n" << endl;
+
+    Array<test*> struct_arr(2);
+	struct_arr[0] = new test();
+	struct_arr[1] = new test();
+
+	Array<test*> struct_arr_mirror = struct_arr;
+
+	cout << "\nBefore changes: " << endl;
+	cout << "Original array: " << endl;
+	cout << "ptr1: " << struct_arr[0] << endl;
+	cout << "ptr2: " << struct_arr[1] << endl;
+	cout << "Mirror array: " << endl;
+	cout << "ptr1: " << struct_arr_mirror[0] << endl;
+	cout << "ptr2: " << struct_arr_mirror[1] << endl;
+
+	delete struct_arr[0];
+	struct_arr[0] = NULL;
+	cout << "\nAfter changes: " << endl;
+	cout << "Original array: " << endl;
+	cout << "ptr1: " << struct_arr[0] << endl;
+	cout << "ptr2: " << struct_arr[1] << endl;
+	cout << "Mirror array: " << endl;
+	cout << "ptr1: " << struct_arr_mirror[0] << endl;
+	cout << "ptr2: " << struct_arr_mirror[1] << endl;
+
+	delete struct_arr[1];
     return 0;
 }
 
