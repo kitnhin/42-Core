@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <sstream>
 
 using std::string;
 using std::endl;
