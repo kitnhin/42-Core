@@ -61,13 +61,13 @@ void    merge_insertion_sort(vector<int> &nums, int nums_in_element)
     }
     merge_insertion_sort(nums, nums_in_element * 2);
 
-
-    // cout << "nums after merge: ";
-    // for(int i = 0; i < nums.size(); i++)
-    //     cout << nums[i] << " ";
-    // cout << endl;
     
     cout << "\n====================== nums in elements: " << nums_in_element << " ======================\n" << endl;
+    
+    cout << "sequence: ";
+    for(int i = 0; i < nums.size(); i++)
+        cout << nums[i] << " ";
+    cout << endl << endl;
     vector<vector<int>::iterator> main; //iterator vector damn that guide guy is smart asf
     vector<vector<int>::iterator> pend; //REMEMBER THIS HERE STARTS FROM B2
     vector<vector<int>::iterator> a;
@@ -137,6 +137,21 @@ void    merge_insertion_sort(vector<int> &nums, int nums_in_element)
     }
     cout << endl;
 
+    // int n = 2;
+    // int offset = 0;
+    // while(pend.size())
+    // {
+    //     int curr_J = Jacobsthal(n);
+    //     int prev_J = Jacobsthal(n - 1);
+    //     int diff = curr_J - prev_J;
+    //     for(i = diff + offset; i >= offset; i--)
+    //     {
+    //         vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
+    //         vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+    //         main.insert(pos, pend[i]);
+    //     }
+    //     offset += diff;
+    // }
 
     for(int i = pend.size() - 1; i >= 0; i--)
     {
