@@ -1,5 +1,7 @@
 #include "PmergeMe.hpp"
 
+unsigned long PmergeMe::num_of_comps = 0;
+
 PmergeMe::PmergeMe() {}
 
 PmergeMe::PmergeMe(const PmergeMe &obj)
@@ -13,11 +15,19 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &obj)
 {
 	if(this == &obj)
 		return(*this);
-	this->sorted_vec = obj.sorted_vec;
-	this->sorted_deque = obj.sorted_deque;
+	this->vec = obj.vec;
+    this->num_of_comps = obj.num_of_comps;
 	return(*this);
 }
 
+// void    init_vec(vector<int> &nums, int argc, char **argv)
+// {
+//     for(int i = 1; i < argc; i++)
+//     {
+//         int n = atoi(argv[i]);
+//         nums.push_back(n);
+//     }
+// }
 std::ostream& operator<<(std::ostream& os, const std::pair<int, int>& p)
 {
     os << "(" << p.first << ", " << p.second << ")";
@@ -48,246 +58,225 @@ void	print_and_filter_unsorted_list(int argc, char **argv)
 //
 
 
-vector<pair<int, int> > mergePairs_vec(vector<pair<int, int> > left_vec, vector<pair<int, int> > right_vec)
+bool compare_ft(vector<int>::iterator it1, vector<int>::iterator it2)
 {
-    vector<pair<int, int> >::iterator iterator_left = left_vec.begin();
-    vector<pair<int, int> >::iterator iterator_right = right_vec.begin();
-    vector<pair<int, int> > res_vec;
-
-    while(iterator_left != left_vec.end() && iterator_right != right_vec.end())
-    {
-        if((*iterator_left).second < (*iterator_right).second) // compare the bigger numbers
-        {
-            res_vec.push_back(*iterator_left);
-            iterator_left++;
-        }
-        else
-        {
-            res_vec.push_back(*iterator_right);
-            iterator_right++;
-        }
-    }
-    // push the remaining stuff
-    while(iterator_left != left_vec.end())
-    {
-        res_vec.push_back(*iterator_left);
-        iterator_left++;
-    }
-    while(iterator_right != right_vec.end())
-    {
-        res_vec.push_back(*iterator_right);
-        iterator_right++;
-    }
-    return res_vec;
+    PmergeMe::num_of_comps++;
+    return *it1 < *it2;
 }
 
-vector<pair<int, int> > mergeSort_vec(vector<pair<int, int> > pairs_vec)
+int     Jacobsthal(int n)
 {
-    if(pairs_vec.size() == 1)
-        return pairs_vec;
-
-    vector<pair<int, int> > left_vec(pairs_vec.begin(), pairs_vec.begin() + pairs_vec.size() / 2);
-    vector<pair<int, int> > right_vec(pairs_vec.begin() + pairs_vec.size() / 2, pairs_vec.end());
-
-    left_vec = mergeSort_vec(left_vec);
-    right_vec = mergeSort_vec(right_vec);
-
-    return mergePairs_vec(left_vec, right_vec); //basically splitting everything then arranging back, like merge sort
+    return ((std::pow(2, n + 1) + std::pow(-1, n)) / 3);
 }
 
-vector<pair<int, int> > formPairs_vec(int argc, char **argv)
-{
-    vector<pair<int, int> > pairs_vec;
-    int firstnum = -1;
-    int secnum = -1;
+// void    swap_group(vector<int>::iterator it, vector<int>::iterator ite)
+// {
+//     std::swap_ranges(it, ite, ite);
+// }
 
-    //iterating and doing stuff one at a time trying out new coding style
-    for(int i = 1; i < argc; i++)
+// int     biggest_value(vector<int>::iterator it, vector<int>::iterator ite)
+// {
+//     return *std::max_element(it, ite);
+// }
+
+// void    process_element(vector<int>::iterator it, vector<int>::iterator ite)
+// {
+//     int max1 = biggest_value(it, it + ((ite - it) / 2));
+//     int max2 = biggest_value(it + ((ite - it) / 2), ite);
+
+//     //cout << "max1: " << max1 << " max2: " << max2 << endl;
+//     PmergeMe::num_of_comps++;
+//     if(max2 < max1)
+//         swap_group(it,  it + ((ite - it) / 2));
+// }
+
+
+// void    PmergeMe::merge_insertion_sort(int nums_in_element)
+// {
+//     if(nums_in_element > (int)nums.size() / 2)
+//         return ;
+    
+//     vector<int>::iterator it = nums.begin();
+//     int i = 0; //using i cuz way easier to imagine and compare
+//     while(i < (int)nums.size() - ((int)nums.size() % nums_in_element))
+//     {
+//         process_element(it + i, it + i + nums_in_element);
+//         i += nums_in_element;
+//     }
+//     merge_insertion_sort(nums_in_element * 2);
+
+    
+//     cout << "\n====================== nums in elements: " << nums_in_element << " ======================\n" << endl;
+    
+//     cout << "sequence: ";
+//     for(int i = 0; i < (int)nums.size(); i++)
+//         cout << nums[i] << " ";
+//     cout << endl << endl;
+//     vector<vector<int>::iterator> main; //iterator vector damn that guide guy is smart asf
+//     vector<vector<int>::iterator> pend; //REMEMBER THIS HERE STARTS FROM B2
+//     vector<vector<int>::iterator> a;
+//     vector<vector<int>::iterator> b;
+    
+//     int nums_in_group = nums_in_element / 2;
+//     // main.push_back(nums.begin() + nums_in_group - 1);
+//     // main.push_back(nums.begin() + (2 * nums_in_group) - 1);
+
+//     //int number_of_elements = nums.size() / nums_in_element;
+//     int number_of_groups = nums.size() / nums_in_group;
+
+//     // cout << "number of elements: " << number_of_elements << endl;
+//     // cout << "number of groups: " << number_of_groups << endl;
+
+//     for(i = 1; i <= number_of_groups; i++)
+//     {
+//         if(i % 2 == 0)
+//             a.push_back(nums.begin() + (i * nums_in_group) - 1);
+//         else
+//             b.push_back(nums.begin() + (i * nums_in_group) - 1);
+//     }
+
+//     cout << "a: ";
+//     for(i = 0; i < (int)a.size(); i++)
+//         cout << *a[i] << " ";
+//     cout << endl;
+
+//     cout << "b: ";
+//     for(i = 0; i < (int)b.size(); i++)
+//         cout << *b[i] << " ";
+//     cout << endl;
+
+//     main.push_back(b[0]);
+//     for(i = 0; i < (int)a.size(); i++)
+//         main.push_back(a[i]);
+//     for(i = 1; i < (int)b.size(); i++)
+//         pend.push_back(b[i]);
+
+//     vector<int>::iterator elements_left = nums.begin() + number_of_groups * nums_in_group;
+
+//     cout << "\nmain: " << endl;
+//     for(i = 0; i < (int)main.size(); i++)
+//     {
+//         vector<int>::iterator it = main[i];
+//         //cout << "value at iterator: |" << *main[i] << "| ";
+//         for(int j = -nums_in_group + 1; j <= 0; j++)
+//             cout << *(it + j) << " ";
+//     }
+//     cout << endl;
+
+//     cout << "\npend: " << endl;
+//     for(i = 0; i < (int)pend.size(); i++)
+//     {
+//         vector<int>::iterator it = pend[i];
+//         //cout << "value at iterator: |" << *pend[i] << "| ";
+//         for(int j = -nums_in_group + 1; j <= 0; j++)
+//             cout << *(it + j) << " ";
+//     }
+//     cout << endl;
+
+
+//     a.erase(a.begin()); // remove a1
+//     int n = 2;
+//     while(pend.size())
+//     {
+//         int curr_J = Jacobsthal(n);
+//         int prev_J = Jacobsthal(n - 1);
+//         int diff = curr_J - prev_J;
+//         if(diff < (int)pend.size())
+//         {
+//             for(i = diff - 1; i >= 0; i--)
+//             {
+//                 vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i]);
+//                 vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+//                 cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |" << *(*upper_bound_limit) << endl;
+//                 main.insert(pos, pend[i]);
+//                 pend.erase(pend.begin() + i);
+//                 a.erase(a.begin() + i);
+//             }
+//         }
+//         else
+//         {
+//             for(int i = (int)pend.size() - 1; i >= 0; i--)
+//             {
+//                 vector<vector<int>::iterator>::iterator upper_bound_limit;
+//                 if((int)a.size() > i)
+//                 {
+//                     // cout << "a_value: " << *a[i] << endl;
+//                     upper_bound_limit = std::find(main.begin(), main.end(), a[i]);
+//                 }
+//                 else
+//                 {
+//                     // cout << "a_value: " << *a[i] << endl;
+//                     upper_bound_limit = main.end();
+//                 }
+
+//                 vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+//                 if(upper_bound_limit != main.end())
+//                     cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |" << *(*upper_bound_limit) << endl;
+//                 else
+//                     cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |end" << endl;
+//                 main.insert(pos, pend[i]);
+
+//                 pend.erase(pend.begin() + i);
+//                 if((int)a.size() > i)
+//                     a.erase(a.begin() + i);
+//             }
+//         }
+//         n++;
+//     }
+
+//     // for(int i = pend.size() - 1; i >= 0; i--)
+//     // {
+//     //     vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
+//     //     vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+//     //     main.insert(pos, pend[i]);
+//     // }
+
+//     vector<int> res;
+//     for(i = 0; i < (int)main.size(); i++)
+//     {
+//         vector<int>::iterator it = main[i];
+//         for(int j = -nums_in_group + 1; j <= 0; j++)
+//             res.push_back(*(it + j));
+//     }
+
+//     for(; elements_left != nums.end(); elements_left++)
+//         res.push_back(*elements_left);
+
+//     nums = res;
+
+//     cout << "\nnums after sort: " << endl;
+//     for(i = 0; i < (int)nums.size(); i++)
+//     {
+//         cout << nums[i] << " ";
+//     }
+//     cout << endl;
+//     cout << endl;
+// }
+
+vector<int>     &PmergeMe::getVec()
+{
+    return this->vec;
+}
+
+list<int>       &PmergeMe::getList()
+{
+    return this->lst;
+}
+
+unsigned long maximum_comparisons(int n)
+{
+    unsigned long sum = 0;
+    for(int k = 1; k <= n; k++)
     {
-        string temp = static_cast<string>(argv[i]);
-        if(firstnum == -1)
-            firstnum = stoi(temp);
-        else
-        {
-            secnum = stoi(temp);
-            if(firstnum < secnum)
-                pairs_vec.push_back(std::make_pair(firstnum, secnum)); //first num will be the smaller one in the pair
-            else
-                pairs_vec.push_back(std::make_pair(secnum, firstnum));
-            firstnum = -1; //reset
-        }
+        double value = (3.0/4.0) * k;
+        sum += static_cast<unsigned long>(ceil(log2(value)));
     }
-    return pairs_vec;
+    return sum;
 }
 
-vector<int> push_larger_array_vec(vector<pair<int, int> > pairs_vec)
+double  calculate_time(struct timeval start, struct timeval end)
 {
-    vector<int> res_vec;
-
-    for(vector<pair<int, int> >::iterator it = pairs_vec.begin(); it != pairs_vec.end(); it++)
-        res_vec.push_back((*it).second);
-    return res_vec;
+    double seconds = end.tv_sec - start.tv_sec;
+    double microsecs = end.tv_usec - start.tv_usec;
+    return seconds * 1e6 + microsecs;
 }
-
-vector<int> insert_other_nums_vec(vector<int> sorted_vec, vector<pair<int, int> > pairs_vec, int odd)
-{
-    for(vector<pair<int, int> >::iterator it = pairs_vec.begin(); it != pairs_vec.end(); it++)
-    {
-        vector<int>::iterator pos = lower_bound(sorted_vec.begin(), sorted_vec.end(), (*it).first);
-        sorted_vec.insert(pos, (*it).first);
-    }
-    if(odd != -1)
-    {
-        vector<int>::iterator pos = lower_bound(sorted_vec.begin(), sorted_vec.end(), odd);
-        sorted_vec.insert(pos, odd);
-    }
-    return sorted_vec;
-}
-
-void PmergeMe::sort_vec(int argc, char **argv)
-{
-    vector<pair<int, int> > pairs_vec;
-
-	std::chrono::time_point<std::chrono::system_clock> starttime_vec = std::chrono::system_clock::now();
-
-    pairs_vec = formPairs_vec(argc, argv);
-    pairs_vec = mergeSort_vec(pairs_vec);
-    this->sorted_vec = push_larger_array_vec(pairs_vec);
-
-    if(argc % 2 == 0) //take into account the odd number that isn't in a pair
-        this->sorted_vec = insert_other_nums_vec(sorted_vec, pairs_vec, stoi(static_cast<string>(argv[argc - 1])));
-    else
-        this->sorted_vec = insert_other_nums_vec(sorted_vec, pairs_vec, -1);
-	
-	std::chrono::time_point<std::chrono::system_clock> endtime_vec = std::chrono::system_clock::now();
-	std::chrono::microseconds duration_vec = std::chrono::duration_cast<std::chrono::microseconds>(endtime_vec - starttime_vec);
-
-	cout << "After:";
-	for(vector<int>::iterator it = sorted_vec.begin(); it != sorted_vec.end(); it++)
-		cout << " " << *it;
-	cout << endl; 
-	cout << "Time to process a range of " << argc - 1 << " elements with std::vector: " << duration_vec.count() << "us" << endl;
-}
-
-
-//
-//for deque: (cuz stupid list doesnt have lowerbound acc to gpt)
-//
-
-deque<pair<int, int> > mergePairs_deque(deque<pair<int, int> > left_deque, deque<pair<int, int> > right_deque)
-{
-    deque<pair<int, int> >::iterator iterator_left = left_deque.begin();
-    deque<pair<int, int> >::iterator iterator_right = right_deque.begin();
-    deque<pair<int, int> > res_deque;
-
-    while (iterator_left != left_deque.end() && iterator_right != right_deque.end())
-    {
-        if ((*iterator_left).second < (*iterator_right).second) // compare the bigger numbers
-        {
-            res_deque.push_back(*iterator_left);
-            iterator_left++;
-        }
-        else
-        {
-            res_deque.push_back(*iterator_right);
-            iterator_right++;
-        }
-    }
-    // push the remaining stuff
-    while (iterator_left != left_deque.end())
-    {
-        res_deque.push_back(*iterator_left);
-        iterator_left++;
-    }
-    while (iterator_right != right_deque.end())
-    {
-        res_deque.push_back(*iterator_right);
-        iterator_right++;
-    }
-    return res_deque;
-}
-
-deque<pair<int, int> > mergeSort_deque(deque<pair<int, int> > pairs_deque)
-{
-    if (pairs_deque.size() == 1)
-        return pairs_deque;
-
-    deque<pair<int, int> > left_deque(pairs_deque.begin(), pairs_deque.begin() + pairs_deque.size() / 2);
-    deque<pair<int, int> > right_deque(pairs_deque.begin() + pairs_deque.size() / 2, pairs_deque.end());
-
-    left_deque = mergeSort_deque(left_deque);
-    right_deque = mergeSort_deque(right_deque);
-
-    return mergePairs_deque(left_deque, right_deque); //basically splitting everything then arranging back, like merge sort
-}
-
-deque<pair<int, int> > formPairs_deque(int argc, char **argv)
-{
-    deque<pair<int, int> > pairs_deque;
-    int firstnum = -1;
-    int secnum = -1;
-
-    //iterating and doing stuff one at a time
-    for (int i = 1; i < argc; i++)
-    {
-        string temp = static_cast<string>(argv[i]);
-        if (firstnum == -1)
-            firstnum = stoi(temp);
-        else
-        {
-            secnum = stoi(temp);
-            if (firstnum < secnum)
-                pairs_deque.push_back(std::make_pair(firstnum, secnum)); //first num will be the smaller one in the pair
-            else
-                pairs_deque.push_back(std::make_pair(secnum, firstnum));
-            firstnum = -1;// reset
-        }
-    }
-    return pairs_deque;
-}
-
-deque<int> push_larger_array_deque(deque<pair<int, int> > pairs_deque)
-{
-    deque<int> res_deque;
-
-    for (deque<pair<int, int> >::iterator it = pairs_deque.begin(); it != pairs_deque.end(); it++)
-        res_deque.push_back((*it).second);
-    return res_deque;
-}
-
-deque<int> insert_other_nums_deque(deque<int> sorted_deque, deque<pair<int, int> > pairs_deque, int odd)
-{
-    for (deque<pair<int, int> >::iterator it = pairs_deque.begin(); it != pairs_deque.end(); it++)
-    {
-        deque<int>::iterator pos = lower_bound(sorted_deque.begin(), sorted_deque.end(), (*it).first);
-        sorted_deque.insert(pos, (*it).first);
-    }
-    if (odd != -1)
-    {
-        deque<int>::iterator pos = lower_bound(sorted_deque.begin(), sorted_deque.end(), odd);
-        sorted_deque.insert(pos, odd);
-    }
-    return sorted_deque;
-}
-
-void PmergeMe::sort_deque(int argc, char **argv)
-{
-    deque<pair<int, int> > pairs_deque;
-
-	std::chrono::time_point<std::chrono::system_clock> starttime_deque = std::chrono::system_clock::now();
-
-    pairs_deque = formPairs_deque(argc, argv);
-    pairs_deque = mergeSort_deque(pairs_deque);
-    this->sorted_deque = push_larger_array_deque(pairs_deque);
-
-    if (argc % 2 == 0) //take into account the odd number that isn't in a pair
-        this->sorted_deque = insert_other_nums_deque(sorted_deque, pairs_deque, stoi(static_cast<string>(argv[argc - 1])));
-    else
-        this->sorted_deque = insert_other_nums_deque(sorted_deque, pairs_deque, -1);
-
-	std::chrono::time_point<std::chrono::system_clock> endtime_deque = std::chrono::system_clock::now();
-	std::chrono::microseconds duration_deque = std::chrono::duration_cast<std::chrono::microseconds>(endtime_deque - starttime_deque);
-	cout << "Time to process a range of " << argc - 1 << " elements with std::deque: " << duration_deque.count() << "us" << endl; // .count extracts the value out
-}
-
-

@@ -137,28 +137,63 @@ void    merge_insertion_sort(vector<int> &nums, int nums_in_element)
     }
     cout << endl;
 
-    // int n = 2;
-    // int offset = 0;
-    // while(pend.size())
-    // {
-    //     int curr_J = Jacobsthal(n);
-    //     int prev_J = Jacobsthal(n - 1);
-    //     int diff = curr_J - prev_J;
-    //     for(i = diff + offset; i >= offset; i--)
-    //     {
-    //         vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
-    //         vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
-    //         main.insert(pos, pend[i]);
-    //     }
-    //     offset += diff;
-    // }
 
-    for(int i = pend.size() - 1; i >= 0; i--)
+    a.erase(a.begin()); // remove a1
+    int n = 2;
+    while(pend.size())
     {
-        vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
-        vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
-        main.insert(pos, pend[i]);
+        int curr_J = Jacobsthal(n);
+        int prev_J = Jacobsthal(n - 1);
+        int diff = curr_J - prev_J;
+        if(diff < pend.size())
+        {
+            for(i = diff - 1; i >= 0; i--)
+            {
+                vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i]);
+                vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+                cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |" << *(*upper_bound_limit) << endl;
+                main.insert(pos, pend[i]);
+                pend.erase(pend.begin() + i);
+                a.erase(a.begin() + i);
+            }
+        }
+        else
+        {
+            for(int i = pend.size() - 1; i >= 0; i--)
+            {
+                vector<vector<int>::iterator>::iterator upper_bound_limit;
+                if(a.size() > i)
+                {
+                    // cout << "a_value: " << *a[i] << endl;
+                    upper_bound_limit = std::find(main.begin(), main.end(), a[i]);
+                }
+                else
+                {
+                    // cout << "a_value: " << *a[i] << endl;
+                    upper_bound_limit = main.end();
+                }
+
+                vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+                if(upper_bound_limit != main.end())
+                    cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |" << *(*upper_bound_limit) << endl;
+                else
+                    cout << "\ninserting b value: |" << *pend[i] << "| upper bound used: |end" << endl;
+                main.insert(pos, pend[i]);
+
+                pend.erase(pend.begin() + i);
+                if(a.size() > i)
+                    a.erase(a.begin() + i);
+            }
+        }
+        n++;
     }
+
+    // for(int i = pend.size() - 1; i >= 0; i--)
+    // {
+    //     vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
+    //     vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+    //     main.insert(pos, pend[i]);
+    // }
 
     vector<int> res;
     for(i = 0; i < main.size(); i++)
