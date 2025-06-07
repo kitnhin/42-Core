@@ -58,11 +58,11 @@ void	print_and_filter_unsorted_list(int argc, char **argv)
 //
 
 
-bool compare_ft(vector<int>::iterator it1, vector<int>::iterator it2)
-{
-    PmergeMe::num_of_comps++;
-    return *it1 < *it2;
-}
+// bool compare_ft(vector<int>::iterator it1, vector<int>::iterator it2)
+// {
+//     PmergeMe::num_of_comps++;
+//     return *it1 < *it2;
+// }
 
 int     Jacobsthal(int n)
 {

@@ -10,7 +10,8 @@ int main(int argc, char **argv)
 
 		vector<int> unsorted_arr;
 		print_and_filter_unsorted_list(argc, argv);
-		//11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
+		//./PmergeMe 11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
+		//./PmergeMe `shuf -i 1-100000 -n 3000 | tr "\n" " "`
 
 		init_arr(pm.getVec(), argc, argv);
 		init_arr(unsorted_arr, argc, argv);
@@ -21,10 +22,10 @@ int main(int argc, char **argv)
 		gettimeofday(&end, NULL);
 		double time_passed_vec = calculate_time(start, end);
 
-		// gettimeofday(&start, NULL);
-		// merge_insertion_sort(pm.getList(), 2);
-		// gettimeofday(&end, NULL);
-		// double time_passed_lst = calculate_time(start, end);
+		gettimeofday(&start, NULL);
+		merge_insertion_sort(pm.getList(), 2);
+		gettimeofday(&end, NULL);
+		double time_passed_lst = calculate_time(start, end);
 
     	// cout << "unsorted: ";
 		// for(size_t i = 0; i < pm.getNums().size(); i++)
@@ -46,11 +47,11 @@ int main(int argc, char **argv)
 
 		cout << endl;
 		cout << "Time passed (vector): " << time_passed_vec << "µs"<< endl;
-		//cout << "Time passed (list): " << time_passed_lst << "µs" << endl;
+		cout << "Time passed (list): " << time_passed_lst << "µs" << endl;
 
 		cout << endl;
 		cout << "maximum comparisons: " << maximum_comparisons(pm.getVec().size()) << endl;
-		cout << "total comparisions made: " << PmergeMe::num_of_comps << endl;
+		cout << "total comparisions made: " << PmergeMe::num_of_comps / 2 << endl;
 		cout << endl;
 	}
 	catch(const std::exception& e)
