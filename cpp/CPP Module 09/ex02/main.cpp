@@ -1,19 +1,13 @@
 #include "PmergeMe.hpp"
 
-double gettime()
-{
-	struct timespec ts;
-	clock_gettime(CLOCK_MONOTONIC, &ts);
-	return static_cast<double>(ts.tv_sec) * 1e6 + static_cast<double>(ts.tv_nsec) / 1e3;
-}
 
 int main(int argc, char **argv)
 {
 	try
 	{
 		PmergeMe pm;
-		// struct timeval start;
-		// struct timeval end;
+		struct timeval start;
+		struct timeval end;
 
 		vector<int> unsorted_arr;
 		print_and_filter_unsorted_list(argc, argv);
@@ -24,15 +18,15 @@ int main(int argc, char **argv)
 		init_arr(unsorted_arr, argc, argv);
 		init_arr(pm.getList(), argc, argv);
 	
-		double start_vec = gettime();
+		gettimeofday(&start, NULL);
 		merge_insertion_sort(pm.getVec(), 2);
-		double end_vec = gettime();
-		double time_passed_vec = end_vec - start_vec;
+		gettimeofday(&end, NULL);
+		double time_passed_vec = calculate_time(start, end);
 
-		double start_lst = gettime();
+		gettimeofday(&start, NULL);
 		merge_insertion_sort(pm.getList(), 2);
-		double end_lst = gettime();
-		double time_passed_lst = end_lst - start_lst;
+		gettimeofday(&end, NULL);
+		double time_passed_lst = calculate_time(start, end);
     	// cout << "unsorted: ";
 		// for(size_t i = 0; i < pm.getNums().size(); i++)
         // 	cout << pm.getNums()[i] << " ";
