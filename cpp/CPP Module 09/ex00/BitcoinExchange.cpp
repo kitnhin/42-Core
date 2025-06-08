@@ -87,21 +87,21 @@ int	validate_line(string line)
 	//cout << line << endl;
 	for(size_t i = 0; i < line.length(); i++)
 	{
-		if(i == 13 && line[i] == '-')
+		if(i == 13 && line[i] == '-') //check - anywhere other than at neg value
 			continue;
-		if(i > 13 && line[i] == '.')
+		if(i > 13 && line[i] == '.') //check . anywhere other than at decimal
 			continue;
-		if(i == 11 && line[i] != '|')
+		if(i == 11 && line[i] != '|') //check | in " | "
 		{
 			//cout << "test1" << endl;
 			return 1;
 		}
-		else if((i == 10 || i == 12) && line[i] != ' ')
+		else if((i == 10 || i == 12) && line[i] != ' ') //check spaces in " | "
 		{
 			//cout << "test2" << endl;
 			return 1;
 		}
-		else if((i == 4 || i == 7) && line[i] != '-')
+		else if((i == 4 || i == 7) && line[i] != '-') //check dash in date
 		{
 			//cout << "test3" << endl;
 			return 1;
@@ -141,7 +141,7 @@ float getFloat(string line)
 	float res = str_to_float(line);
 	if(res < 0)
 	{
-		cerr << "Error: not a posive number" << endl;
+		cerr << "Error: not a positive number" << endl;
 		return (-1);
 	}
 	if(res > 1000)

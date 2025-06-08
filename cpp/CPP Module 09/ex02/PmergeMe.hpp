@@ -67,6 +67,7 @@ template <typename Container>
 bool compare_ft(typename Container::iterator it1, typename Container::iterator it2)
 {
     PmergeMe::num_of_comps++;
+	//cout << "comparing : |" << *it1 << "| and |" << *it2 << "|" << endl;  
     return *it1 < *it2;
 }
 
@@ -115,6 +116,7 @@ void    merge_insertion_sort(Container &nums, int nums_in_element)
 	if(nums_in_element > (int)nums.size())
         return ;
     
+	unsigned long curr_comp = PmergeMe::num_of_comps;
     typename Container::iterator it = nums.begin();
     int i = 0; //using i cuz way easier to imagine and compare
     while(i < (int)nums.size() - ((int)nums.size() % nums_in_element))
@@ -127,11 +129,13 @@ void    merge_insertion_sort(Container &nums, int nums_in_element)
         process_element<Container>(elem_start, elem_end);
         i += nums_in_element;
     }
-    merge_insertion_sort(nums, nums_in_element * 2);
 
+	cout << "curr comp when nums in element = " << nums_in_element << " is |" << PmergeMe::num_of_comps - curr_comp << endl;
+    merge_insertion_sort(nums, nums_in_element * 2);
     
     cout << "\n====================== nums in elements: " << nums_in_element << " ======================\n" << endl;
     
+	curr_comp = PmergeMe::num_of_comps;
     cout << "sequence: ";
     for(typename Container::iterator print_i = nums.begin(); print_i != nums.end(); print_i++)
         cout << *print_i << " ";
@@ -285,6 +289,7 @@ void    merge_insertion_sort(Container &nums, int nums_in_element)
         cout << *print_i << " ";
     cout << endl;
     cout << endl;
+	cout << "num of comparisons = " << PmergeMe::num_of_comps - curr_comp << endl;
 }
 
 #endif

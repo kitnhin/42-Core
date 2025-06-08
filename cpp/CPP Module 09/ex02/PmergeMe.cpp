@@ -50,7 +50,7 @@ void	print_and_filter_unsorted_list(int argc, char **argv)
 		else
 			outputstr += " " + temp;
 	}
-	cout << outputstr << endl;
+	cout << "\n" << outputstr << endl << endl;
 }
 
 //
