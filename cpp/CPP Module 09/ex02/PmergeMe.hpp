@@ -112,7 +112,7 @@ void    process_element(typename Container::iterator it, typename Container::ite
 template<typename Container>
 void    merge_insertion_sort(Container &nums, int nums_in_element)
 {
-	if(nums_in_element > (int)nums.size() / 2)
+	if(nums_in_element > (int)nums.size())
         return ;
     
     typename Container::iterator it = nums.begin();
@@ -143,14 +143,7 @@ void    merge_insertion_sort(Container &nums, int nums_in_element)
     vector<typename Container::iterator> b;
     
     int nums_in_group = nums_in_element / 2;
-    // main.push_back(nums.begin() + nums_in_group - 1);
-    // main.push_back(nums.begin() + (2 * nums_in_group) - 1);
-
-    //int number_of_elements = nums.size() / nums_in_element;
     int number_of_groups = nums.size() / nums_in_group;
-
-    // cout << "number of elements: " << number_of_elements << endl;
-    // cout << "number of groups: " << number_of_groups << endl;
 
     for(i = 1; i <= number_of_groups; i++)
     {
@@ -259,20 +252,18 @@ void    merge_insertion_sort(Container &nums, int nums_in_element)
 
     // for(int i = pend.size() - 1; i >= 0; i--)
     // {
-    //     vector<vector<int>::iterator>::iterator upper_bound_limit = std::find(main.begin(), main.end(), a[i + 1]); // note: careful this isnt protected MIGHT SEG FAULT LOLLLL
-    //     vector<vector<int>::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft);
+	// 	typename vector<typename Container::iterator>::iterator upper_bound_limit;
+	// 	if((int)a.size() > i)
+    //     	upper_bound_limit = std::find(main.begin(), main.end(), a[i]);
+    //     else
+    //     	upper_bound_limit = main.end();
+    //     typename vector<typename Container::iterator>::iterator pos = std::upper_bound(main.begin(), upper_bound_limit, pend[i], compare_ft<Container>);
     //     main.insert(pos, pend[i]);
+	// 	pend.erase(pend.begin() + i);
+    // 	if((int)a.size() > i)
+    //         a.erase(a.begin() + i);
     // }
 
-	// cout << "\nmain after: " << endl;
-    // for(i = 0; i < (int)main.size(); i++)
-    // {
-    //     typename Container::iterator pos = main[i];
-	// 	advance(pos, -nums_in_group + 1);
-    //     cout << "value at iterator: |" << *pos << "| ";
-    //     for(int j = -nums_in_group + 1; j <= 0; j++)
-	// 		cout << *(pos++) << " ";
-    // }
     cout << endl;
 
     Container res;
