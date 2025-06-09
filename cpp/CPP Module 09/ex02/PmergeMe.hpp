@@ -37,7 +37,6 @@ class PmergeMe
 		~PmergeMe();
 		PmergeMe &operator=(const PmergeMe &obj);
 
-		void    merge_insertion_sort(int nums_in_element);
 		vector<int>	&getVec();
 		list<int>	&getList();
 
