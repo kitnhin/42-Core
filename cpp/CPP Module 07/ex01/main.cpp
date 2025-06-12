@@ -5,11 +5,22 @@
 #include <unistd.h>
 
 
-std::ostream& operator<<(std::ostream& o, Awesome const& rhs)
-{
-    o << rhs.get();
-    return o;
-}
+// class Awesome
+// {
+// 	public:
+// 		Awesome(void) : _n(42) { return; }
+// 		int get(void) const { return this->_n; }
+
+// 	private:
+// 		int _n;
+// };
+
+
+// std::ostream& operator<<(std::ostream& o, Awesome const& rhs)
+// {
+//     o << rhs.get();
+//     return o;
+// }
 
 
 // int main()
@@ -30,7 +41,7 @@ void	increment_by_one(char &c)
 
 void	appendstr(string &str)
 {
-	str.append(" is very gay. ");
+	str.append(" hen shuai. ");
 }
 
 void	increment_by_one_int(int &i)

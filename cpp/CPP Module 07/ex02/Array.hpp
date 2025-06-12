@@ -1,6 +1,7 @@
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
+#include <string.h>
 #include <iostream>
 
 using std::cout;
@@ -59,5 +60,13 @@ class Array
 			}
 	};
 };
+
+//for testingggssss
+
+
+typedef struct
+{
+	char *str;
+} test;
 
 #endif

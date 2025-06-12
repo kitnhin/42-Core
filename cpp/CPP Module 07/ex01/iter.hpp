@@ -15,16 +15,6 @@ void	iter(T *arr, int size, void function(T &a))
 		function(arr[i]);
 }
 
-class Awesome
-{
-	public:
-		Awesome(void) : _n(42) { return; }
-		int get(void) const { return this->_n; }
-
-	private:
-		int _n;
-};
-
 template<typename T>
 void print(T &x) //need to take the const out cuz i will iter only accepts functions that take in without const
 {

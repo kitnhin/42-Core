@@ -30,33 +30,49 @@ std::ostream& operator<<(std::ostream& o, const Awesome& a) { o << a.get_n(); re
 
 int main( void )
 {
-	int a = 2;
-	int b = 3;
-	::swap( a, b );
-	std::cout << "a = " << a << ", b = " << b << std::endl;
-	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
-	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
-	std::string c = "chaine1";
-	std::string d = "chaine2";
-	::swap(c, d);
-	std::cout << "c = " << c << ", d = " << d << std::endl;
-	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
-	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+	// int a = 2;
+	// int b = 3;
+	// ::swap( a, b );
+	// std::cout << "a = " << a << ", b = " << b << std::endl;
+	// std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
+	// std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+	// std::string c = "chaine1";
+	// std::string d = "chaine2";
+	// ::swap(c, d);
+	// std::cout << "c = " << c << ", d = " << d << std::endl;
+	// std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
+	// std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
 
 
-	// Awesome a(2), b(4);
+	Awesome a(2), b(4);
     
-    // swap(a, b);
-    // std::cout << a << " " << b << std::endl;
-    // std::cout << max(a, b) << std::endl;
-    // std::cout << min(a, b) << std::endl;
-	// return 0;
+    swap(a, b);
+    std::cout << a << " " << b << std::endl;
+    std::cout << max(a, b) << std::endl;
+    std::cout << min(a, b) << std::endl;
+	//return 0;
 
-	//honestly i rly dk wat else to test for this
+	//own test
+	int m = 1;
+	int n = 2;
+	int *ptr1 = &m;
+	int *ptr2 = &n;
+
+	std::cout << "address at ptr1: " << ptr1 << std::endl;
+	std::cout << "address at ptr2: " << ptr2 << std::endl;
+	std::cout << "min ptr: " << min(ptr1, ptr2) << std::endl;
+	std::cout << "max ptr: " << max(ptr1, ptr2) << std::endl;
+	swap(ptr1, ptr2);
+	std::cout << "after swap:" << endl;
+	std::cout << "address at ptr1: " << ptr1 << endl;
+	std::cout << "address at ptr2: " << ptr2 << endl;
+
 }
 
+//TEST FOR GLOBAL FUNCTION CALLING (::FT)
+
 // namespace test{
-//     void yes(){ std::cout << "YES from namespace" << std::endl;}
+//     void yes(){ tsd::cout << "YES from namespace" << std::endl;}
 // }
 // void    yes()
 // {

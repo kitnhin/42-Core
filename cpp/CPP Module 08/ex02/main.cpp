@@ -65,6 +65,46 @@ int main()
     }
 
     std::list<int> s2(mlist);
+	cout << "\n============ test stack for INT bounds =============\n" << endl;
+	MutantStack<int> elaina;
+	elaina.push(INT_MAX);
+	elaina.push(INT_MIN);
+	elaina.push(0);
+	MutantStack<int>::const_iterator it4 = elaina.begin();
+	MutantStack<int>::const_iterator it4e = elaina.end();
+	for(; it4 != it4e; it4++)
+		cout << *it4 << endl;
+	
+	cout << "\n============ test for string stack =============\n" << endl;
+	MutantStack<string> miku;
+	miku.push("first string");
+	miku.push("");
+	miku.push("third string (second string pushed is empty)");
+	MutantStack<string>::const_iterator it5 = miku.begin();
+	MutantStack<string>::const_iterator it5e = miku.end();
+	for(; it5 != it5e; it5++)
+		cout << *it5 << endl;
+
+
+	cout << "\n============ test for const stack =============\n" << endl;
+
+	MutantStack<int> cartethyia;
+	cartethyia.push(1);
+	cartethyia.push(5);
+	const MutantStack<int> ciacona = cartethyia;
+
+	MutantStack<int>::const_iterator it3 = ciacona.begin();
+	MutantStack<int>::const_iterator it3e = ciacona.end();
+	for(; it3 != it3e; ++it3)
+		cout << *it3 << endl;
+	
+	//what if we use a normal iterator to iterate a const stack? 
+	// MutantStack<int>::iterator it4 = ciacona.begin();
+	// MutantStack<int>::iterator it4e = ciacona.end(); <- does not compile
+	// this is because only const functions work for const objects
+	// hence since theres no begin() and end() thats const AND returns a normal iterator, it doesnt compile
     
     return 0;
 }	//yayyyyy same output i can finally sleep
+
+//btw very nice but begin() gives the bottom of the stack (oldest element)

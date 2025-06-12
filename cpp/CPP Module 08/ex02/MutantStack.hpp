@@ -10,6 +10,7 @@
 #include <iterator>
 #include <limits>
 #include <list>
+#include <limits.h>
 
 using std::endl;
 using std::cout;
@@ -20,7 +21,7 @@ class MutantStack : public std::stack<T>
 {
 	public:
 	MutantStack() {}
-	MutantStack(const MutantStack &obj)
+	MutantStack(const MutantStack &obj) : std::stack<T>(obj)
 	{
 		*this = obj;
 	}
@@ -33,7 +34,8 @@ class MutantStack : public std::stack<T>
 		return (*this);
 	}
 
-	typedef typename std::stack<T>::container_type::iterator iterator;
+	typedef typename std::stack<T>::container_type::iterator iterator; //normally container type is deque
+	typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 
 	iterator begin()
 	{
@@ -43,13 +45,32 @@ class MutantStack : public std::stack<T>
 	{
 		return (this->c.end());
 	}
+	const_iterator begin() const
+	{
+		return this->c.begin();
+	}
+	const_iterator end() const
+	{
+		return this->c.end();
+	}
 };
 
 //stack container is just a container that uses last in first out format (just like a stack)
-//however it also uses a normal container (probably list or vector) to store its values, it just works like a stack (basically a container acting like a stack)
-//so wat we need to do it just typedef the iterator from this underlying container (basically using the underlying container iterator as our own)
-//then we implement the functions this new "iterator" used in the main provided by using the original iterator (from the underlying container) lol
+//however it actually uses another container inside its class:
 
-//honestly feels abit weird but aiya it works it works la
+// template<typename T, typename Container = std::deque<T>>
+// class stack
+// {
+// 	protected:
+// 	class Container c;
+
+// 	public:
+// 	top(); ...... member functions
+
+// 	using container_type = Container //defining member types
+// }
+
+//so wat we need to do it just typedef the iterator from this underlying container (basically using the underlying container iterator as our own)
+//very nice website https://en.cppreference.com/w/cpp/container/stack.html
 
 #endif

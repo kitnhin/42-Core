@@ -7,7 +7,6 @@
 #include <list>
 #include <exception>
 #include <deque>
-#include <array>
 
 using std::cout;
 using std::endl;

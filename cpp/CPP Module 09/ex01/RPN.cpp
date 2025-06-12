@@ -42,9 +42,19 @@ void	RPN::execute_RPN(string input)
 		if(input[i] == ' ')
 			continue ;
 		else if(isdigit(input[i]))
+		{
+			if((i - 1 >= 0 && isdigit(input[i - 1])) || (i + 1 < (int)input.length() && isdigit(input[i + 1])))
+				throw std::logic_error("Error: only single digits nums pls");
 			nums.push(static_cast<int>(input[i] - '0'));
+		}
 		else if(input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/')
 		{
+			if(input[i] == '-' && i + 1 < (int)input.length() && isdigit(input[i + 1]))
+			{
+				nums.push(std::atoi(input.substr(i, 2).c_str()));
+				i++;
+				continue;
+			}
 			if(nums.size() < 2)
 				throw std::logic_error("Error: not enough numbers");
 			int b = nums.top();

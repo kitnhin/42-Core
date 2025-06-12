@@ -9,7 +9,8 @@ using std::string;
 
 //templates must be defined in header file worrrrr
 //got reason for this one actually haihhhh so long
-//in summary its like since templates might be used by multiple files differently, it will generate diff machine code during compilation
+//when compiling, machine codes for each file is generated
+//but if 
 //for example: file1 use template wif int data type, the other uses wif string data type
 //therefore if u put in somewhere else it might cause linker error
 
