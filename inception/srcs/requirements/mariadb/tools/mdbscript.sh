@@ -1,26 +1,27 @@
 #!/bin/bash
+set -e
 
-#start mysql
-service mysql start
+# Initialize MariaDB if not already done
+if [ ! -d "/var/lib/mysql/${SQL_DATABASE}" ]; then
+    echo "Initializing database..."
+    mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
-#create database
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
+    # Start MariaDB in background (just for setup)
+    mysqld_safe --skip-networking &
+    sleep 5
 
-#create user and give perms
-mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+    echo "Creating database and user..."
+    mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
+    mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+    mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%';"
+    mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+    mysql -e "FLUSH PRIVILEGES;"
 
-#change root user
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+    echo "Shutting down temporary MariaDB..."
+    mysqladmin -u root -p"${SQL_ROOT_PASSWORD}" shutdown
+    sleep 5
+fi
 
-#apply changes
-mysql -e "FLUSH PRIVILEGES;"
-
-#restart MySQL
-mysqladmin -u root -p${SQL_ROOT_PASSWORD} shutdown
-
-#print msg
-echo "mariadb is running"
-
-#start MySQL in foreground
+echo "Starting MariaDB..."
+# Run MariaDB in the foreground
 exec mysqld_safe

@@ -24,5 +24,8 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
+#expose port
+EXPOSE 443
+
 #stupid one can only have one CMD so everything wanna do when running need put inside the script
 CMD ["./nginxscript.sh"]
