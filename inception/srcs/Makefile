@@ -1,14 +1,29 @@
-DOCKER-COMPOSE = ./docker-compose.yml
+DOCKER_COMPOSE = ./docker-compose.yml
 
 all: build up
 
+build:
+	docker compose -f $(DOCKER_COMPOSE) build
+
 up:
-	docker compose -f $(DOCKER-COMPOSE) up -d --build
+	docker compose -f $(DOCKER_COMPOSE) up -d
 
 down:
-	docker compose -f $(DOCKER-COMPOSE) down
+	docker compose -f $(DOCKER_COMPOSE) down
 
-fclean:
-	docker compose down --rmi all --volumes
+clean:
+	docker compose -f $(DOCKER_COMPOSE) down --volumes
 
-re: fclean up
+fclean: clean
+	docker compose -f $(DOCKER_COMPOSE) down --rmi all --volumes
+
+build-nc:
+	docker compose -f $(DOCKER_COMPOSE) build --no-cache
+
+upnc: build-nc up
+
+renc: fclean build-nc up
+
+re: fclean build up
+
+.PHONY: all build up down clean fclean build-nc upnc renc re

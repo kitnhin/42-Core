@@ -8,4 +8,8 @@ if [ ! -e /var/www/wordpress/wp-config.php ]; then
     --dbhost=mariadb:3306 --path='/var/www/wordpress'
 fi
 
+mkdir -p ./run/php
+
 echo "wordpress is now running"
+
+/usr/sbin/php-fpm7.3 -F

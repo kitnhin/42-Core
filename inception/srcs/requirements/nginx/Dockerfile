@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:buster
 
 #install nginx
 RUN apt update && apt upgrade -y
