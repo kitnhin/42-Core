@@ -33,12 +33,9 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 COPY ./tools/autoconfig.sh ./autoconfig.sh
 RUN chmod 755 autoconfig.sh
 
-#change lang
-
-
 #expose port
 EXPOSE 9000 3306
 
 #run script
 CMD ["./autoconfig.sh"]
-					
+

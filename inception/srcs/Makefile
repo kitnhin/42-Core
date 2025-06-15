@@ -20,6 +20,12 @@ fclean: clean
 build-nc:
 	docker compose -f $(DOCKER_COMPOSE) build --no-cache
 
+rvol:
+	sudo rm -rf /home/ethan/data/wordpress
+	sudo rm -rf /home/ethan/data/mariadb
+	mkdir -p /home/ethan/data/wordpress
+	mkdir -p /home/ethan/data/mariadb
+
 upnc: build-nc up
 
 renc: fclean build-nc up
