@@ -1,0 +1,80 @@
+====================== DOCKER ============================
+
+docker image:
+- a blueprint for ur docker containers
+- has the OS env, code, tools etc
+- created using docker build from Dockerfile (see notes 2 for dockerfile general syntaxes)
+
+docker container:
+- a running instance of a docker image
+- like a mini computer 
+- vs vm
+  1) more lightweight, less resources used
+  2) smallar
+  3) analogy: using a room and using a whole ass house
+- how container runs
+  1) uses the host kernel (core part of the OS that controls the computer aspects like memory)
+  2) everything else in the container is from the image or gotten from the Dockerfile image building (files, dependencies....)
+- at the start of running, executes the stuff in CMD
+- the first process executed when the docker container start running is PID 1, like the CMD or ENTRYPOINT
+
+
+====================== NGINX ============================
+
+TLS: 
+
+- TLS encrypts ur http requests and responses so outsiders cant monitor or spy
+- Basics on how it happens:
+  1) TLS handshake, agree on the encryption method used
+  2) pass the encrypted response and requests around
+- gives the "s" in https
+
+certs and keys:
+- TLS requires something called an SSL cert from the webserver to check if its safe
+- the ssl key is like a private key, used for private stuffs like decrypting
+- generated from the openssl command
+  -> openssl req = request for key and cert generation
+  -> x509 = generates a SELF SIGNED cert, specifying that its NOT a request to sign a cert
+  -> nodes = no password cert, so when use dont need type password
+  -> out = output file for the cert
+  -> keyout = output file for the key
+  -> subj "" = used to specify the fields for the cert during cert generation (can try running without this to see the prompt lol)
+
+php:
+- scripts / codes that produce html webpages
+
+php-fpm:
+- something to run php files
+
+
+====================== mariadb ============================
+- stores wordpress data in tables
+- including posts, user info, webpages, etc
+
+mysql:
+- smth like a terminal that lets u run SQL commands (such as SHOW TABLES; , etc)
+- activated using "docker exec -it my_mariadb mysql -u root -p"
+
+mysqld:
+- the server daemon that runs everything in the back
+- mysql is like the qr code that accepts ur food order, mysqld is like the waiter
+
+running steps:
+1) mysql_install = sets up the database system, which is like a "space" / big area that stores all databases
+2) bootstrap = starts up mysqld TEMPORARILY to do all the configs, after done close it
+3) run mysqld fr
+reason: because mysqld is a hanging process that waits for connection, so if do exec mysqld first u cant do the config cuz no more terminal dy, have to open bash in another terminal and do again v mafan and idt a dockerfile and script itself can do smth liddat automatically
+- configs involved in bootstrap:
+  1) creating a database, which contains tables, and other data
+  2) creates a user, which can modify the database created
+  3) assign perms to this user, this user will be the same as the database user, as this user will have the power to make posts / comments, which will be stored inside the database, so it must have perms
+  4) modifies the root user password, cuz by default root has no pw / random pw
+  5) flushing on both ends to ensure safety and to apply changes
+====================== common commands =============================
+docker: 
+docker exec -it <container> <command>
+docker logs <container>
+docker ps
+
+mariadb:
+docker exec -it my_mariadb mysql -u root -p (mysql)

@@ -1,0 +1,20 @@
+====================== DOCKERFILE ====================
+
+FROM debian:buster #downloads the base minimum debian os, just enuf to run stuff
+
+RUN [COMMAND] #runs the command INSIDE the new image
+
+COPY [SOURCE] [DESTINATION] #copies stuff FROM the host vm INTO the new image (mostly scripts)
+
+CMD ["commands / scripts"] #tells docker to run the command / script WHEN THE DOCKER CONTAINER RUNS (not when the image is build)
+
+flags: -y # specifies yes in yes no prompts when the command runs
+
+
+====================== 50-server-conf mariadb ====================
+bind=* = specifies can bind to any network, so the docker containers can conect since they dont use localhost
+port = specifies the port to listen to obvly
+
+
+
+
