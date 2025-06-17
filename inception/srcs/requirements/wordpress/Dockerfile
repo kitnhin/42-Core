@@ -1,11 +1,11 @@
-FROM debian:buster
+FROM debian:bullseye
 
 #install wget
 RUN apt update && apt upgrade -y
 RUN apt-get -y install wget
 
 #install php
-RUN apt-get install -y php7.3 \
+RUN apt-get install -y php7.4 \
 php-fpm \
 php-mysql
 
@@ -21,7 +21,7 @@ RUN cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 RUN chown -R root:root /var/www/wordpress
 
 #copy config
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
 #install CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

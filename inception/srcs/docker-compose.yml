@@ -1,6 +1,7 @@
 services:
   mariadb:
     container_name: mariadb
+    image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -12,6 +13,7 @@ services:
 
   nginx:
     container_name: nginx
+    image: nginx
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -27,6 +29,7 @@ services:
 
   wordpress:
     container_name: wordpress
+    image: wordpress
     volumes:
       - wordpress:/var/www/wordpress
     env_file: .env
@@ -41,12 +44,14 @@ services:
 volumes:
   wordpress:
     driver: local
+    name: wordpress
     driver_opts:
       type: none
       o: bind
       device: /home/ethan/data/wordpress
   mariadb:
     driver: local
+    name: mariadb
     driver_opts:
       type: none
       o: bind
@@ -55,3 +60,4 @@ volumes:
 networks:
   inception:
     driver: bridge
+    name: inception

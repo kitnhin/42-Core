@@ -41,4 +41,4 @@ mkdir -p ./run/php
 echo "wordpress is now running"
 
 #runs phpfpm 
-/usr/sbin/php-fpm7.3 -F
+/usr/sbin/php-fpm7.4 -F

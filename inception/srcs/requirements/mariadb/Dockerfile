@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 #install mdb
 RUN apt update && apt upgrade -y

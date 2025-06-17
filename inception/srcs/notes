@@ -154,6 +154,27 @@ SHOW DATABASES; USE <DATABASE NAME>; SHOW TABES; SELECT * FROM <TABLE NAME>
 - show nginx config
 - run login.42.fr and show it doesnt work
 
+- show dockerfile
+- used debian:bullseye cuz its the curr penult stable, if follow old eval sheet change to debian:buster and change php7.4 to 7.3
+- run the terminal cmd docker images, see that the name "REPOSITORY" is the name
+
+- run cmd docker network ls see inception network
+
+- cd into srcs and do docker compose ps
+- run http://cheelim.42.fr cannot work
+- run fr and see that its not the installation page (can show wat it looks like from the guide)
+- show the nginx config for 1.2 and 1.3
+- run curl https://cheelim.42.fr to show self sign cert warning, add -k to ignore the warning and run fr
+
+- docker volume ls show wordpress vol
+- docker volume inspect wordpress shows path /home.....
+- add comment and edit page
+
+- same thing docker volume ls + inspecting
+- run docker exec -it mariadb mysql -u root -p then type 0123
+- run docker exec -it mariadb mysql -u cheelim -p then type 123
+- do SHOW DATABASES; USE <DATABASE NAME>; SHOW TABES; SELECT * FROM <TABLE NAME>
+
 ====================== bonus notes =============================
 - wts when writing shell scripts the if [ command ] need to write wif space before and after '[' and ']' cuz of how bash tokenizer works 
 -
