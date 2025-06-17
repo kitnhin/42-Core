@@ -7,8 +7,7 @@ RUN apt-get -y install wget
 #install php
 RUN apt-get install -y php7.3 \
 php-fpm \
-php-mysql \
-mariadb-client
+php-mysql
 
 #install vim and curl
 RUN apt install vim -y
@@ -26,16 +25,16 @@ COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
 #install CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
+RUN chmod 755 wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 #copy init script
-COPY ./tools/autoconfig.sh ./autoconfig.sh
-RUN chmod 755 autoconfig.sh
+COPY ./tools/wpscript.sh ./wpscript.sh
+RUN chmod 755 wpscript.sh
 
 #expose port
 EXPOSE 9000 3306
 
 #run script
-CMD ["./autoconfig.sh"]
+CMD ["./wpscript.sh"]
 

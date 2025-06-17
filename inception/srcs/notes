@@ -43,11 +43,8 @@ certs and keys:
 php:
 - scripts / codes that produce html webpages
 
-php-fpm:
-- something to run php files
 
-
-====================== mariadb ============================
+====================== MARIADB ============================
 - stores wordpress data in tables
 - including posts, user info, webpages, etc
 
@@ -64,17 +61,99 @@ running steps:
 2) bootstrap = starts up mysqld TEMPORARILY to do all the configs, after done close it
 3) run mysqld fr
 reason: because mysqld is a hanging process that waits for connection, so if do exec mysqld first u cant do the config cuz no more terminal dy, have to open bash in another terminal and do again v mafan and idt a dockerfile and script itself can do smth liddat automatically
-- configs involved in bootstrap:
+
+configs involved in bootstrap:
   1) creating a database, which contains tables, and other data
   2) creates a user, which can modify the database created
   3) assign perms to this user, this user will be the same as the database user, as this user will have the power to make posts / comments, which will be stored inside the database, so it must have perms
   4) modifies the root user password, cuz by default root has no pw / random pw
   5) flushing on both ends to ensure safety and to apply changes
+- bootstrap syntax:
+  1) --bootstrap = runs msql (terminal) in bootstrap mode
+  2) < = redirection to stdin, like CREATE_DATABASE.....;
+  3) /tmp... = file that contains the config
+- installing mariadb automatically creates a "user" called mysql to modify / do stuff cuz doing stuff in root can be dangerous
+
+====================== wordpress =============================
+dockerfile installations:
+
+  wget:
+  - something that can help u download stuff if u give the link
+  php-fpm:
+  - something to run php files
+  php-mysql:
+  - something that allows php to talk to / connect with Mariadb database to read or write stuff
+  - eg. when making posts all those
+  tar -xzf:
+  - unzips the file
+  - x = extract, z = uncompressing, f = filename
+  wpcli-phar:
+  - to configure / modify our wordpress from the terminal
+  - phar is like a php file containing everything we need
+
+wpscript:
+1) wp config create:
+  - checks if the wp-config file exist
+  - if it doesnt, create one and set variables
+  - all this to skip the first welcome page
+2) wp core install:
+  - used to skip the second welcome page
+3) wp create user:
+  - create new user cuz subject asks to lol
+4) mkdir:
+  - somehow installin php doesnt create its own dir wts need to create urself if not cannot run one
+5) phpfpm:
+  - uses phpfpm to run the script
+  - -F = run in the foreground to keep the container running
+
+====================== Dockercompose file =============================
+mariadb:
+  network:
+  - allows containers to talk to each other
+  - isolates ur containers so outside cannot connect (unless 'port' header field is used is used, like in nginx)
+  volume:
+  - specifies the volume called mariadb which is mounted to /var/lib.... INSIDE the container
+  - meaning all data writes to /var/lib... will be stored inside the volume
+  - mounting means like binding, so writing to the /var/lib.... will directly write to the volume inside the host machine
+  build:
+  - specifies docker compose to build the docker image based on our own service images, not take from dockerhub
+  - opposite of 'images:' header field which takes from dockerhub online
+
+nginx:
+- port:port = host port : container port
+- depends on = start the container specified (wordpress) before starting this container
+
+volumes:
+- driver: the mounter, mounts our volume to a filesystem, in this case we using our own local mounter
+- type: type of mount the driver shud use, in this case its NONE NOT BINDDDDDDDDD
+- o: options to tell our local driver
+- device: the path
+ok heres an explanation, apparently we need a volume WITH a name, but also we need the bind behaviour where wtv we change inside the docker will change in our local volume, and we need a file path we can specify. So we do type none + o bind. So we specify like we're creating a named volume, but type none cuz we're not actually doing bind mount, more like we're doing normal mount with bind behaviour. If we use type : bind instead, we cant name our volumes lol.
+
+network:
+- driver: to specify wat type of nework we want
+
 ====================== common commands =============================
 docker: 
 docker exec -it <container> <command>
 docker logs <container>
-docker ps
+docker compose ps
 
 mariadb:
-docker exec -it my_mariadb mysql -u root -p (mysql)
+docker exec -it my_mariadb mysql -u root -p <-- for the mysql terminal
+SHOW DATABASES; USE <DATABASE NAME>; SHOW TABES; SELECT * FROM <TABLE NAME>
+
+
+====================== eval sheetssss =============================
+- docker runs images, to give containers, and docker compose manages multiple containers
+- with compose, run multiple images giving multiple containers, if not then need to run images individually
+- lightweight, ....
+- very organised yes every services split clearly
+
+- run cheelim.42.fr:443 or without the 443 shud work, run cheelim.42.fr:123 shudnt work
+- show nginx config
+- run login.42.fr and show it doesnt work
+
+====================== bonus notes =============================
+- wts when writing shell scripts the if [ command ] need to write wif space before and after '[' and ']' cuz of how bash tokenizer works 
+-

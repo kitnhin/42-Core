@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#sleep first while waiting for wordpress to start
+sleep 10;
+
 echo "Nginx now is running!" 
 
 # nginx = starts nginx

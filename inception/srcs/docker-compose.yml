@@ -7,11 +7,8 @@ services:
       - inception
     build: 
       context: requirements/mariadb
-      dockerfile: Dockerfile
     env_file: .env 
     restart: on-failure
-    expose:
-      - "3306"
 
   nginx:
     container_name: nginx
@@ -23,7 +20,6 @@ services:
       - wordpress
     build: 
       context: requirements/nginx
-      dockerfile: Dockerfile
     env_file: .env
     ports:
       - "443:443"
@@ -38,12 +34,9 @@ services:
       - inception
     build: 
       context: requirements/wordpress
-      dockerfile: Dockerfile
     depends_on:
       - mariadb
     restart: on-failure
-    expose: 
-      - "9000"
 
 volumes:
   wordpress:

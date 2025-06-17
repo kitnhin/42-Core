@@ -17,6 +17,7 @@ RUN chmod 755 mdbscript.sh
 #create socket dir
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
 
+#expose the container port (yes container and host have different set of ports wts)
 EXPOSE 3306
 
 #run script

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# used to test restart lol
+# exit(1)
+
 #chatgpt teach one, for safety in case one of the commands fail it exits
 set -e
 
@@ -22,13 +25,13 @@ GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES; " > /tmp/init.sql
 
-#use bootstrap to run these configs
+#use bootstrap to run msql and do the configs
 mysqld --user=mysql --bootstrap < /tmp/init.sql
 
-# Clean up temp file
+#clean up temp file
 rm /tmp/init.sql
 
 echo "running mysql fr now"
 
-# Start MariaDB server (normal mode) in foreground
+# starts mysqld fr now
 exec mysqld_safe --user=mysql

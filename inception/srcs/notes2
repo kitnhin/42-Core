@@ -15,6 +15,9 @@ flags: -y # specifies yes in yes no prompts when the command runs
 bind=* = specifies can bind to any network, so the docker containers can conect since they dont use localhost
 port = specifies the port to listen to obvly
 
+====================== www.conf Wordpress ====================
+listen = change listening ip thats it
+clear_env = dont clear env to ensure wordpress can use them (in wp create, install .....)
 
 
 
