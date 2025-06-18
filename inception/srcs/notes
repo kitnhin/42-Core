@@ -175,6 +175,9 @@ SHOW DATABASES; USE <DATABASE NAME>; SHOW TABES; SELECT * FROM <TABLE NAME>
 - run docker exec -it mariadb mysql -u cheelim -p then type 123
 - do SHOW DATABASES; USE <DATABASE NAME>; SHOW TABES; SELECT * FROM <TABLE NAME>
 
+- verify if the changes to sample page is still there
+- DONE!!!!!!!
+
 ====================== bonus notes =============================
 - wts when writing shell scripts the if [ command ] need to write wif space before and after '[' and ']' cuz of how bash tokenizer works 
 -
